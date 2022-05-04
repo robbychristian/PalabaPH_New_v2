@@ -23,6 +23,8 @@ class CreateLaundriesTable extends Migration
             $table->string('valid_id');
             $table->string('bir_permit');
             $table->string('brgy_permit');
+            $table->boolean('is_approved');
+            $table->string('status');
             $table->timestamps();
         });
     }

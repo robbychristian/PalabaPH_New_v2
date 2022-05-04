@@ -18,6 +18,8 @@ class Laundries extends Model
         'valid_id',
         'bir_permit',
         'brgy_permit',
+        'is_approved',
+        'status'
     ];
 
     public function user()
