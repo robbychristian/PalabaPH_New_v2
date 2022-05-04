@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ClientManagementController as AdminClientManagement;
+use App\Http\Controllers\Admin\UserManagementController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +23,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/clientmanagement', [AdminClientManagement::class, 'index'])->name('admin.clientmanagement.index');
+Route::get('/clientmanagement/{id}', [AdminClientManagement::class, 'show'])->name('admin.clientmanagement.show');
+
+Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement.index');

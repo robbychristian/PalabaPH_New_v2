@@ -12,7 +12,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>PalabaPH @yield('title')</title>
 
 
     <!-- Custom fonts for this template-->
@@ -29,6 +29,12 @@
 
     <!-- Core plugin JavaScript-->
     <script src={{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}></script>
+
+    <!-- Data tables -->
+    <!-- Page level plugins -->
+    <script src="{{ asset('admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
 
 </head>
 
