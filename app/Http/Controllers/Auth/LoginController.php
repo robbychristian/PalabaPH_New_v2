@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +39,47 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->username() => 'required',
+            'password' => 'required',
+            // new rules here
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        $valid = DB::table('users')->select('email_verified_at')->where('email', $request->email)->first();
+        if ($valid->email_verified_at == '') {
+            return redirect('/login')->with("Error", "Your Email is not yet verified!");
+        } else {
+            if ($this->guard()->validate($this->credentials($request))) {
+                if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                    return redirect('/home');
+                } else {
+                    $this->incrementLoginAttempts($request);
+                    return response()->json([
+                        'error' => 'This account is not activated.'
+                    ], 401);
+                }
+            } else {
+                // dd('ok');
+                $this->incrementLoginAttempts($request);
+                return response()->json([
+                    'error' => 'Credentials do not match our database.'
+                ], 401);
+            }
+        }
     }
 }

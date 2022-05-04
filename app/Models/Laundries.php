@@ -11,12 +11,14 @@ class Laundries extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
+        'address_id',
         'name',
         'landline',
-        'address',
         'phone',
         'valid_id',
         'bir_permit',
+        'dti_permit',
         'brgy_permit',
         'is_approved',
         'status'

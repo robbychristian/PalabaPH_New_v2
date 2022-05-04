@@ -16,12 +16,13 @@ class CreateLaundriesTable extends Migration
         Schema::create('laundries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('address_id');
             $table->string('name');
             $table->string('landline');
-            $table->string('address');
             $table->string('phone');
             $table->string('valid_id');
             $table->string('bir_permit');
+            $table->string('dti_permit');
             $table->string('brgy_permit');
             $table->boolean('is_approved');
             $table->string('status');

@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Laundries;
+use App\Models\LaundryAddress;
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,15 +41,24 @@ class DatabaseSeeder extends Seeder
 
         Laundries::create([
             'user_id' => '2',
+            'address_id' => '1',
             'name' => 'Labadaba',
             'landline' => '31234567',
-            'address' => 'Valenzuela City',
             'phone' => '09123456789',
             'valid_id' => 'id.jpg',
             'bir_permit' => 'bir.jpg',
+            'dti_permit' => 'dti.jpg',
             'brgy_permit' => 'brgy.jpg',
             'is_approved' => false,
             'status' => 'Pending',
+        ]);
+
+        LaundryAddress::create([
+            'laundry_id' => '1',
+            'street' => 'St Street',
+            'barangay' => 'brgy Barangay',
+            'city' => 'Valenzuela City',
+            'region' => 'NCR',
         ]);
     }
 }
