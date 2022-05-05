@@ -37,9 +37,7 @@ class ClientManagementController extends Controller
                 })
 
                 ->addColumn('status', function ($row) {
-                    if ($row->status == 'Not yet approved') {
-                        return '<span class="badge badge-danger">Not yet approved</span>';
-                    } else if ($row->status == 'Pending') {
+                    if ($row->is_approved == 0) {
                         return '<span class="badge badge-warning">Pending</span>';
                     } else {
                         return '<span class="badge badge-success">Approved</span>';
