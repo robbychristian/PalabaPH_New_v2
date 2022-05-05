@@ -17,6 +17,7 @@ class CreateLaundryAddressesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('laundry_id');
             $table->string('street');
+            $table->string('state');
             $table->string('barangay');
             $table->string('city');
             $table->string('region');

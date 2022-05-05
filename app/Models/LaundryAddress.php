@@ -12,6 +12,7 @@ class LaundryAddress extends Model
     protected $fillable = [
         'laundry_id',
         'street',
+        'state',
         'barangay',
         'city',
         'region',

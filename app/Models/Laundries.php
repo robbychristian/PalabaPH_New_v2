@@ -14,14 +14,14 @@ class Laundries extends Model
         'user_id',
         'address_id',
         'name',
+        'type_of_laundry',
         'landline',
         'phone',
         'valid_id',
         'bir_permit',
+        'business_permit',
         'dti_permit',
-        'brgy_permit',
         'is_approved',
-        'status'
     ];
 
     public function user()
