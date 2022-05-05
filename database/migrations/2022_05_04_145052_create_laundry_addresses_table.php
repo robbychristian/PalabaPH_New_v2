@@ -22,6 +22,7 @@ class CreateLaundryAddressesTable extends Migration
             $table->string('city');
             $table->string('region');
             $table->timestamps();
+            $table->foreign('laundry_id')->references('id')->on('laundries')->onDelete('cascade');
         });
     }
 

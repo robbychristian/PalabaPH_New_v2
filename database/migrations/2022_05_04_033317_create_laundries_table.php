@@ -16,7 +16,6 @@ class CreateLaundriesTable extends Migration
         Schema::create('laundries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('address_id')->nullable();
             $table->string('name');
             $table->string('landline');
             $table->string('type_of_laundry');
@@ -27,6 +26,7 @@ class CreateLaundriesTable extends Migration
             $table->string('dti_permit')->nullable();
             $table->boolean('is_approved')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

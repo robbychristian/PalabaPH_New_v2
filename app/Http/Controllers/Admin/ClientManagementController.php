@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class ClientManagementController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request)
     {
 
@@ -63,5 +67,21 @@ class ClientManagementController extends Controller
         return view('features.clientmanagementview', [
             'laundries' => $laundries
         ]);
+    }
+
+    public function accept(Request $request)
+    {
+        $laundry = DB::table('laundries')
+            ->where('id', $request->id)
+            ->update(['is_approved' => 1]);
+        return redirect('http://127.0.0.1:8000/clientmanagement');
+    }
+
+    public function decline(Request $request)
+    {
+        $laundry = DB::table('laundries')
+            ->where('id', $request->id)
+            ->delete();
+        return redirect('http://127.0.0.1:8000/clientmanagement');
     }
 }

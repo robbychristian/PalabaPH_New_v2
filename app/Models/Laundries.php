@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\LaundryAddress;
 
 class Laundries extends Model
 {
@@ -12,7 +13,6 @@ class Laundries extends Model
 
     protected $fillable = [
         'user_id',
-        'address_id',
         'name',
         'type_of_laundry',
         'landline',
@@ -24,8 +24,8 @@ class Laundries extends Model
         'is_approved',
     ];
 
-    public function user()
+    public function laundryAddress()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(LaundryAddress::class, 'laundry_id', 'id');
     }
 }

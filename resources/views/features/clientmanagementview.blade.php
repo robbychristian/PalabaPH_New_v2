@@ -23,11 +23,18 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-end">
-                <div class="registration-actions">
+                <div class="registration-actions d-flex flex-row">
 
-
-                    <button class="btn btn-sm btn-success">Approve</button>
-                    <button class="btn btn-sm btn-danger">Deny</button>
+                    <form action="/clientmanagement/{{ $laundries[0]->id }}/accept" method="POST">
+                        @csrf
+                        @method('post')
+                        <button class="btn btn-sm btn-success mr-3">Approve</button>
+                    </form>
+                    <form action="/clientmanagement/{{ $laundries[0]->id }}/decline" method="POST">
+                        @csrf
+                        @method("post")
+                        <button class="btn btn-sm btn-danger">Deny</button>
+                    </form>
                 </div>
             </div>
             <!-- Card Body -->
