@@ -3,6 +3,9 @@
 use App\Http\Controllers\Admin\ClientManagementController as AdminClientManagement;
 use App\Http\Controllers\Admin\UserManagementController;
 
+use App\Http\Controllers\Client\ManageStore;
+use App\Http\Controllers\Client\ManageService;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +29,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/clientmanagement', [AdminClientManagement::class, 'index'])->name('admin.clientmanagement.index');
 Route::get('/clientmanagement/{id}', [AdminClientManagement::class, 'show'])->name('admin.clientmanagement.show');
-Route::post('//clientmanagement/{id}/accept', [AdminClientManagement::class, 'accept'])->name('admin.clientmanagement.accept');
-Route::post('//clientmanagement/{id}/decline', [AdminClientManagement::class, 'decline'])->name('admin.clientmanagement.decline');
+Route::post('/clientmanagement/{id}/accept', [AdminClientManagement::class, 'accept'])->name('admin.clientmanagement.accept');
+Route::post('/clientmanagement/{id}/decline', [AdminClientManagement::class, 'decline'])->name('admin.clientmanagement.decline');
+
+Route::get('/managestore', [ManageStore::class, 'index'])->name('client.managestore');
+Route::post('/storelaundry', [ManageStore::class, 'store'])->name('client.storelaundry');
+
+Route::get('/manageservices', [ManageService::class, 'index'])->name('client.manageservices');
 
 //Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement.index');

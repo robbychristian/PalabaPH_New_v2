@@ -14,5 +14,8 @@
             @include('features.dashboard')
         @endif
 
+        @if (Auth::user()->user_role == 2)
+            @include('features.Client.managemodule')
+        @endif
     </div>
 @endsection

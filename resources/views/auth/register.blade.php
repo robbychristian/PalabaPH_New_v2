@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="w-full flex flex-col items-center justify-center bg-sky-100 bg-sky-300 p-5">
+    <div class="w-full flex flex-col items-center justify-center bg-sky-300 p-5">
         <div class="flex flex-col items-center p-4 bg-white" style="border-radius: 20px">
             <h1 class="h1 fw-bold mb-3 text-uppercase">Client Registration</h1>
 
@@ -62,10 +62,6 @@
                         @enderror
                     </div>
                 </div>
-                <!-------------- End of Laundry Owner Information------------->
-
-                <!--------------Laundry Shop Account------------->
-                <h1 class="h4 p-2 text-center mt-3 fw-bold">Laundry Shop Account</h1>
                 <div class="row px-3">
                     <div class="col-md-12 mb-3">
                         <label for="" class="fw-bold">Email</label>
@@ -95,10 +91,56 @@
                         @enderror
                     </div>
                 </div>
-                <!-------------- End of Laundry Shop Account------------->
+                <!-------------- End of Laundry Owner Information------------->
 
                 <!--------------Laundry Owner's Address------------->
-                <h1 class="h4 p-2 text-center mt-3 fw-bold">Laundry Owner's Address</h1>
+                <h1 class="h4 p-2 text-center mt-3 fw-bold">Laundry Shop's Information</h1>
+                <div class="row px-3">
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="fw-bold">Laundry Shop Name</label>
+                        <input value="{{ old('laundryName') }}" type="text" name="laundryName"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
+                        @error('laundryName')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="fw-bold">Type of Laundry Shop</label>
+                        <select value="{{ old('typeLaundry') }}" name="typeLaundry"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option value="Full Service">Full Service</option>
+                            <option value="Self Service">Self Service</option>
+                            <option value="Hybrid Service">Hybrid Service</option>
+                        </select>
+                        @error('typeLaundry')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="" class="fw-bold">Description of Laundry Shop</label>
+                        <textarea rows="4" name="description" value="{{ old('description') }}"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"></textarea>
+                        @error('description')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="fw-bold">Opening Time</label>
+                        <input type="time" name="openingtime"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        @error('openingtime')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="fw-bold">Closing Time</label>
+                        <input type="time" name="closingtime"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        @error('closingtime')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                </div>
                 <div class="row px-3">
                     <div class="col-md-4 mb-3">
                         <label for="" class="fw-bold">Region</label>
@@ -136,7 +178,7 @@
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="" class="fw-bold">House No.</label>
+                        <label for="" class="fw-bold">House No. / Street</label>
                         <input value="{{ old('houseNo') }}" type="text" name="houseNo"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('houseNo')
@@ -147,25 +189,6 @@
                 <!--------------End of Laundry Owner's Address------------->
 
                 <!--------------Laundry Shop Information------------->
-                <h1 class="h4 p-2 text-center mt-3 fw-bold">Laundry Shop Information</h1>
-                <div class="row px-3">
-                    <div class="col-md-6 mb-3">
-                        <label for="" class="fw-bold">Laundry Shop Name</label>
-                        <input value="{{ old('laundryName') }}" type="text" name="laundryName"
-                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                        @error('laundryName')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="" class="fw-bold">Type of Laundry Shop</label>
-                        <input value="{{ old('typeLaundry') }}" type="text" name="typeLaundry"
-                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                        @error('typeLaundry')
-                            {{ $message }}
-                        @enderror
-                    </div>
-                </div>
 
                 <!--------------End of Laundry Shop Information------------->
 

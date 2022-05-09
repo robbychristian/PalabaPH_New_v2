@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Laundries;
 use App\Models\LaundryAddress;
+use App\Models\LaundryInfo;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -70,6 +71,9 @@ class RegisterController extends Controller
             'houseNo' => ['required', 'string', 'max:255'],
             'laundryName' => ['required', 'string', 'max:255'],
             'typeLaundry' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'openingtime' => ['required'],
+            'closingtime' => ['required'],
             'bir' => 'mimes:jpeg,png,jpg',
             'business' => 'mimes:jpeg,png,jpg',
             'dti' => 'mimes:jpeg,png,jpg',
@@ -116,6 +120,13 @@ class RegisterController extends Controller
             'barangay' => $data['barangay'],
             'city' => $data['city'],
             'region' => $data['region'],
+        ]);
+
+        $laundryInfo = LaundryInfo::create([
+            'laundry_id' => $laundry->id,
+            'description' => $data['description'],
+            'opening_time' => $data['openingtime'],
+            'closing_time' => $data['closingtime'],
         ]);
 
         if (request()->hasFile('bir')) {
