@@ -27,7 +27,7 @@
             </div>
             <div class="card-body d-flex flex-column justify-content-center align-items-center">
                 <div class="mb-3">Manage your store in this module.</div>
-                <button class="btn btn-primary w-50">Manage</button>
+                <a href="{{ route('client.manageinventory') }}" class="btn btn-primary w-50">Manage</a>
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-7 col-lg-5 d-flex justify-content-center card mx-2 my-3">

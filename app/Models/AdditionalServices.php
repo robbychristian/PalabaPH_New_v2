@@ -13,5 +13,6 @@ class AdditionalServices extends Model
         'laundry_id',
         'name',
         'price',
+        'image_service'
     ];
 }

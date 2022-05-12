@@ -18,6 +18,7 @@ class CreateAdditionalProductsTable extends Migration
             $table->unsignedBigInteger('laundry_id');
             $table->string('name');
             $table->string('price');
+            $table->string('image_product');
             $table->timestamps();
         });
     }

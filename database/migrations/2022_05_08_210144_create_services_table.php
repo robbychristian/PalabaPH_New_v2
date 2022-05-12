@@ -22,7 +22,7 @@ class CreateServicesTable extends Migration
             $table->boolean('reservations')->nullable();
             $table->boolean('cash')->nullable();
             $table->boolean('cashless')->nullable();
-            $table->boolean('gcash_qr_code')->nullable();
+            $table->string('gcash_qr_code')->nullable();
             $table->boolean('is_published');
             $table->timestamps();
         });

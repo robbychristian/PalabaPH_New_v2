@@ -50,12 +50,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="">
-                            <div class="form-group mb-3">
-                                <label for=""> <strong> Image </strong></label>
-                                <br>
-                                <input type="file" name="imgMain" id="imgMain">
-                            </div>
+                        <form action="/addservice" method="POST" id="addservice" enctype="multipart/form-data">
+                            @csrf
+                            @method("POST")
                             <div class="form-group mb-3">
                                 <label for=""> <strong> Service </strong></label>
                                 <input type="text" name="service" id="service" class="form-control">
@@ -69,13 +66,18 @@
                                     <label for=""> <strong> Price </strong></label>
                                     <input type="text" name="priceMain" id="priceMain" class="form-control">
                                 </div>
+                                <div class="d-none">
+                                    <label for=""> <strong> laundry ID </strong></label>
+                                    <input type="text" name="laundryId" class="form-control"
+                                        value="{{ $laundries[0]->id }}">
+                                </div>
                             </div>
 
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add Service</button>
+                        <button type="button" class="btn btn-primary" id="submitService">Add Service</button>
                     </div>
                 </div>
             </div>
@@ -122,7 +124,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="">
+                        <form action="/addadditionalservice" method="POST" id="additionalService"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method("POST")
                             <div class="form-group mb-3">
                                 <label for=""> <strong> Image </strong></label>
                                 <br>
@@ -137,13 +142,18 @@
                                     <label for=""> <strong> Price </strong></label>
                                     <input type="text" name="priceService" id="priceService" class="form-control">
                                 </div>
+                                <div class="d-none">
+                                    <label for=""> <strong> laundry ID </strong></label>
+                                    <input type="text" name="laundryId" class="form-control"
+                                        value="{{ $laundries[0]->id }}">
+                                </div>
                             </div>
 
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Add Service</button>
+                        <button type="button" class="btn btn-success" id="additionalServices">Add Service</button>
                     </div>
                 </div>
             </div>
@@ -190,7 +200,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="">
+                        <form action="/addadditionalproduct" method="POST" id="additionalProduct"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
                             <div class="form-group mb-3">
                                 <label for=""> <strong> Image </strong></label>
                                 <br>
@@ -207,12 +220,17 @@
                                     <input type="text" name="priceProducts" id="priceProducts" class="form-control">
                                 </div>
                             </div>
+                            <div class="d-none">
+                                <label for=""> <strong> laundry ID </strong></label>
+                                <input type="text" name="laundryId" class="form-control"
+                                    value="{{ $laundries[0]->id }}">
+                            </div>
 
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-info">Add Service</button>
+                        <button type="button" id="additionalProducts" class="btn btn-info">Add Service</button>
                     </div>
                 </div>
             </div>
@@ -221,38 +239,40 @@
 
     </div>
 
+    <script src="{{ asset('js/servicemanagement.js') }}"></script>
+
     <!--
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            var table = $('.data-table').DataTable({
-                                processing: true,
-                                serverSide: true,
-                                ajax: "",
-                                columns: [{
-                                        data: 'id',
-                                        name: 'id'
-                                    },
-                                    {
-                                        data: 'laundry_owner',
-                                        name: 'laundry_owner'
-                                    },
+                                                            <script type="text/javascript">
+                                                                $(document).ready(function() {
+                                                                    var table = $('.data-table').DataTable({
+                                                                        processing: true,
+                                                                        serverSide: true,
+                                                                        ajax: "",
+                                                                        columns: [{
+                                                                                data: 'id',
+                                                                                name: 'id'
+                                                                            },
+                                                                            {
+                                                                                data: 'laundry_owner',
+                                                                                name: 'laundry_owner'
+                                                                            },
 
-                                    {
-                                        data: 'name',
-                                        name: 'name'
-                                    },
+                                                                            {
+                                                                                data: 'name',
+                                                                                name: 'name'
+                                                                            },
 
-                                    {
-                                        data: 'status',
-                                        name: 'status',
-                                        orderable: false,
-                                        searchable: false
-                                    },
-                                ],
+                                                                            {
+                                                                                data: 'status',
+                                                                                name: 'status',
+                                                                                orderable: false,
+                                                                                searchable: false
+                                                                            },
+                                                                        ],
 
-                            });
+                                                                    });
 
 
-                        });
-                    </script> -->
+                                                                });
+                                                            </script> -->
 @endsection

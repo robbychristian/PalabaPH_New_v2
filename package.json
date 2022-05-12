@@ -25,6 +25,7 @@
     "dependencies": {
         "moment": "^2.29.3",
         "moments": "^0.0.2",
-        "select-philippines-address": "^1.0.5"
+        "select-philippines-address": "^1.0.5",
+        "sweetalert": "^2.1.2"
     }
 }

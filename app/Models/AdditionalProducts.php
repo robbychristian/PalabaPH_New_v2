@@ -13,5 +13,6 @@ class AdditionalProducts extends Model
         'laundry_id',
         'name',
         'price',
+        'image_product'
     ];
 }

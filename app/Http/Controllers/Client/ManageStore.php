@@ -74,6 +74,7 @@ class ManageStore extends Controller
             'cash' => $cash,
             'cashless' => $cl,
             'gcash_qr_code' => $request->gcash,
+            'is_published' => true
         ]);
         return $services;
     }

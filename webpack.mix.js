@@ -16,4 +16,6 @@ mix.js("resources/js/app.js", "public/js")
     .postCss("resources/css/app.css", "public/css", [require("tailwindcss")])
     .js("resources/js/loc.js", "public/js")
     .js("resources/js/time.js", "public/js")
+    .js("resources/js/servicemanagement.js", "public/js")
+    .js("resources/js/inventorymanagement.js", "public/js")
     .sourceMaps();

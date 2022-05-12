@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/loc.js": "/js/loc.js",
     "/js/time.js": "/js/time.js",
+    "/js/servicemanagement.js": "/js/servicemanagement.js",
+    "/js/inventorymanagement.js": "/js/inventorymanagement.js",
     "/css/app.css": "/css/app.css"
 }

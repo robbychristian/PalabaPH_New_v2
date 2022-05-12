@@ -18,5 +18,6 @@ class Services extends Model
         'cash',
         'cashless',
         'gcash_qr_code',
+        'is_published'
     ];
 }
