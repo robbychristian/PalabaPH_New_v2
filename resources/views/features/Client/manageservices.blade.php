@@ -3,6 +3,11 @@
 @section('content')
     <div class="container-fluid">
 
+        <div class="back mb-4">
+            <a href="{{ url('/home') }}" class="text-gray-900" style="text-decoration: none;">
+                <i class="fas fa-chevron-left"></i> Back</a>
+        </div>
+
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Service Management</h1>
@@ -12,7 +17,8 @@
         <!--- MAIN SERVICES TABLE -->
         <div class="card shadow-card mb-3 mt-3">
             <div class="card-body">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div style="background-color: transparent;"
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h4 class="m-0 font-weight-bold text-primary">Main Services</h4>
                     <!-- BUTTON FOR MODAL -->
                     <button class="btn btn-primary" data-toggle="modal" data-target="#mainServicesModal">
@@ -20,7 +26,7 @@
                     </button>
                 </div>
                 <div class="table-responsive">
-                    <table class="table data-table" id="dataTable" width="100%" cellspacing="0"
+                    <table class="table main-serv-table" id="dataTable" width="100%" cellspacing="0"
                         style="color:#464646 !important">
                         <thead>
                             <tr>
@@ -86,7 +92,8 @@
         <!--- ADDITIONAL SERVICES TABLE -->
         <div class="card shadow-card mb-3 mt-3">
             <div class="card-body">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div style="background-color: transparent;"
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h4 class="m-0 font-weight-bold text-success">Additional Services</h4>
                     <!-- BUTTON FOR MODAL -->
                     <button class="btn btn-success" data-toggle="modal" data-target="#addServicesModal">
@@ -94,7 +101,7 @@
                     </button>
                 </div>
                 <div class="table-responsive">
-                    <table class="table data-table" id="dataTable" width="100%" cellspacing="0"
+                    <table class="table add-serv-table" id="dataTable" width="100%" cellspacing="0"
                         style="color:#464646 !important">
                         <thead>
                             <tr>
@@ -162,7 +169,8 @@
         <!--- ADDITIONAL PRODUCTS TABLE -->
         <div class="card shadow-card mb-3 mt-3">
             <div class="card-body">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div style="background-color: transparent;"
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h4 class="m-0 font-weight-bold text-info">Additional Products</h4>
                     <!-- BUTTON FOR MODAL -->
                     <button class="btn btn-info" data-toggle="modal" data-target="#addProductsModal">
@@ -170,7 +178,7 @@
                     </button>
                 </div>
                 <div class="table-responsive">
-                    <table class="table data-table" id="dataTable" width="100%" cellspacing="0"
+                    <table class="table add-prod-table" id="dataTable" width="100%" cellspacing="0"
                         style="color:#464646 !important">
                         <thead>
                             <tr>
@@ -241,38 +249,90 @@
 
     <script src="{{ asset('js/servicemanagement.js') }}"></script>
 
-    <!--
-                                                            <script type="text/javascript">
-                                                                $(document).ready(function() {
-                                                                    var table = $('.data-table').DataTable({
-                                                                        processing: true,
-                                                                        serverSide: true,
-                                                                        ajax: "",
-                                                                        columns: [{
-                                                                                data: 'id',
-                                                                                name: 'id'
-                                                                            },
-                                                                            {
-                                                                                data: 'laundry_owner',
-                                                                                name: 'laundry_owner'
-                                                                            },
 
-                                                                            {
-                                                                                data: 'name',
-                                                                                name: 'name'
-                                                                            },
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var table = $('.main-serv-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('client.manageservices') }}",
+                columns: [{
+                        data: 'main_serv_name',
+                        name: 'main_serv_name'
+                    },
 
-                                                                            {
-                                                                                data: 'status',
-                                                                                name: 'status',
-                                                                                orderable: false,
-                                                                                searchable: false
-                                                                            },
-                                                                        ],
+                    {
+                        data: 'main_serv_max_kg',
+                        name: 'main_serv_max_kg'
+                    },
+                    {
+                        data: 'main_serv_price',
+                        name: 'main_serv_price'
+                    },
 
-                                                                    });
+                    {
+                        data: 'main_serv_action',
+                        name: 'main_serv_action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+
+            });
+        });
+
+        $(document).ready(function() {
+            var table = $('.add-serv-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('client.addservice.table') }}",
+                columns: [{
+                        data: 'add_serv_name',
+                        name: 'add_serv_name'
+                    },
+                    {
+                        data: 'add_serv_price',
+                        name: 'add_serv_price'
+                    },
+
+                    {
+                        data: 'add_serv_action',
+                        name: 'add_serv_action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+
+            });
 
 
-                                                                });
-                                                            </script> -->
+        });
+
+        $(document).ready(function() {
+            var table = $('.add-prod-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('client.addproduct.table') }}",
+                columns: [{
+                        data: 'add_prod_name',
+                        name: 'add_prod_name'
+                    },
+                    {
+                        data: 'add_prod_price',
+                        name: 'add_prod_price'
+                    },
+
+                    {
+                        data: 'add_prod_action',
+                        name: 'add_prod_action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+
+            });
+
+
+        });
+    </script>
 @endsection

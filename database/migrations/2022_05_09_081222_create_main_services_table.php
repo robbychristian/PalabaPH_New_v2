@@ -16,10 +16,11 @@ class CreateMainServicesTable extends Migration
         Schema::create('main_services', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('laundry_id');
-            $table->string('name');
-            $table->string('max_kg');
-            $table->string('price');
+            $table->string('main_serv_name');
+            $table->string('main_serv_max_kg');
+            $table->string('main_serv_price');
             $table->timestamps();
+            $table->foreign('laundry_id')->references('id')->on('laundries')->onDelete('cascade');
         });
     }
 

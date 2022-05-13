@@ -37,6 +37,8 @@ Route::get('/managestore', [ManageStore::class, 'index'])->name('client.managest
 Route::post('/storelaundry', [ManageStore::class, 'store'])->name('client.storelaundry');
 
 Route::get('/manageservices', [ManageService::class, 'index'])->name('client.manageservices');
+Route::get('/addservtable', [ManageService::class, 'addServTable'])->name('client.addservice.table'); //used just for retrieving data on datatables
+Route::get('/addprodtable', [ManageService::class, 'addProdTable'])->name('client.addproduct.table'); //used just for retrieving data on datatables
 Route::post('/addservice', [ManageService::class, 'addService'])->name('client.addservice');
 Route::post('/addadditionalservice', [ManageService::class, 'addAdditionalService'])->name('client.addadditionalservice');
 Route::post('/addadditionalproduct', [ManageService::class, 'addAdditionalProduct'])->name('client.addadditionalproduct');

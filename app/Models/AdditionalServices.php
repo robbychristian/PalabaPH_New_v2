@@ -11,8 +11,8 @@ class AdditionalServices extends Model
 
     protected $fillable = [
         'laundry_id',
-        'name',
-        'price',
-        'image_service'
+        'add_serv_name',
+        'add_serv_price',
+        'add_serv_image_service'
     ];
 }

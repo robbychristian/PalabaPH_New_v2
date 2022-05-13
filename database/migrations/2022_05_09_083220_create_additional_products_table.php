@@ -16,10 +16,11 @@ class CreateAdditionalProductsTable extends Migration
         Schema::create('additional_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('laundry_id');
-            $table->string('name');
-            $table->string('price');
-            $table->string('image_product');
+            $table->string('add_prod_name');
+            $table->string('add_prod_price');
+            $table->string('add_prod_image_product');
             $table->timestamps();
+            $table->foreign('laundry_id')->references('id')->on('laundries')->onDelete('cascade');
         });
     }
 

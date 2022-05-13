@@ -11,8 +11,8 @@ class MainServices extends Model
 
     protected $fillable = [
         'laundry_id',
-        'name',
-        'max_kg',
-        'price',
+        'main_serv_name',
+        'main_serv_max_kg',
+        'main_serv_price',
     ];
 }

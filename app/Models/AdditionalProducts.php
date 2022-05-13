@@ -11,8 +11,8 @@ class AdditionalProducts extends Model
 
     protected $fillable = [
         'laundry_id',
-        'name',
-        'price',
-        'image_product'
+        'add_prod_name',
+        'add_prod_price',
+        'add_prod_image_product'
     ];
 }

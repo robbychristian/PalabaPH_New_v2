@@ -16,10 +16,11 @@ class CreateAdditionalServicesTable extends Migration
         Schema::create('additional_services', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('laundry_id');
-            $table->string('name');
-            $table->string('price');
-            $table->string('image_service');
+            $table->string('add_serv_name');
+            $table->string('add_serv_price');
+            $table->string('add_serv_image_service');
             $table->timestamps();
+            $table->foreign('laundry_id')->references('id')->on('laundries')->onDelete('cascade');
         });
     }
 
