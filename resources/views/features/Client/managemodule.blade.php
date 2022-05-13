@@ -23,10 +23,10 @@
         </div>
         <div class="col-12 col-sm-12 col-md-7 col-lg-5 d-flex justify-content-center card mx-2 my-3">
             <div class="card-header bg-white justify-content-center d-flex font-weight-bold">
-                Store Management
+                Inventory Management
             </div>
             <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                <div class="mb-3">Manage your store in this module.</div>
+                <div class="mb-3">Manage your inventory in this module.</div>
                 <a href="{{ route('client.manageinventory') }}" class="btn btn-primary w-50">Manage</a>
             </div>
         </div>

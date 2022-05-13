@@ -3,7 +3,7 @@
 @if (Auth::user()->user_role == 1)
     @section('title', '| Dashboard')
 @else
-    @section('title', '| ###')
+    @section('title', '| Manage Your Assets')
 @endif
 
 
