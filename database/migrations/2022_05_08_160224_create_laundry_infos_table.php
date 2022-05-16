@@ -17,8 +17,9 @@ class CreateLaundryInfosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('laundry_id');
             $table->string('description');
-            $table->time('opening_time');
-            $table->time('closing_time');
+            $table->string('opening_time');
+            $table->string('closing_time');
+            $table->string('laundry_img')->nullable();
             $table->timestamps();
             $table->foreign('laundry_id')->references('id')->on('laundries')->onDelete('cascade');
         });

@@ -23,6 +23,7 @@ class ManageInventory extends Controller
 
         $inventories = DB::table('inventories')
             ->join('laundries', 'inventories.laundry_id', '=', 'laundries.id')
+            ->select('inventories.*')
             ->where('laundries.user_id', Auth::user()->id)
             ->get();
 
@@ -43,5 +44,13 @@ class ManageInventory extends Controller
         ]);
 
         return redirect('/manageinventory')->with('success', 'Item added in inventory!');
+    }
+
+    public function confirmQuantity(Request $request)
+    {
+        DB::table('inventories')
+            ->where('id', $request->item_id)
+            ->update(['item_quantity' => (int)$request->itemQty]);
+        return redirect('/manageinventory');
     }
 }

@@ -15,6 +15,7 @@ class LaundryInfo extends Model
         'description',
         'opening_time',
         'closing_time',
+        'laundry_img'
     ];
 
     public function laundries()

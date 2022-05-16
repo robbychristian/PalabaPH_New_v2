@@ -8,11 +8,13 @@ use App\Models\User;
 use App\Models\Laundries;
 use App\Models\LaundryAddress;
 use App\Models\LaundryInfo;
+use App\Models\Services;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class RegisterController extends Controller
 {
@@ -125,10 +127,29 @@ class RegisterController extends Controller
         $laundryInfo = LaundryInfo::create([
             'laundry_id' => $laundry->id,
             'description' => $data['description'],
-            'opening_time' => $data['openingtime'],
-            'closing_time' => $data['closingtime'],
+            'opening_time' => Carbon::parse('2018-06-15' . $data['openingtime'], 'UTC'),
+            'closing_time' => Carbon::parse('2018-06-15' . $data['closingtime'], 'UTC'),
+            'laundry_img' => null,
         ]);
 
+        $services = Services::create([
+            'laundry_id' => $laundry->id,
+            'self_service' => false,
+            'full_service' => false,
+            'pick_up' => false,
+            'reservations' => false,
+            'cash' => false,
+            'cashless' => false,
+            'gcash_qr_code' => null,
+            'gcash_qr_code' => false,
+            'is_published' => false,
+        ]);
+
+        if (request()->hasFile('laundry_img')) {
+            $file = request()->file('laundry_img')->getClientOriginalName();
+            request()->file('laundry_img')->storeAs('laundry_img_pics', $client->id . '/' . $file, '');
+            $laundryInfo->update(['laundry_img' => $file]);
+        }
         if (request()->hasFile('bir')) {
             $file = request()->file('bir')->getClientOriginalName();
             request()->file('bir')->storeAs('bir_pics', $client->id . '/' . $file, '');

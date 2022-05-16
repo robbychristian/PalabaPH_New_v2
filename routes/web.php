@@ -45,5 +45,6 @@ Route::post('/addadditionalproduct', [ManageService::class, 'addAdditionalProduc
 
 Route::get('/manageinventory', [ManageInventory::class, 'index'])->name('client.manageinventory');
 Route::post('/additem', [ManageInventory::class, 'addItem'])->name('client.addinventory');
+Route::post('/confirmquantity', [ManageInventory::class, 'confirmQuantity']);
 
 //Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement.index');

@@ -96,68 +96,77 @@
 
                             <tbody>
                                 @foreach ($inventories as $inventory)
-                                    <tr>
-                                        <th>{{ $inventory->item_name }}</th>
-                                        <form action="">
-                                            @csrf
-                                            @method('PUT')
+                                    <form action="/confirmquantity" method="POST" id="{{ $inventory->id }}confirm">
+                                        @csrf
+                                        @method('POST')
+                                        <tr>
+                                            <th>{{ $inventory->item_name }}</th>
                                             <td class="d-flex flex-row justify-content-center align-items-center">
-                                                <button class="btn btn-sm btn-circle btn-success mr-3" type="button"><i
+                                                <button class="btn btn-sm btn-circle btn-success mr-3" type="button"
+                                                    id="{{ $inventory->id }}addQuantity"><i
                                                         class="fas fa-plus"></i></button>
-                                                <input type="text" name="itemQty" id="itemQty" class="form-control w-25"
-                                                    value=" {{ $inventory->item_quantity }}">
-                                                <button class="btn btn-sm btn-circle btn-danger ml-3" type="button"><i
+                                                <input type="text" name="itemQty" id="{{ $inventory->id }}itemQty"
+                                                    class="form-control w-25" value="{{ $inventory->item_quantity }}">
+                                                <input type="text" id="itemThreshold" class="d-none form-control w-25"
+                                                    value="{{ $inventory->item_threshold }}">
+                                                <input type="text" name="item_id" class="d-none form-control w-25"
+                                                    value="{{ $inventory->id }}">
+                                                <button class="btn btn-sm btn-circle btn-danger ml-3"
+                                                    id="{{ $inventory->id }}minusQuantity" type="button"><i
                                                         class="fas fa-minus"></i></button>
                                             </td>
-                                        </form>
-                                        <td>
-                                            <button class="btn btn-sm btn-circle btn-info" data-toggle="modal"
-                                                data-target="#editInventory"><i class="fas fa-pen"></i></button>
-                                            <button class="btn btn-sm btn-circle btn-danger"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                <button class="btn btn-sm btn-circle btn-info" type="button"
+                                                    id="{{ $inventory->id }}confirmQuantity"><i
+                                                        class="fas fa-check"></i></button>
+                                                <button class="btn btn-sm btn-circle btn-danger"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $(`#{{ $inventory->id }}addQuantity`).on("click", function() {
+                                                let item{{ $inventory->id }} = Number($(`#{{ $inventory->id }}itemQty`).val());
+                                                item{{ $inventory->id }} = item{{ $inventory->id }} + 1
+                                                $(`#{{ $inventory->id }}itemQty`).val(item{{ $inventory->id }})
+                                            });
+                                            $(`#{{ $inventory->id }}minusQuantity`).on("click", function() {
+                                                if (Number($(`#{{ $inventory->id }}itemQty`).val()) <= Number(
+                                                        {{ $inventory->item_threshold }})) {
+                                                    swal({
+                                                        icon: 'error',
+                                                        title: "Oops...",
+                                                        text: "You cannot go below the item quantity threshold!",
+                                                        buttons: false,
+                                                    })
+                                                } else {
+                                                    let item{{ $inventory->id }} = Number($(`#{{ $inventory->id }}itemQty`).val());
+                                                    item{{ $inventory->id }} = item{{ $inventory->id }} - 1
+                                                    $(`#{{ $inventory->id }}itemQty`).val(item{{ $inventory->id }})
+                                                }
+                                            });
+                                            $('#{{ $inventory->id }}confirmQuantity').on('click', function() {
+                                                swal({
+                                                    icon: 'warning',
+                                                    title: 'Are you sure you want to confirm quantity?',
+                                                    text: 'The quantity will change based on the adjusted number!',
+                                                    buttons: {
+                                                        cancel: 'Cancel',
+                                                        true: 'OK'
+                                                    }
+                                                }).then(response => {
+                                                    if (response === 'true') {
+                                                        $('#{{ $inventory->id }}confirm').submit();
+                                                    }
+                                                })
+                                            })
+                                        })
+                                    </script>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL FOR EDIT INVENTORY -->
-    <div class="modal fade" id="editInventory" tabindex="-1" aria-labelledby="editInventoryLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editInventoryLabel">Edit Inventory</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">Item Name</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="itemName" id="itemName" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label">Item Quantity</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="itemQty" id="itemQty" class="form-control">
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
