@@ -12,7 +12,7 @@
 
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item {{ Route::is('home') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
@@ -20,14 +20,14 @@
 
 
         <!-- Nav Item - Client Management -->
-        <li class="nav-item">
+        <li class="nav-item {{ Route::is('admin.clientmanagement.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.clientmanagement.index') }}">
                 <i class="fas fa-fw fa-building"></i>
                 <span>Client Management</span></a>
         </li>
 
         <!-- Nav Item - User Management -->
-        <li class="nav-item">
+        <li class="nav-item {{ Route::is() ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>User Management</span></a>
@@ -54,12 +54,18 @@
 
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item {{ Route::is('home') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Manage</span></a>
         </li>
 
+        <!-- Nav Item - Order Management -->
+        <li class="nav-item {{ Route::is('client.manageorder') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('client.manageorder') }}">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Order Management</span></a>
+        </li>
 
         <!-- Nav Item - Client Management -->
         <li class="nav-item">

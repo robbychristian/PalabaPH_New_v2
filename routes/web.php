@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Client\ManageStore;
 use App\Http\Controllers\Client\ManageService;
 use App\Http\Controllers\Client\ManageInventory;
+use App\Http\Controllers\Client\ManageOrder;
 
 use Illuminate\Support\Facades\Route;
 
@@ -46,5 +47,7 @@ Route::post('/addadditionalproduct', [ManageService::class, 'addAdditionalProduc
 Route::get('/manageinventory', [ManageInventory::class, 'index'])->name('client.manageinventory');
 Route::post('/additem', [ManageInventory::class, 'addItem'])->name('client.addinventory');
 Route::post('/confirmquantity', [ManageInventory::class, 'confirmQuantity']);
+
+Route::get('/manageorder', [ManageOrder::class, 'index'])->name('client.manageorder');
 
 //Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement.index');
