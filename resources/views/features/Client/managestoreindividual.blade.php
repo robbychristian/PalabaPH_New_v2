@@ -2,6 +2,70 @@
 
 @section('content')
     <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="">
+                            <div class="text-primary font-weight-bold h5">Machine Management</div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label">Machine Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label">Timer</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                            </div>
+                            <div class="text-primary font-weight-bold h5">Machine Maintenance</div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label">Description</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-sm-4 col-form-label">Set Date:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button class="btn btn-primary" type="submit">Add Machine</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-card mb-3 mt-3">
+                    <div class="card-body">
+                        <div class="text-primary font-weight-bold h5">Machines</div>
+                        <div class="table-responsive">
+                            <table class="table" width="100%" cellspacing="0" style="color:#464646 !important">
+                                <thead>
+                                    <tr>
+                                        <th>Machines</th>
+                                        <th>Machine Maintenance</th>
+                                        <th>Timer</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex justify-content-center font-weight-bold h3" style="color: #000">
             Order Management
         </div>
