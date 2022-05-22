@@ -7,6 +7,7 @@ use App\Http\Controllers\Client\ManageStore;
 use App\Http\Controllers\Client\ManageService;
 use App\Http\Controllers\Client\ManageInventory;
 use App\Http\Controllers\Client\ManageOrder;
+use App\Http\Controllers\Client\ManageMachine;
 
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,10 @@ Route::post('/addadditionalproduct', [ManageService::class, 'addAdditionalProduc
 Route::get('/manageinventory', [ManageInventory::class, 'index'])->name('client.manageinventory');
 Route::post('/additem', [ManageInventory::class, 'addItem'])->name('client.addinventory');
 Route::post('/confirmquantity', [ManageInventory::class, 'confirmQuantity']);
+
+Route::get('/managemachine', [ManageMachine::class, 'index'])->name('client.managemachine');
+Route::get('/managemachine/{id}', [ManageMachine::class, 'individualMachine'])->name('client.individualmachine');
+Route::post('/addmachine', [ManageMachine::class, 'addMachine'])->name('client.addmachine');
 
 Route::get('/manageorder', [ManageOrder::class, 'index'])->name('client.manageorder');
 Route::get('/manageorder/{id}', [ManageOrder::class, 'individualLaundry'])->name('client.manageindividual');

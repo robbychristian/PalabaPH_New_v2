@@ -95,7 +95,6 @@ class ManageStore extends Controller
                     'gcash_qr_code' => null,
                     'is_published' => 1,
                 ]);
-            dd(false);
             return redirect('/managestore');
         }
     }

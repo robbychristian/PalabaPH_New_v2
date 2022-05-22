@@ -78,7 +78,7 @@
                             </div>
                         </div>{{-- END OF STORE INFORMATION --}}
                     </div> {{-- END OF FIRST ROW --}}
-                    <form method="POST" action="{{ route('client.storelaundry') }}">
+                    <form method="POST" action="{{ route('client.storelaundry') }}" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         {{-- SECOND ROW --}}
