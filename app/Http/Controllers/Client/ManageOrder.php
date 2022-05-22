@@ -21,26 +21,6 @@ class ManageOrder extends Controller
             ->join('services', 'services.laundry_id', '=', 'laundries.id')
             ->where('laundries.id', $id)
             ->get();
-        return view('features.Client.manageorder.machines')->with('laundry', $laundry);
-    }
-
-    public function individualServices($id)
-    {
-        $laundry = DB::table('laundries')
-            ->join('services', 'services.laundry_id', '=', 'laundries.id')
-            ->where('laundries.id', $id)
-            ->get();
-
-        return view('features.Client.manageorder.services')->with('laundry', $laundry);
-    }
-
-    public function individualProducts($id)
-    {
-        $laundry = DB::table('laundries')
-            ->join('services', 'services.laundry_id', '=', 'laundries.id')
-            ->where('laundries.id', $id)
-            ->get();
-
-        return view('features.Client.manageorder.products')->with('laundry', $laundry);
+        return view('features.Client.manageorderindividual')->with('laundry', $laundry);
     }
 }
