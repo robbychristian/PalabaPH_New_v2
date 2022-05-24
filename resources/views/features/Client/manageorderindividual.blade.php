@@ -34,41 +34,88 @@
                         aria-labelledby="pills-machine-tab">
 
                         <div class="row row-cols-1 row-cols-md-3">
-                            <div class="col mb-4">
-                                <div class="card h-100 bg-success text-white">
-                                    <div class="card-body ">
-                                        <h2 class="card-title d-flex justify-content-center align-items-center">D1</h2>
-                                        <div class="card-footer text-center" style="background-color: transparent;"><span
-                                                class="badge badge-success">Available</span>
+                            @foreach ($laundry as $info)
+                                @if ($info->status == 0)
+                                    <div class="col mb-4">
+                                        <div class="card h-100 bg-success text-white" id="M{{ $info->id }}">
+                                            <div class="card-body ">
+                                                <h2 class="card-title d-flex justify-content-center align-items-center">
+                                                    {{ $info->machine_name }}
+                                                </h2>
+                                                <div class="card-footer text-center" style="background-color: transparent;">
+                                                    <span class="badge badge-success">Available</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col mb-4">
-                                <div class="card h-100 bg-danger text-white">
-                                    <div class="card-body">
-                                        <h2 class="card-title d-flex justify-content-center align-items-center">D2</h2>
-                                        <div class="card-footer text-center" style="background-color: transparent;"><span
-                                                class="badge badge-danger">Not
-                                                Available</span>
+                                    <script>
+                                        $("#M{{ $info->id }}").on('click', function() {
+                                            $("#receiptTable > tbody:last-child").append(
+                                                '<tr>' +
+                                                '<td>{{ $info->machine_service }}</td>' +
+                                                '<td>{{ $info->price }}</td>' +
+                                                '<td class="d-flex">' +
+                                                '<button class="btn btn-sm btn-circle btn-danger mr-3" id="{{ $info->id }}minusQuantity" type="button"><i class="fas fa-minus"></i></button>' +
+                                                '<input readonly type="text" value="0" class="form-control w-25" id="weight{{ $info->id }}">' +
+                                                '<button class="btn btn-sm btn-circle btn-success ml-3" type="button" id="{{ $info->id }}addQuantity"><i class="fas fa-plus"></i></button></td>' +
+                                                '<td id="total{{ $info->id }}"></td>' +
+                                                '<td>action</td></tr>'
+                                            )
+                                            const currVal = Number($("#numberOfRows").val())
+                                            $("#numberOfRows").val(currVal + 1)
+                                            const numRows = Number($("#numberOfRows").val())
+
+                                            // for (let i = 0; i < numRows; i++) {
+                                            //     console.log($("#weight{{ $info->id }}").val())
+                                            // }
+                                            $("#{{ $info->id }}addQuantity").on('click', function() {
+                                                let currWeight = Number($('#weight{{ $info->id }}').val())
+                                                if (currWeight >= 0 && currWeight < Number({{ $info->max_kg }})) {
+                                                    currWeight = currWeight + 0.5
+                                                    $("#weight{{ $info->id }}").val(currWeight);
+                                                    $("#total{{ $info->id }}").html(Number({{ $info->price }}))
+                                                } else {
+                                                    swal({
+                                                        icon: 'error',
+                                                        title: 'Error!',
+                                                        text: "Cannot exceed past the weight limit!",
+                                                        buttons: false
+                                                    })
+                                                }
+                                            })
+                                            $("#{{ $info->id }}minusQuantity").on('click', function() {
+                                                let currWeight = Number($('#weight{{ $info->id }}').val())
+                                                if (currWeight > 0 && currWeight <= Number({{ $info->max_kg }})) {
+                                                    currWeight = currWeight - 0.5
+                                                    $("#weight{{ $info->id }}").val(currWeight);
+                                                    $("#total{{ $info->id }}").html(Number({{ $info->price }}))
+                                                } else {
+                                                    swal({
+                                                        icon: 'error',
+                                                        title: 'Error!',
+                                                        text: "Cannot exceed past the weight limit!",
+                                                        buttons: false
+                                                    })
+                                                }
+                                            })
+                                        });
+                                    </script>
+                                @else
+                                    <div class="col mb-4">
+                                        <div class="card h-100 bg-danger text-white">
+                                            <div class="card-body">
+                                                <h2 class="card-title d-flex justify-content-center align-items-center">
+                                                    {{ $info->machine_name }}
+                                                </h2>
+                                                <div class="card-footer text-center" style="background-color: transparent;">
+                                                    <span class="badge badge-danger">Not
+                                                        Available</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h2 class="card-title d-flex justify-content-center align-items-center">D1</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h2 class="card-title d-flex justify-content-center align-items-center">D1</h2>
-                                    </div>
-                                </div>
-                            </div>
+                                @endif
+                            @endforeach
                         </div>
 
                     </div>
@@ -93,7 +140,7 @@
                     </select>
 
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="receiptTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Item</th>
@@ -104,23 +151,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {{-- <tr>
                                     <td>Jacob</td>
                                     <td>Jacob</td>
                                     <td>Thornton</td>
                                     <td>@fat</td>
                                     <td>@fat</td>
-                                </tr>
-
-                                <tr>
+                                </tr> --}}
+                                {{-- <tr>
                                     <th scope="row">Grand Total</th>
                                     <td></td>
                                     <td></td>
                                     <td colspan="4">30.00</td>
-                                </tr>
-
+                                </tr> --}}
                             </tbody>
                         </table>
+                        {{-- INPUT FOR COUTING NUMBER OF ROWS --}}
+                        <input type="text" id="numberOfRows" class="d-none">
+
                     </div>
 
                     <button class="btn btn-primary d-block mr-auto ml-auto" type="submit">Cash Payment</button>
@@ -136,3 +184,18 @@
 
     </div>
 @endsection
+
+{{-- <div class="col mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title d-flex justify-content-center align-items-center">D1</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h2 class="card-title d-flex justify-content-center align-items-center">D1</h2>
+            </div>
+        </div>
+    </div> --}}

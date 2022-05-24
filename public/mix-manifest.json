@@ -4,5 +4,6 @@
     "/js/time.js": "/js/time.js",
     "/js/servicemanagement.js": "/js/servicemanagement.js",
     "/js/inventorymanagement.js": "/js/inventorymanagement.js",
+    "/js/swal.js": "/js/swal.js",
     "/css/app.css": "/css/app.css"
 }

@@ -14,6 +14,8 @@
 
     <title>PalabaPH @yield('title')</title>
 
+    {{-- SWAL WITH AXIOS LIB --}}
+    <script src="{{ asset('js/swal.js') }}"></script>
 
     <!-- Custom fonts for this template-->
     <link href={{ asset('admin/vendor/fontawesome-free/css/all.min.css') }} rel="stylesheet" type="text/css">

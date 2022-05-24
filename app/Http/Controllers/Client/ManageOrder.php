@@ -18,8 +18,9 @@ class ManageOrder extends Controller
     public function individualLaundry($id)
     {
         $laundry = DB::table('laundries')
-            ->join('services', 'services.laundry_id', '=', 'laundries.id')
+            ->join('machines', 'machines.laundry_id', '=', 'laundries.id')
             ->where('laundries.id', $id)
+            ->orderBy('machine_name', 'asc')
             ->get();
         return view('features.Client.manageorderindividual')->with('laundry', $laundry);
     }

@@ -102,18 +102,18 @@
                                         <tr>
                                             <th>{{ $inventory->item_name }}</th>
                                             <td class="d-flex flex-row justify-content-center align-items-center">
-                                                <button class="btn btn-sm btn-circle btn-success mr-3" type="button"
-                                                    id="{{ $inventory->id }}addQuantity"><i
-                                                        class="fas fa-plus"></i></button>
+                                                <button class="btn btn-sm btn-circle btn-danger mr-3"
+                                                    id="{{ $inventory->id }}minusQuantity" type="button"><i
+                                                        class="fas fa-minus"></i></button>
                                                 <input type="text" name="itemQty" id="{{ $inventory->id }}itemQty"
-                                                    class="form-control w-25" value="{{ $inventory->item_quantity }}">
+                                                    class="form-control" value="{{ $inventory->item_quantity }}">
                                                 <input type="text" id="itemThreshold" class="d-none form-control w-25"
                                                     value="{{ $inventory->item_threshold }}">
                                                 <input type="text" name="item_id" class="d-none form-control w-25"
                                                     value="{{ $inventory->id }}">
-                                                <button class="btn btn-sm btn-circle btn-danger ml-3"
-                                                    id="{{ $inventory->id }}minusQuantity" type="button"><i
-                                                        class="fas fa-minus"></i></button>
+                                                <button class="btn btn-sm btn-circle btn-success ml-3" type="button"
+                                                    id="{{ $inventory->id }}addQuantity"><i
+                                                        class="fas fa-plus"></i></button>
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-circle btn-info" type="button"
