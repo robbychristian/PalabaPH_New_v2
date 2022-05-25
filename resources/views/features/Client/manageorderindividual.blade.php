@@ -30,6 +30,7 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
+                    {{-- MACHINES TAB --}}
                     <div class="tab-pane fade show active" id="pills-machine" role="tabpanel"
                         aria-labelledby="pills-machine-tab">
 
@@ -117,14 +118,69 @@
                                 @endif
                             @endforeach
                         </div>
+                    </div> {{-- END OF MACHINES TAB --}}
 
-                    </div>
+                    {{-- SERVICES TAB --}}
                     <div class="tab-pane fade" id="pills-services" role="tabpanel" aria-labelledby="pills-services-tab">
-                        Services
-                    </div>
+                        <div class="row row-cols-1 row-cols-md-3">
+                            <div class="col mb-4">
+                                <div class="card h-100 bg-success text-white">
+                                    <div class="card-body ">
+                                        <h2 class="card-title d-flex justify-content-center align-items-center">
+                                            S1
+                                        </h2>
+                                        <div class="card-footer text-center" style="background-color: transparent;">
+                                            <span class="badge badge-success">Available</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col mb-4">
+                                <div class="card h-100 bg-danger text-white">
+                                    <div class="card-body ">
+                                        <h2 class="card-title d-flex justify-content-center align-items-center">
+                                            S1
+                                        </h2>
+                                        <div class="card-footer text-center" style="background-color: transparent;">
+                                            <span class="badge badge-danger">Not Available</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>{{-- END OF SERVICES TAB --}}
+
+                    {{-- PRODUCTS TAB --}}
                     <div class="tab-pane fade" id="pills-products" role="tabpanel" aria-labelledby="pills-products-tab">
-                        Products
-                    </div>
+                        <div class="row row-cols-1 row-cols-md-3">
+                            <div class="col mb-4">
+                                <div class="card h-100 bg-success text-white">
+                                    <div class="card-body ">
+                                        <h2 class="card-title d-flex justify-content-center align-items-center">
+                                            P1
+                                        </h2>
+                                        <div class="card-footer text-center" style="background-color: transparent;">
+                                            <span class="badge badge-success">Available</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col mb-4">
+                                <div class="card h-100 bg-danger text-white">
+                                    <div class="card-body ">
+                                        <h2 class="card-title d-flex justify-content-center align-items-center">
+                                            P1
+                                        </h2>
+                                        <div class="card-footer text-center" style="background-color: transparent;">
+                                            <span class="badge badge-danger">Not Available</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> {{-- END OF PRODUCTS TAB --}}
                 </div>
 
             </div>
