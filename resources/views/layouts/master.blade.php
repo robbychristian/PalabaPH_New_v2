@@ -9,13 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>PalabaPH @yield('title')</title>
 
     {{-- SWAL WITH AXIOS LIB --}}
     <script src="{{ asset('js/swal.js') }}"></script>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    {{-- JQUERY --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
     <!-- Custom fonts for this template-->
     <link href={{ asset('admin/vendor/fontawesome-free/css/all.min.css') }} rel="stylesheet" type="text/css">
@@ -38,6 +41,8 @@
     <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body id="page-top">

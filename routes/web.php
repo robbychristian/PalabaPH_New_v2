@@ -55,5 +55,6 @@ Route::post('/addmachine', [ManageMachine::class, 'addMachine'])->name('client.a
 
 Route::get('/manageorder', [ManageOrder::class, 'index'])->name('client.manageorder');
 Route::get('/manageorder/{id}', [ManageOrder::class, 'individualLaundry'])->name('client.manageindividual');
+Route::post('/submitorder', [ManageOrder::class, 'submitOrder'])->name('client.submitorder');
 
 //Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement.index');
