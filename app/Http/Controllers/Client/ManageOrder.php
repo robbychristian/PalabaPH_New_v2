@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Laundries;
 use App\Models\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,12 +41,15 @@ class ManageOrder extends Controller
             ->where('user_role', '3')
             ->where('is_blocked', 0)
             ->get();
+        $laundryID = Laundries::find($id);
+
         return view('features.Client.manageorderindividual', [
             'laundry' => $laundry,
             'additionalProducts' => $additionalProducts,
             'additionalServices' => $additionalServices,
             'laundryCommodities' => $laundry_services,
             'customers' => $customers,
+            'laundryID' => $laundryID,
         ]);
     }
 
@@ -68,5 +72,13 @@ class ManageOrder extends Controller
             'commodity_type' => $request->type_of_commodity
         ]);
         return response('success');
+    }
+
+    public function viewOrder($id)
+    {
+        $laundry = Laundries::find($id);
+        return view('features.Client.vieworder', [
+            'laundry' => $laundry
+        ]);
     }
 }
