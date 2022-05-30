@@ -57,23 +57,34 @@
                                         $("#M{{ $info->id }}").on('click', function() {
                                             const currPrice = $("#totalPrice").html()
                                             const currTime = $("#totalTime").html()
+                                            const currVal = Number($("#numberOfRows").val())
+
+                                            //CHECK IF MACHINE EXIST ALREADY
+
+                                            $("#numberOfRows").val(currVal + 1)
+                                            const numRows = Number($("#numberOfRows").val())
                                             $("#totalPrice").html(Number(currPrice) + Number({{ $info->price }}))
                                             $("#totalTime").html(Number(currTime) + Number({{ $info->timer }}))
                                             $("#receiptTable > tbody:last-child").append(
                                                 '<tr>' +
-                                                '<td>{{ $info->machine_service }}<span class="d-none" id="machineId{{ $info->id }}">{{ $info->id }}</span></td>' +
-                                                '<td>{{ $info->price }}<span class="d-none" id="machineTimer{{ $info->id }}">{{ $info->timer }}</span></td>' +
+                                                '<td>{{ $info->machine_service }}<span class="d-none" id="machineCount' +
+                                                numRows + '">{{ $info->id }}</span></td>' +
+                                                '<td>{{ $info->price }}<span class="d-none" id="machineTimer' + numRows +
+                                                '">{{ $info->timer }}</span></td>' +
                                                 '<td class="d-flex">' +
                                                 '<button class="btn btn-sm btn-circle btn-danger mr-3" id="{{ $info->id }}minusQuantity" type="button"><i class="fas fa-minus"></i></button>' +
                                                 '<input readonly type="text" value="0" class="form-control w-25" id="weight{{ $info->id }}">' +
+                                                '<input readonly type="text" value="{{ $info->machine_service }}" class="form-control w-25 d-none" id="machineService' +
+                                                numRows + '">' +
                                                 '<button class="btn btn-sm btn-circle btn-success ml-3" type="button" id="{{ $info->id }}addQuantity"><i class="fas fa-plus"></i></button></td>' +
                                                 '<td id="totalService{{ $info->id }}"></td>' +
                                                 '<td>action</td>' +
                                                 '<tr>'
                                             )
-                                            const currVal = Number($("#numberOfRows").val())
-                                            $("#numberOfRows").val(currVal + 1)
-                                            const numRows = Number($("#numberOfRows").val())
+                                            // $("#machineCount{{ $info->id }}").text(numRows);
+                                            // console.log($("#machineId{{ $info->id }}").html())
+                                            console.log($("#machineCount" + numRows).html())
+                                            const currMachineTimer = Number($("#totalTime").html())
 
                                             // for (let i = 0; i < numRows; i++) {
                                             //     console.log($("#weight{{ $info->id }}").val())
@@ -108,6 +119,8 @@
                                                     })
                                                 }
                                             })
+
+
                                         });
                                     </script>
                                 @else
@@ -302,6 +315,14 @@
                                         {{ Str::substr($info->middle_name, 0, 1) }}.</option>
                                 @endforeach
                             </select>
+                            @foreach ($customers as $info)
+                                <span class="d-none"
+                                    id="registeredFname{{ $info->id }}">{{ $info->first_name }}</span>
+                                <span class="d-none"
+                                    id="registeredMname{{ $info->id }}">{{ $info->middle_name }}</span>
+                                <span class="d-none"
+                                    id="registeredLname{{ $info->id }}">{{ $info->last_name }}</span>
+                            @endforeach
                         </div>
                     </div>
                     {{-- UNREGISTERED CUSTOMER --}}
@@ -339,6 +360,13 @@
                                 Reservation</option>
                         @endforeach
                     </select>
+                    <select name="" id="laundrySegregation" class="form-control form-control-sm my-2">
+                        <option value="">Choose a Segregation...</option>
+                        <option value="Whites">Whites</option>
+                        <option value="Mixed">Mixed</option>
+                        <option value="Colors">Colors</option>
+                        <option value="Delicates">Delicates</option>
+                    </select>
                     <input type="text" value="{{ csrf_token() }}" id="csrfToken" class="d-none">
                     <div class="table-responsive">
                         <table class="table" id="receiptTable">
@@ -375,8 +403,9 @@
                                 Total Time: <span id="totalTime">0</span> minutes
                             </div>
                         </div>
-                        {{-- INPUT FOR COUTING NUMBER OF ROWS --}}
+                        {{-- INPUT FOR COUTING NUMBER OF ROWS AND LAUNDRY ID --}}
                         <input type="text" id="numberOfRows" class="d-none">
+                        <input type="text" id="laundryId" value="{{ $laundryID->id }}" class="d-none">
 
                     </div>
                     <div class="d-flex justify-content-around">

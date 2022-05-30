@@ -17,6 +17,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    {{-- MOMENT JS --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
     {{-- JQUERY --}}
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 

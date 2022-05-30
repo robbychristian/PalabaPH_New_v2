@@ -7,6 +7,9 @@ use App\Models\Laundries;
 use App\Models\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Machines;
+use App\Models\MachineOccupancy;
+use App\Models\OrderInfo;
 
 class ManageOrder extends Controller
 {
@@ -56,13 +59,15 @@ class ManageOrder extends Controller
     public function submitOrder(Request $request)
     {
         $user_id = (int)$request->user_id;
+        $laundry_id = (int)$request->laundry_id;
         $totalPrice = (string)$request->total_price;
-        $totalTime = (string)$request->title_time;
+        $totalTime = (string)$request->total_time;
         if ($user_id == 0) {
             $user_id = null;
         }
         $order = Orders::create([
             'user_id' => $user_id,
+            'laundry_id' => $laundry_id,
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
@@ -71,14 +76,86 @@ class ManageOrder extends Controller
             'mode_of_payment' => $request->mode_of_payment,
             'commodity_type' => $request->type_of_commodity
         ]);
+        $orderInfos = OrderInfo::create([
+            'order_id' => $order->id,
+            'status' => "On Going",
+            'payment_status' => "Pending",
+            'segregation_type' => $request->segregation_type
+        ]);
         return response('success');
     }
 
     public function viewOrder($id)
     {
         $laundry = Laundries::find($id);
+        $machines = DB::table('machines')
+            ->join('machine_occupancies', 'machine_occupancies.machine_id', 'machines.id')
+            ->get();
+        $walkIns = DB::table('orders')
+            ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
+            ->where('orders.laundry_id', $id)
+            ->where('orders.commodity_type', 'Walk-In')
+            ->get();
+        $pickUps = DB::table('orders')
+            ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
+            ->where('orders.laundry_id', $id)
+            ->where('orders.commodity_type', 'Pick-up')
+            ->get();
+        $dropOffs = DB::table('orders')
+            ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
+            ->where('orders.laundry_id', $id)
+            ->where('orders.commodity_type', 'Drop-Off')
+            ->get();
+        $reservation = DB::table('orders')
+            ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
+            ->where('orders.laundry_id', $id)
+            ->where('orders.commodity_type', 'Reservation')
+            ->get();
+
         return view('features.Client.vieworder', [
-            'laundry' => $laundry
+            'laundry' => $laundry,
+            'machines' => $machines,
+            'walkIns' => $walkIns,
+            'pickUps' => $pickUps,
+            'dropOffs' => $dropOffs,
+            'reservations' => $reservation
         ]);
+    }
+
+    public function updateMachineState(Request $request)
+    {
+        $machine = DB::table('machines')
+            ->where("id", $request->id)
+            ->get();
+        DB::table('machines')
+            ->where('id', $request->id)
+            ->update(['status' => 1]);
+        MachineOccupancy::create([
+            'machine_id' => $machine[0]->id,
+            'machine_timer' => $machine[0]->timer,
+            'machine_status' => 'pending',
+            'machine_service' => $request->machine_service,
+            'user_id' => $request->user_id,
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
+            'time_end' => $request->time_end,
+        ]);
+    }
+    public function closeMachineState(Request $request)
+    {
+        DB::table("machines")
+            ->where('id', $request->machine_id)
+            ->update(['status' => 0]);
+    }
+
+    public function updateDryMachineTime(Request $request)
+    {
+        DB::table("machine_occupancies")
+            ->where('id', $request->id)
+            ->update([
+                'machine_service' => "Dry (Started)",
+                'time_end' => $request->time_end
+            ]);
     }
 }

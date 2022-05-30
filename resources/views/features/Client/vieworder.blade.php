@@ -15,18 +15,109 @@
 
         {{-- FIRST SECTION --}}
         <div class="card shadow-card mb-3 mt-3">
-            <div class="card-header text-primary font-weight-bold h5">Machine Availbility</div>
+            <div class="card-header text-primary font-weight-bold h5">Machines Occupied</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table" width="100%" cellspacing="0" style="color:#464646 !important">
                         <thead>
                             <tr>
                                 <th>Machine</th>
-                                <th>Current User</th>
+                                <th>Occupied By</th>
+                                <th>Status</th>
                                 <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($machines as $machine)
+                                @if ($machine->status === 1)
+                                    <span class="d-none"
+                                        id="machineId{{ $machine->machine_id }}">{{ $machine->machine_id }}</span>
+                                    <tr>
+                                        <th>{{ $machine->machine_name }} <span class="d-none"
+                                                id="machineService{{ $machine->id }}">{{ $machine->machine_service }}</span>
+                                        </th>
+                                        <th>{{ $machine->first_name }} {{ $machine->middle_name }}
+                                            {{ $machine->last_name }}</th>
+                                        <th>
+                                            @if ($machine->status === 1)
+                                                On Going
+                                            @else
+                                                Done
+                                            @endif
+                                        </th>
+                                        <th id="machineTimer{{ $machine->id }}"></th>
+                                        <th id="numOfDryMachine" class="d-none">0</th>
+                                    </tr>
+                                    <script>
+                                        let dryMachineCount = 0;
+                                        const countdown{{ $machine->id }} = setInterval(() => {
+                                            const machineService = $("#machineService{{ $machine->id }}").html()
+                                            if (machineService === 'Wash') {
+                                                const machineId = $("#machineId{{ $machine->machine_id }}").html()
+                                                const timeStart = moment()
+                                                const timeEnd = moment('{{ $machine->time_end }}')
+                                                const timeDiff = moment(timeEnd).diff(timeStart, 's')
+                                                const duration = moment.duration(timeEnd.diff(timeStart))
+                                                const durationMinutes = duration.minutes()
+                                                const durationSeconds = duration.seconds()
+                                                $("#machineTimer{{ $machine->id }}").text(durationMinutes + ":" + durationSeconds)
+                                                if (durationMinutes <= 0 && durationSeconds <= 0) {
+                                                    const formdata = new FormData()
+                                                    formdata.append('machine_id', machineId);
+                                                    console.log(machineId)
+                                                    axios.post('/closemachinestate', formdata)
+                                                        .then(response => {
+                                                            console.log(response.data);
+                                                        })
+                                                    clearInterval(countdown{{ $machine->id }})
+                                                }
+                                            } else if (machineService === "Dry") {
+                                                dryMachineCount = dryMachineCount + 1;
+                                                $("#numOfDryMachine").text(dryMachineCount);
+                                                $("#machineTimer{{ $machine->id }}").append(
+                                                    "<button type='button' class='btn btn-warning' id='startCount" + dryMachineCount +
+                                                    "'>Start Timer</button>"
+                                                )
+                                                clearInterval(countdown{{ $machine->id }})
+                                                $("#startCount" + dryMachineCount).on('click', function() {
+                                                    const machineOccupancyId = "{{ $machine->id }}"
+                                                    const machineTimer = "{{ $machine->machine_timer }}"
+                                                    const timeEnd = moment().add(machineTimer, "m");
+                                                    const machineFormData = new FormData()
+                                                    machineFormData.append('id', machineOccupancyId)
+                                                    machineFormData.append('time_end', timeEnd)
+                                                    // console.log(machineFormData);
+                                                    // console.log(machineTimer);
+                                                    // console.log(timeEnd);
+                                                    axios.post('/updatedrymachinetime', machineFormData)
+                                                        .then(response => {
+                                                            location.reload();
+                                                        })
+                                                })
+                                            } else {
+                                                const machineId = $("#machineId{{ $machine->machine_id }}").html()
+                                                const timeStart = moment()
+                                                const timeEnd = moment('{{ $machine->time_end }}')
+                                                const timeDiff = moment(timeEnd).diff(timeStart, 's')
+                                                const duration = moment.duration(timeEnd.diff(timeStart))
+                                                const durationMinutes = duration.minutes()
+                                                const durationSeconds = duration.seconds()
+                                                $("#machineTimer{{ $machine->id }}").text(durationMinutes + ":" + durationSeconds)
+                                                if (durationMinutes <= 0 && durationSeconds <= 0) {
+                                                    const formdata = new FormData()
+                                                    formdata.append('machine_id', machineId);
+                                                    console.log(machineId)
+                                                    axios.post('/closemachinestate', formdata)
+                                                        .then(response => {
+                                                            location.reload()
+                                                        })
+                                                    clearInterval(countdown{{ $machine->id }})
+                                                }
+                                            }
+                                        }, 1000);
+                                    </script>
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -59,22 +150,33 @@
                             <table class="table" width="100%" cellspacing="0" style="color:#464646 !important">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Name</th>
-                                        <th>Services</th>
-                                        <th>Date</th>
                                         <th>Laundry Status</th>
-                                        <th>Payment Status</th>
-                                        <th>Assigned Machine</th>
-                                        <th>Weight (KG)</th>
-                                        <th>Price</th>
-                                        <th>Load Count</th>
+                                        <th>Segregation</th>
                                         <th>Payment Method</th>
-                                        <th>Timer Status</th>
+                                        <th>Payment Status</th>
+                                        <th>Total Price</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($walkIns as $walkIn)
+                                        <tr>
+                                            <th>{{ $walkIn->first_name }} {{ $walkIn->middle_name }}
+                                                {{ $walkIn->last_name }}</th>
+                                            <th>{{ $walkIn->status }}</th>
+                                            <th>{{ $walkIn->segregation_type }}</th>
+                                            <th>
+                                                @if ($walkIn->mode_of_payment === 'cash')
+                                                    Cash
+                                                @else
+                                                    Cashless
+                                                @endif
+                                            </th>
+                                            <th>{{ $walkIn->payment_status }}</th>
+                                            <th>P{{ $walkIn->total_price }}</th>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -86,22 +188,33 @@
                             <table class="table" width="100%" cellspacing="0" style="color:#464646 !important">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Name</th>
-                                        <th>Services</th>
-                                        <th>Date</th>
                                         <th>Laundry Status</th>
-                                        <th>Payment Status</th>
-                                        <th>Assigned Machine</th>
-                                        <th>Weight (KG)</th>
-                                        <th>Price</th>
-                                        <th>Service Type</th>
+                                        <th>Segregation</th>
                                         <th>Payment Method</th>
-                                        <th>Timer Status</th>
+                                        <th>Payment Status</th>
+                                        <th>Total Price</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($dropOffs as $dropOff)
+                                        <tr>
+                                            <th>{{ $dropOff->first_name }} {{ $dropOff->middle_name }}
+                                                {{ $dropOff->last_name }}</th>
+                                            <th>{{ $dropOff->status }}</th>
+                                            <th>{{ $dropOff->segregation_type }}</th>
+                                            <th>
+                                                @if ($dropOff->mode_of_payment === 'cash')
+                                                    Cash
+                                                @else
+                                                    Cashless
+                                                @endif
+                                            </th>
+                                            <th>{{ $dropOff->payment_status }}</th>
+                                            <th>P{{ $dropOff->total_price }}</th>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -113,22 +226,33 @@
                             <table class="table" width="100%" cellspacing="0" style="color:#464646 !important">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Name</th>
-                                        <th>Services</th>
-                                        <th>Date</th>
                                         <th>Laundry Status</th>
+                                        <th>Segregation</th>
+                                        <th>Payment Method</th>
                                         <th>Payment Status</th>
-                                        <th>Assigned Machine</th>
-                                        <th>Weight (KG)</th>
-                                        <th>Price</th>
-                                        <th>Service Type</th>
-                                        <th>Delivery Status</th>
-                                        <th>Delivery Address</th>
+                                        <th>Total Price</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($pickUps as $pickUp)
+                                        <tr>
+                                            <th>{{ $pickUp->first_name }} {{ $pickUp->middle_name }}
+                                                {{ $pickUp->last_name }}</th>
+                                            <th>{{ $pickUp->status }}</th>
+                                            <th>{{ $pickUp->segregation_type }}</th>
+                                            <th>
+                                                @if ($pickUp->mode_of_payment === 'cash')
+                                                    Cash
+                                                @else
+                                                    Cashless
+                                                @endif
+                                            </th>
+                                            <th>{{ $pickUp->payment_status }}</th>
+                                            <th>P{{ $pickUp->total_price }}</th>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -141,19 +265,13 @@
                             <table class="table" width="100%" cellspacing="0" style="color:#464646 !important">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Name</th>
-                                        <th>Services</th>
-                                        <th>Date</th>
                                         <th>Laundry Status</th>
+                                        <th>Segregation</th>
+                                        <th>Payment Method</th>
                                         <th>Payment Status</th>
-                                        <th>Assigned Machine</th>
-                                        <th>Weight (KG)</th>
-                                        <th>Price</th>
-                                        <th>Service Type</th>
-                                        <th>Timer Status</th>
-                                        <th>Reservation Status</th>
-                                        <th>Action</th>
+                                        <th>Total Price</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -56,6 +56,9 @@ Route::post('/addmachine', [ManageMachine::class, 'addMachine'])->name('client.a
 Route::get('/manageorder', [ManageOrder::class, 'index'])->name('client.manageorder');
 Route::get('/manageorder/{id}', [ManageOrder::class, 'individualLaundry'])->name('client.manageindividual');
 Route::get('/manageorder/{id}/order', [ManageOrder::class, 'viewOrder'])->name('client.vieworder');
+Route::post("/changemachinestate", [ManageOrder::class, 'updateMachineState'])->name('client.changemachinestate');
+Route::post("/closemachinestate", [ManageOrder::class, 'closeMachineState'])->name('client.closemachinestate');
+Route::post("/updatedrymachinetime", [ManageOrder::class, 'updateDryMachineTime'])->name('client.updatedrymachinetime');
 Route::post('/submitorder', [ManageOrder::class, 'submitOrder'])->name('client.submitorder');
 
 //Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement.index');
