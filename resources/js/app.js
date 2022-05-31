@@ -51,7 +51,7 @@ $("#cashRecepitSubmit").on("click", function () {
                 let lname = "";
                 if (checked == "registered") {
                     userId = $("#orderingCustomerId").val();
-                    fname = $("#registeredFname41").html();
+                    fname = $("#registeredFname" + userId).html();
                     mname = $("#registeredMname" + userId).html();
                     lname = $("#registeredLname" + userId).html();
                 } else if (checked == "unregistered") {

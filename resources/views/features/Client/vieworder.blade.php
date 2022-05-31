@@ -29,7 +29,9 @@
                         </thead>
                         <tbody>
                             @foreach ($machines as $machine)
-                                @if ($machine->status === 1)
+                                @if ($machine->machine_status === 'pending')
+                                    <span class="d-none"
+                                        id="machineOccupancyId{{ $machine->id }}">{{ $machine->id }}</span>
                                     <span class="d-none"
                                         id="machineId{{ $machine->machine_id }}">{{ $machine->machine_id }}</span>
                                     <tr>
@@ -39,7 +41,7 @@
                                         <th>{{ $machine->first_name }} {{ $machine->middle_name }}
                                             {{ $machine->last_name }}</th>
                                         <th>
-                                            @if ($machine->status === 1)
+                                            @if ($machine->machine_status === 'pending')
                                                 On Going
                                             @else
                                                 Done
@@ -49,10 +51,11 @@
                                         <th id="numOfDryMachine" class="d-none">0</th>
                                     </tr>
                                     <script>
-                                        let dryMachineCount = 0;
+                                        let dryMachineCount{{ $machine->id }} = 0;
                                         const countdown{{ $machine->id }} = setInterval(() => {
                                             const machineService = $("#machineService{{ $machine->id }}").html()
                                             if (machineService === 'Wash') {
+                                                const machineOccupancyId = $("#machineOccupancyId{{ $machine->id }}").html()
                                                 const machineId = $("#machineId{{ $machine->machine_id }}").html()
                                                 const timeStart = moment()
                                                 const timeEnd = moment('{{ $machine->time_end }}')
@@ -63,23 +66,26 @@
                                                 $("#machineTimer{{ $machine->id }}").text(durationMinutes + ":" + durationSeconds)
                                                 if (durationMinutes <= 0 && durationSeconds <= 0) {
                                                     const formdata = new FormData()
+                                                    formdata.append('machine_occupancy_id', machineOccupancyId);
                                                     formdata.append('machine_id', machineId);
-                                                    console.log(machineId)
+                                                    console.log(machineOccupancyId)
                                                     axios.post('/closemachinestate', formdata)
                                                         .then(response => {
-                                                            console.log(response.data);
+                                                            location.reload();
                                                         })
                                                     clearInterval(countdown{{ $machine->id }})
                                                 }
                                             } else if (machineService === "Dry") {
-                                                dryMachineCount = dryMachineCount + 1;
-                                                $("#numOfDryMachine").text(dryMachineCount);
+                                                dryMachineCount{{ $machine->id }} = dryMachineCount{{ $machine->id }} + 1;
+                                                $("#numOfDryMachine").text(dryMachineCount{{ $machine->id }});
                                                 $("#machineTimer{{ $machine->id }}").append(
-                                                    "<button type='button' class='btn btn-warning' id='startCount" + dryMachineCount +
+                                                    "<button type='button' class='btn btn-warning' id='startCount" +
+                                                    dryMachineCount{{ $machine->id }} +
                                                     "'>Start Timer</button>"
                                                 )
                                                 clearInterval(countdown{{ $machine->id }})
-                                                $("#startCount" + dryMachineCount).on('click', function() {
+                                                $("#startCount" + dryMachineCount{{ $machine->id }}).on('click', function() {
+                                                    const machineId = $("#machineId{{ $machine->id }}").html()
                                                     const machineOccupancyId = "{{ $machine->id }}"
                                                     const machineTimer = "{{ $machine->machine_timer }}"
                                                     const timeEnd = moment().add(machineTimer, "m");
@@ -95,6 +101,7 @@
                                                         })
                                                 })
                                             } else {
+                                                const machineOccupancyId = $("#machineOccupancyId{{ $machine->id }}").html()
                                                 const machineId = $("#machineId{{ $machine->machine_id }}").html()
                                                 const timeStart = moment()
                                                 const timeEnd = moment('{{ $machine->time_end }}')
@@ -105,6 +112,7 @@
                                                 $("#machineTimer{{ $machine->id }}").text(durationMinutes + ":" + durationSeconds)
                                                 if (durationMinutes <= 0 && durationSeconds <= 0) {
                                                     const formdata = new FormData()
+                                                    formdata.append('machine_occupancy_id', machineOccupancyId);
                                                     formdata.append('machine_id', machineId);
                                                     console.log(machineId)
                                                     axios.post('/closemachinestate', formdata)

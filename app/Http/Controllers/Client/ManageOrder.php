@@ -144,9 +144,13 @@ class ManageOrder extends Controller
     }
     public function closeMachineState(Request $request)
     {
+        DB::table('machine_occupancies')
+            ->where('id', $request->machine_occupancy_id)
+            ->update(['machine_status' => "Done"]);
         DB::table("machines")
             ->where('id', $request->machine_id)
             ->update(['status' => 0]);
+        return response($request);
     }
 
     public function updateDryMachineTime(Request $request)
