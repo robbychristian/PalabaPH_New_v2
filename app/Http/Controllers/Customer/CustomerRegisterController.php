@@ -51,4 +51,18 @@ class CustomerRegisterController extends Controller
             return response(['response' => false]);
         }
     }
+
+    public function editProfile(Request $request)
+    {
+        $test = DB::table('mobile_users')
+            ->where('email', $request->email)
+            ->update([
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'last_name' => $request->last_name,
+                'contact_no' => $request->contact_no,
+                'pass' => Hash::make($request->pass)
+            ]);
+        return $test;
+    }
 }
