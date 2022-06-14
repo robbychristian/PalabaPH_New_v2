@@ -11,6 +11,11 @@ use App\Models\Machines;
 use App\Models\MachineOccupancy;
 use App\Models\OrderInfo;
 
+//FCM
+use Kreait\Firebase\Contract\Messaging;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+
 class ManageOrder extends Controller
 {
     public function index()
@@ -82,6 +87,16 @@ class ManageOrder extends Controller
             'payment_status' => "Pending",
             'segregation_type' => $request->segregation_type
         ]);
+        $res = send_notification_FCM(61, 'test title', 'test message', 61, 'basic');
+
+        if ($res == 1) {
+            return response('SENT NOTIF');
+        } else {
+
+            return response('NO NOTIF');
+            // fail code
+        }
+
         return response('success');
     }
 
@@ -150,7 +165,7 @@ class ManageOrder extends Controller
         DB::table("machines")
             ->where('id', $request->machine_id)
             ->update(['status' => 0]);
-        return response($request);
+        // return response($request);
     }
 
     public function updateDryMachineTime(Request $request)
@@ -160,6 +175,24 @@ class ManageOrder extends Controller
             ->update([
                 'machine_service' => "Dry (Started)",
                 'time_end' => $request->time_end
+            ]);
+    }
+
+    public function updatePaymentStatus(Request $request)
+    {
+        DB::table('order_infos')
+            ->where('id', $request->id)
+            ->update([
+                'payment_status' => "Paid"
+            ]);
+    }
+
+    public function updateLaundryStatus(Request $request)
+    {
+        DB::table('order_infos')
+            ->where('id', $request->id)
+            ->update([
+                'status' => "Completed"
             ]);
     }
 }

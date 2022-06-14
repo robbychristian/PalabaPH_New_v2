@@ -72,7 +72,7 @@
                     <div class="modal-body">
                         <form action="/addservice" method="POST" id="addservice" enctype="multipart/form-data">
                             @csrf
-                            @method("POST")
+                            @method('POST')
                             <div class="form-group mb-3">
                                 <label for=""> <strong> Service </strong></label>
                                 <input type="text" name="service" id="service" class="form-control">
@@ -148,7 +148,7 @@
                         <form action="/addadditionalservice" method="POST" id="additionalService"
                             enctype="multipart/form-data">
                             @csrf
-                            @method("POST")
+                            @method('POST')
                             <div class="form-group mb-3">
                                 <label for=""> <strong> Image </strong></label>
                                 <br>

@@ -23,6 +23,7 @@ class CreateMachinesTable extends Migration
             $table->integer('price');
             $table->boolean('status');
             $table->boolean('is_reserved');
+            $table->string('maintenance_date')->nullable();
             $table->timestamps();
         });
     }

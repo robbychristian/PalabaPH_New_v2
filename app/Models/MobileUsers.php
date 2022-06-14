@@ -9,6 +9,7 @@ class MobileUsers extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'laundry_id',
         'first_name',
         'middle_name',
         'last_name',

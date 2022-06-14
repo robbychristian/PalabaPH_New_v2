@@ -60,8 +60,9 @@ class ClientManagementController extends Controller
     {
         $laundries = DB::table('laundries')
             ->join('users', 'laundries.user_id', '=', 'users.id')
-            ->select('users.*', 'laundries.*')
-            ->where('laundries.id', $id)
+            ->join('laundry_addresses', 'laundry_addresses.laundry_id', '=', 'laundries.id')
+            ->select('users.*', 'laundries.*', 'laundry_addresses.*')
+            ->where('laundries.user_id', $id)
             ->get();
 
         return view('features.clientmanagementview', [

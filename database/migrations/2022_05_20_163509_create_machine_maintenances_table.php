@@ -17,7 +17,7 @@ class CreateMachineMaintenancesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('machine_id');
             $table->string('description');
-            $table->dateTime('maintenance_date');
+            $table->string('maintenance_date');
             $table->timestamps();
         });
     }

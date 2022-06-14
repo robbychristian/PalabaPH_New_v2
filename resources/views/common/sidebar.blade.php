@@ -57,7 +57,7 @@
         <li class="nav-item {{ Route::is('home') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Manage</span></a>
+                <span>Store Manage</span></a>
         </li>
 
         <!-- Nav Item - Order Management -->
@@ -69,16 +69,16 @@
 
         <!-- Nav Item - Client Management -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.clientmanagement.index') }}">
+            <a class="nav-link" href="{{ route('client.manageriders') }}">
                 <i class="fas fa-fw fa-building"></i>
-                <span>Client Management</span></a>
+                <span>Rider Management</span></a>
         </li>
 
         <!-- Nav Item - User Management -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('home') }}">
+            <a class="nav-link" href="{{ route('client.managesales') }}">
                 <i class="fas fa-fw fa-user"></i>
-                <span>User Management</span></a>
+                <span>Sales Management</span></a>
         </li>
 
 

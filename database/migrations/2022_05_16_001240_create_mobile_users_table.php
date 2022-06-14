@@ -15,6 +15,7 @@ class CreateMobileUsersTable extends Migration
     {
         Schema::create('mobile_users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('laundry_id')->nullable();
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
@@ -23,6 +24,7 @@ class CreateMobileUsersTable extends Migration
             $table->string('pass')->nullable();
             $table->boolean('is_blocked')->nullable();
             $table->string('user_role')->nullable();
+            $table->string('notif_token')->nullable();
             $table->timestamps();
         });
     }

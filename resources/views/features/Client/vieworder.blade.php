@@ -76,15 +76,15 @@
                                                     clearInterval(countdown{{ $machine->id }})
                                                 }
                                             } else if (machineService === "Dry") {
-                                                dryMachineCount{{ $machine->id }} = dryMachineCount{{ $machine->id }} + 1;
+                                                dryMachineCount{{ $machine->id }} += 1;
                                                 $("#numOfDryMachine").text(dryMachineCount{{ $machine->id }});
                                                 $("#machineTimer{{ $machine->id }}").append(
                                                     "<button type='button' class='btn btn-warning' id='startCount" +
-                                                    dryMachineCount{{ $machine->id }} +
+                                                    {{ $machine->id }} +
                                                     "'>Start Timer</button>"
                                                 )
                                                 clearInterval(countdown{{ $machine->id }})
-                                                $("#startCount" + dryMachineCount{{ $machine->id }}).on('click', function() {
+                                                $("#startCount" + {{ $machine->id }}).on('click', function() {
                                                     const machineId = $("#machineId{{ $machine->id }}").html()
                                                     const machineOccupancyId = "{{ $machine->id }}"
                                                     const machineTimer = "{{ $machine->machine_timer }}"
@@ -183,7 +183,36 @@
                                             </th>
                                             <th>{{ $walkIn->payment_status }}</th>
                                             <th>P{{ $walkIn->total_price }}</th>
+                                            <th><button class="btn btn-primary btn-sm btn-circle"
+                                                    id="updatePayment{{ $walkIn->id }}"><i
+                                                        class="fas fa-search"></i></button>
+                                                <button class="btn btn-warning btn-sm btn-circle"
+                                                    id="updateLaundryStatus{{ $walkIn->id }}"><i
+                                                        class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger btn-sm btn-circle"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </th>
                                         </tr>
+
+                                        <script>
+                                            $("#updatePayment{{ $walkIn->id }}").on('click', function() {
+                                                const formdata = new FormData()
+                                                formdata.append('id', "{{ $walkIn->id }}")
+                                                axios.post('/updatepaymentstatus', formdata)
+                                                    .then(response => {
+                                                        location.reload()
+                                                    })
+                                            })
+
+                                            $("#updateLaundryStatus{{ $walkIn->id }}").on('click', function() {
+                                                const formdata = new FormData()
+                                                formdata.append("id", '{{ $walkIn->id }}')
+                                                axios.post('/updatelaundrystatus', formdata)
+                                                    .then(respomse => {
+                                                        location.reload()
+                                                    })
+                                            })
+                                        </script>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -221,7 +250,36 @@
                                             </th>
                                             <th>{{ $dropOff->payment_status }}</th>
                                             <th>P{{ $dropOff->total_price }}</th>
+                                            <th><button class="btn btn-primary btn-sm btn-circle"
+                                                    id="updatePayment{{ $dropOff->id }}"><i
+                                                        class="fas fa-search"></i></button>
+                                                <button class="btn btn-warning btn-sm btn-circle"
+                                                    id="updateLaundryStatus{{ $dropOff->id }}"><i
+                                                        class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger btn-sm btn-circle"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </th>
                                         </tr>
+
+                                        <script>
+                                            $("#updatePayment{{ $dropOff->id }}").on('click', function() {
+                                                const formdata = new FormData()
+                                                formdata.append('id', "{{ $dropOff->id }}")
+                                                axios.post('/updatepaymentstatus', formdata)
+                                                    .then(response => {
+                                                        location.reload()
+                                                    })
+                                            })
+
+                                            $("#updateLaundryStatus{{ $dropOff->id }}").on('click', function() {
+                                                const formdata = new FormData()
+                                                formdata.append("id", '{{ $dropOff->id }}')
+                                                axios.post('/updatelaundrystatus', formdata)
+                                                    .then(respomse => {
+                                                        location.reload()
+                                                    })
+                                            })
+                                        </script>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -259,7 +317,36 @@
                                             </th>
                                             <th>{{ $pickUp->payment_status }}</th>
                                             <th>P{{ $pickUp->total_price }}</th>
+                                            <th><button class="btn btn-primary btn-sm btn-circle"
+                                                    id="updatePayment{{ $pickUp->id }}"><i
+                                                        class="fas fa-search"></i></button>
+                                                <button class="btn btn-warning btn-sm btn-circle"
+                                                    id="updateLaundryStatus{{ $pickUp->id }}"><i
+                                                        class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger btn-sm btn-circle"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </th>
                                         </tr>
+
+                                        <script>
+                                            $("#updatePayment{{ $pickUp->id }}").on('click', function() {
+                                                const formdata = new FormData()
+                                                formdata.append('id', "{{ $pickUp->id }}")
+                                                axios.post('/updatepaymentstatus', formdata)
+                                                    .then(response => {
+                                                        location.reload()
+                                                    })
+                                            })
+
+                                            $("#updateLaundryStatus{{ $pickUp->id }}").on('click', function() {
+                                                const formdata = new FormData()
+                                                formdata.append("id", '{{ $pickUp->id }}')
+                                                axios.post('/updatelaundrystatus', formdata)
+                                                    .then(respomse => {
+                                                        location.reload()
+                                                    })
+                                            })
+                                        </script>
                                     @endforeach
                                 </tbody>
                             </table>

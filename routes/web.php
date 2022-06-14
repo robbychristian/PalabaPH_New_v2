@@ -8,6 +8,9 @@ use App\Http\Controllers\Client\ManageService;
 use App\Http\Controllers\Client\ManageInventory;
 use App\Http\Controllers\Client\ManageOrder;
 use App\Http\Controllers\Client\ManageMachine;
+use App\Http\Controllers\Client\ManageSales;
+use App\Http\Controllers\Client\ManageRiders;
+use App\Http\Controllers\Customer\CustomerOrdering;
 
 use Illuminate\Support\Facades\Route;
 
@@ -48,10 +51,14 @@ Route::post('/addadditionalproduct', [ManageService::class, 'addAdditionalProduc
 Route::get('/manageinventory', [ManageInventory::class, 'index'])->name('client.manageinventory');
 Route::post('/additem', [ManageInventory::class, 'addItem'])->name('client.addinventory');
 Route::post('/confirmquantity', [ManageInventory::class, 'confirmQuantity']);
+Route::post('/deleteitem', [ManageInventory::class, 'deleteItem'])->name('client.deleteinventory');
 
 Route::get('/managemachine', [ManageMachine::class, 'index'])->name('client.managemachine');
 Route::get('/managemachine/{id}', [ManageMachine::class, 'individualMachine'])->name('client.individualmachine');
 Route::post('/addmachine', [ManageMachine::class, 'addMachine'])->name('client.addmachine');
+Route::post('/editmachine', [ManageMachine::class, 'editMachine'])->name('client.editmachine');
+Route::post('/deletemachine', [ManageMachine::class, 'deleteMachine'])->name('client.deletemachine');
+Route::post('/addmachinemaintenance', [ManageMachine::class, 'addMaintenance'])->name('client.addmaintenance');
 
 Route::get('/manageorder', [ManageOrder::class, 'index'])->name('client.manageorder');
 Route::get('/manageorder/{id}', [ManageOrder::class, 'individualLaundry'])->name('client.manageindividual');
@@ -60,5 +67,14 @@ Route::post("/changemachinestate", [ManageOrder::class, 'updateMachineState'])->
 Route::post("/closemachinestate", [ManageOrder::class, 'closeMachineState'])->name('client.closemachinestate');
 Route::post("/updatedrymachinetime", [ManageOrder::class, 'updateDryMachineTime'])->name('client.updatedrymachinetime');
 Route::post('/submitorder', [ManageOrder::class, 'submitOrder'])->name('client.submitorder');
+Route::post('/updatepaymentstatus', [ManageOrder::class, 'updatePaymentStatus']);
+Route::post('/updatelaundrystatus', [ManageOrder::class, 'updateLaundryStatus']);
+
+Route::get('/managesales', [ManageSales::class, 'index'])->name('client.managesales');
+
+Route::get('/manageriders', [ManageRiders::class, 'index'])->name('client.manageriders');
+Route::post('/addriders', [ManageRiders::class, 'addRiders'])->name('client.addrider');
+
+Route::get('/sendnotification', [CustomerOrdering::class, 'sendNotification']);
 
 //Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement.index');

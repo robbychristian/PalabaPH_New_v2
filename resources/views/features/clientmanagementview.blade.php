@@ -32,7 +32,7 @@
                     </form>
                     <form action="/clientmanagement/{{ $laundries[0]->id }}/decline" method="POST">
                         @csrf
-                        @method("post")
+                        @method('post')
                         <button class="btn btn-sm btn-danger">Deny</button>
                     </form>
                 </div>
@@ -48,20 +48,39 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-md-4"> <strong> Cellphone Number: </strong>{{ $laundries[0]->first_name }}</div>
-                    <div class="col-md-4"> <strong> Birthday: </strong> {{ $laundries[0]->middle_name }}</div>
-                    <div class="col-md-4"> <strong> Gender: </strong> {{ $laundries[0]->last_name }}</div>
+                    <div class="col-md-6"> <strong> Cellphone Number: </strong>{{ $laundries[0]->phone }}</div>
+                    <div class="col-md-6"> <strong> Landline Number: </strong>{{ $laundries[0]->landline }}</div>
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-md-4"> <strong> Street: </strong>{{ $laundries[0]->first_name }}</div>
-                    <div class="col-md-4"> <strong> Barangay: </strong> {{ $laundries[0]->middle_name }}</div>
-                    <div class="col-md-4"> <strong> City: </strong> {{ $laundries[0]->last_name }}</div>
+                    <div class="col-md-4"> <strong> Street: </strong>{{ $laundries[0]->street }}</div>
+                    <div class="col-md-4"> <strong> Barangay: </strong>
+                        {{ Str::substr($laundries[0]->barangay, 9) }}</div>
+                    <div class="col-md-4"> <strong> City: </strong> {{ Str::substr($laundries[0]->city, 6) }}</div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-md-4"> <strong> State/Province: </strong>{{ $laundries[0]->first_name }}</div>
+                    <div class="col-md-4"> <strong> State/Province:
+                        </strong>{{ Str::substr($laundries[0]->state, 4) }}</div>
 
-                    <div class="col-md-4"> <strong> Country: </strong> {{ $laundries[0]->last_name }}</div>
+                    <div class="col-md-4"> <strong> Region: </strong> {{ Str::substr($laundries[0]->region, 2) }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column">
+                            <div class="h6">
+                                BIR
+                            </div>
+                            <img src="{{  }}" alt="" srcset="" style="height: 100px; width: 100px">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">Photo</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">Photo</div>
+
+                    <div class="col-md-6">Photo</div>
                 </div>
             </div>
         </div>

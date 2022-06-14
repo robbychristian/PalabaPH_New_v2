@@ -53,4 +53,11 @@ class ManageInventory extends Controller
             ->update(['item_quantity' => (int)$request->itemQty]);
         return redirect('/manageinventory');
     }
+
+    public function deleteItem(Request $request)
+    {
+        DB::table("inventories")
+            ->where("id", $request->item_id)
+            ->delete();
+    }
 }

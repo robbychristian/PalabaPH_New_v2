@@ -1,0 +1,29 @@
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB_IJc1lDsOS1kwnYf1a2vEcvJr8ezy2XE",
+    authDomain: "palabaph.firebaseapp.com",
+    projectId: "palabaph",
+    storageBucket: "palabaph.appspot.com",
+    messagingSenderId: "373825974217",
+    appId: "1:373825974217:web:3cfe1b3e71cb8974af0218",
+    measurementId: "G-H7MEMZ9L38"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+//FCM KEY
+AAAAVwnDr8k:APA91bG8d0xpBONkTYUzI-m4zt112ZiQ3ma9biYIfXQRYjzeI70tNlhpG4n1ONdX8tKpBBdykKWI9EPM5eHjI94oSIXpQ604ewmtyJJzDgq0cv8fwwgs2j_lr5N61mcBXShEAe4sbq5A
+
+//sender ID
+373825974217

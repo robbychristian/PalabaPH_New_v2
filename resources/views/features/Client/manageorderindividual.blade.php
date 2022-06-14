@@ -48,12 +48,27 @@
                                                     {{ $info->machine_name }}
                                                 </h2>
                                                 <div class="card-footer text-center" style="background-color: transparent;">
-                                                    <span class="badge badge-success">Available</span>
+                                                    <span class="badge badge-success"
+                                                        id="machineAvailability{{ $info->id }}">Available</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <script>
+                                        $(document).ready(function() {
+                                            @if ($info->maintenance_date !== null)
+                                                const currDate = moment().format('LL')
+                                                const maintenanceDate = moment('{{ $info->maintenance_date }}').format('LL')
+
+                                                if (currDate === maintenanceDate) {
+                                                    $("#M{{ $info->id }}").removeClass('bg-success')
+                                                    $("#M{{ $info->id }}").addClass('d-none')
+                                                    $("#machineAvailability{{ $info->id }}").removeClass('bg-success')
+                                                    $("#machineAvailability{{ $info->id }}").addClass('bg-danger')
+                                                    $("#machineAvailability{{ $info->id }}").text("Maintenance")
+                                                }
+                                            @endif
+                                        })
                                         $("#M{{ $info->id }}").on('click', function() {
                                             const currPrice = $("#totalPrice").html()
                                             const currTime = $("#totalTime").html()
@@ -78,7 +93,7 @@
                                                 numRows + '">' +
                                                 '<button class="btn btn-sm btn-circle btn-success ml-3" type="button" id="{{ $info->id }}addQuantity"><i class="fas fa-plus"></i></button></td>' +
                                                 '<td id="totalService{{ $info->id }}"></td>' +
-                                                '<td>action</td>' +
+                                                '<td><button class="btn btn-danger btn-sm btn-circle"><i class="fas fa-trash"></i></button></td>' +
                                                 '<tr>'
                                             )
                                             // $("#machineCount{{ $info->id }}").text(numRows);
@@ -171,7 +186,7 @@
                                             '<td></td>' +
                                             '<td></td>' +
                                             '<td id="servicePrice{{ $info->id }}}">{{ $info->add_serv_price }}</td>' +
-                                            '<td>action</td></tr>'
+                                            '<td><button class="btn btn-danger btn-sm btn-circle"><i class="fas fa-trash"></i></button></td></tr>'
                                         )
                                         const currVal = Number($("#numberOfRows").val())
                                         $("#numberOfRows").val(currVal + 1)
@@ -226,7 +241,7 @@
                                             '<input readonly type="text" value="0" class="form-control w-25" id="prod{{ $info->id }}">' +
                                             '<button class="btn btn-sm btn-circle btn-success ml-3" type="button" id="{{ $info->id }}addQuantityProd"><i class="fas fa-plus"></i></button></td>' +
                                             '<td id="totalProd{{ $info->id }}"></td>' +
-                                            '<td>action</td></tr>'
+                                            '<td><button class="btn btn-danger btn-sm btn-circle"><i class="fas fa-trash"></i></button></td></tr>'
                                         )
                                         const currVal = Number($("#numberOfRows").val())
                                         $("#numberOfRows").val(currVal + 1)
@@ -412,18 +427,41 @@
 
                         <button class="btn btn-primary d-block mr-auto ml-auto" type="button"
                             id="cashRecepitSubmit">Cash</button>
-                        <button class="btn btn-primary d-block mr-auto ml-auto" type="button">Cashless</button>
+                        <button class="btn btn-primary d-block mr-auto ml-auto" type="button" data-toggle="modal"
+                            data-target="#cashlessModal">Cashless</button>
                     </div>
-
                 </form>
 
                 <div class="d-flex justify-content-end mt-5">
                     <button class="btn btn-danger mr-3">Clear Items</button>
                     <button class="btn btn-warning">Back</button>
                 </div>
+                {{-- ======================== CASHLESS MODAL ======================== --}}
+                {{-- ======================== CASHLESS MODAL ======================== --}}
+                {{-- ======================== CASHLESS MODAL ======================== --}}
+                <div class="modal fade" id="cashlessModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Gcash QR Code</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="{{ asset('images/GCash-MyQR-08062022164958.PNG.jpg') }}" class="img-fluid"
+                                    alt="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id="cashlessRecepitSubmit" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 @endsection
 

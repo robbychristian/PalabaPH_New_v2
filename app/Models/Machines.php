@@ -18,5 +18,6 @@ class Machines extends Model
         'price',
         'status',
         'is_reserved',
+        'maintenance_date'
     ];
 }

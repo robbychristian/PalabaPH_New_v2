@@ -119,8 +119,9 @@
                                                 <button class="btn btn-sm btn-circle btn-info" type="button"
                                                     id="{{ $inventory->id }}confirmQuantity"><i
                                                         class="fas fa-check"></i></button>
-                                                <button class="btn btn-sm btn-circle btn-danger"><i
-                                                        class="fas fa-trash"></i></button>
+                                                <button type="button" class="btn btn-sm btn-circle btn-danger"><i
+                                                        class="fas fa-trash"
+                                                        id="deleteItem{{ $inventory->id }}"></i></button>
                                             </td>
                                         </tr>
                                     </form>
@@ -160,6 +161,33 @@
                                                         $('#{{ $inventory->id }}confirm').submit();
                                                     }
                                                 })
+                                            })
+                                        })
+
+                                        $("#deleteItem{{ $inventory->id }}").on('click', function() {
+                                            swal({
+                                                icon: "warning",
+                                                title: "Warning!",
+                                                text: "Are you sure you want to delete the item?",
+                                                buttons: {
+                                                    cancel: "Cancel",
+                                                    true: "OK"
+                                                }
+                                            }).then(response => {
+                                                if (response === 'true')
+                                                    swal({
+                                                        icon: "success",
+                                                        title: "Item Deleted!",
+                                                        text: "The selected item has been deleted!",
+                                                        buttons: false
+                                                    }).then(response => {
+                                                        const formdata = new FormData()
+                                                        formdata.append('item_id', "{{ $inventory->id }}")
+                                                        axios.post('/deleteitem', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    })
                                             })
                                         })
                                     </script>
