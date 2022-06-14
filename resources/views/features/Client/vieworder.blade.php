@@ -184,11 +184,25 @@
                                             <th>{{ $walkIn->payment_status }}</th>
                                             <th>P{{ $walkIn->total_price }}</th>
                                             <th><button class="btn btn-primary btn-sm btn-circle"
-                                                    id="updatePayment{{ $walkIn->id }}"><i
-                                                        class="fas fa-search"></i></button>
+                                                    id="updatePayment{{ $walkIn->id }}">
+
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-credit-card-2-back-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0V4zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-2zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1H0z" />
+                                                    </svg>
+
+                                                </button>
                                                 <button class="btn btn-warning btn-sm btn-circle"
-                                                    id="updateLaundryStatus{{ $walkIn->id }}"><i
-                                                        class="fas fa-pen"></i></button>
+                                                    id="updateLaundryStatus{{ $walkIn->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-bag-check-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                                                    </svg>
+                                                </button>
                                                 <button class="btn btn-danger btn-sm btn-circle"><i
                                                         class="fas fa-trash"></i></button>
                                             </th>
@@ -251,11 +265,23 @@
                                             <th>{{ $dropOff->payment_status }}</th>
                                             <th>P{{ $dropOff->total_price }}</th>
                                             <th><button class="btn btn-primary btn-sm btn-circle"
-                                                    id="updatePayment{{ $dropOff->id }}"><i
-                                                        class="fas fa-search"></i></button>
+                                                    id="updatePayment{{ $dropOff->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-credit-card-2-back-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0V4zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-2zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1H0z" />
+                                                    </svg>
+                                                </button>
                                                 <button class="btn btn-warning btn-sm btn-circle"
-                                                    id="updateLaundryStatus{{ $dropOff->id }}"><i
-                                                        class="fas fa-pen"></i></button>
+                                                    id="updateLaundryStatus{{ $dropOff->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-bag-check-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                                                    </svg>
+                                                </button>
                                                 <button class="btn btn-danger btn-sm btn-circle"><i
                                                         class="fas fa-trash"></i></button>
                                             </th>
@@ -318,11 +344,23 @@
                                             <th>{{ $pickUp->payment_status }}</th>
                                             <th>P{{ $pickUp->total_price }}</th>
                                             <th><button class="btn btn-primary btn-sm btn-circle"
-                                                    id="updatePayment{{ $pickUp->id }}"><i
-                                                        class="fas fa-search"></i></button>
+                                                    id="updatePayment{{ $pickUp->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-credit-card-2-back-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0V4zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-2zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1H0z" />
+                                                    </svg>
+                                                </button>
                                                 <button class="btn btn-warning btn-sm btn-circle"
-                                                    id="updateLaundryStatus{{ $pickUp->id }}"><i
-                                                        class="fas fa-pen"></i></button>
+                                                    id="updateLaundryStatus{{ $pickUp->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-bag-check-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                                                    </svg>
+                                                </button>
                                                 <button class="btn btn-danger btn-sm btn-circle"><i
                                                         class="fas fa-trash"></i></button>
                                             </th>

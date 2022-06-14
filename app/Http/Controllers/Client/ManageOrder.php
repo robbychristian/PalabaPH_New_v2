@@ -110,21 +110,25 @@ class ManageOrder extends Controller
             ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
             ->where('orders.laundry_id', $id)
             ->where('orders.commodity_type', 'Walk-In')
+            ->where('order_infos.status', 'On Going')
             ->get();
         $pickUps = DB::table('orders')
             ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
             ->where('orders.laundry_id', $id)
             ->where('orders.commodity_type', 'Pick-up')
+            ->where('order_infos.status', 'On Going')
             ->get();
         $dropOffs = DB::table('orders')
             ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
             ->where('orders.laundry_id', $id)
             ->where('orders.commodity_type', 'Drop-Off')
+            ->where('order_infos.status', 'On Going')
             ->get();
         $reservation = DB::table('orders')
             ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
             ->where('orders.laundry_id', $id)
             ->where('orders.commodity_type', 'Reservation')
+            ->where('order_infos.status', 'On Going')
             ->get();
 
         return view('features.Client.vieworder', [

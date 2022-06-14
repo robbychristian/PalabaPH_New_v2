@@ -450,8 +450,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <img src="{{ asset('images/GCash-MyQR-08062022164958.PNG.jpg') }}" class="img-fluid"
-                                    alt="">
+                                <img src="{{ asset('images/Gcash_QR.jpg') }}" class="img-fluid" alt="">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

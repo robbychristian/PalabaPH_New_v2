@@ -111,7 +111,7 @@ $("#cashRecepitSubmit").on("click", function () {
                         },
                     })
                     .then((response) => {
-                        console.log(response.data);
+                        location.reload();
                     });
             });
         }
@@ -203,7 +203,7 @@ $("#cashlessRecepitSubmit").on("click", function () {
                         },
                     })
                     .then((response) => {
-                        console.log(response.data);
+                        location.reload();
                     });
             });
         }
@@ -270,7 +270,7 @@ $("#addRiderButton").on("click", function () {
                     axios
                         .post("/addriders", formdata)
                         .then((response) => {
-                            console.log(response.data);
+                            location.reload();
                         })
                         .catch((e) => {
                             console.log(e);

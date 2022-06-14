@@ -15,7 +15,7 @@ class ManageSales extends Controller
         if ($request->ajax()) {
             $sales = DB::table('orders')
                 ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
-                ->where('orders.commodity_type', 'Pick-up')
+                ->where('order_infos.status', 'Completed')
                 ->get();
             //dd($laundries);
 
@@ -40,7 +40,7 @@ class ManageSales extends Controller
         }
         $sales = DB::table('orders')
             ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
-            ->where('orders.commodity_type', 'Pick-up')
+            ->where('order_infos.status', 'Completed')
             ->get();
         return view('features.Client.managesales', [
             'sales' => $sales
