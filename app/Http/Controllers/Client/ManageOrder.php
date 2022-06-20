@@ -152,7 +152,7 @@ class ManageOrder extends Controller
         MachineOccupancy::create([
             'machine_id' => $machine[0]->id,
             'machine_timer' => $machine[0]->timer,
-            'machine_status' => 'pending',
+            'machine_status' => $request->machine_status,
             'machine_service' => $request->machine_service,
             'user_id' => $request->user_id,
             'first_name' => $request->first_name,
@@ -197,6 +197,21 @@ class ManageOrder extends Controller
             ->where('id', $request->id)
             ->update([
                 'status' => "Completed"
+            ]);
+    }
+
+    public function updateQueuedWashStatus(Request $request)
+    {
+        DB::table('machine_occupancies')
+            ->where('id', $request->id)
+            ->update([
+                'machine_status' => "pending",
+                'time_end' => $request->time_end
+            ]);
+        DB::table('machines')
+            ->where('id', $request->machine_id)
+            ->update([
+                'status' => 1
             ]);
     }
 }

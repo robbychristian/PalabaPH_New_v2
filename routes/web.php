@@ -69,6 +69,7 @@ Route::post("/updatedrymachinetime", [ManageOrder::class, 'updateDryMachineTime'
 Route::post('/submitorder', [ManageOrder::class, 'submitOrder'])->name('client.submitorder');
 Route::post('/updatepaymentstatus', [ManageOrder::class, 'updatePaymentStatus']);
 Route::post('/updatelaundrystatus', [ManageOrder::class, 'updateLaundryStatus']);
+Route::post('/updateQueuedWashStatus', [ManageOrder::class, 'updateQueuedWashStatus']);
 
 Route::get('/managesales', [ManageSales::class, 'index'])->name('client.managesales');
 

@@ -8,6 +8,9 @@ use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use Illuminate\Support\Facades\DB;
+use App\Models\MobileOrders;
+use App\Models\MobileOrderItems;
+use App\Models\MobileOrdersInfo;
 
 class CustomerOrdering extends Controller
 {
@@ -41,13 +44,52 @@ class CustomerOrdering extends Controller
             ->withNotification(Notification::create('Your order is completed!', 'The laundry shop is now finalizing your order!'))
             ->withData(['key' => 'value']);
 
-
-        // $message = CloudMessage::fromArray([
-        //     'token' => $deviceToken,
-        //     'notification' => [/* Notification data as array */], // optional
-        //     'data' => [/* data array */], // optional
-        // ]);
-
         $messaging->send($message);
+    }
+
+    public function orderMobile(Request $request)
+    {
+        $order = MobileOrders::create([
+            'laundry_id' => $request->laundry_id,
+            'user_id' => $request->user_id,
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
+            'total_price' => $request->total_price,
+            'mode_of_payment' => $request->mode_of_payment,
+            'commodity_type' => $request->commodity_type,
+            'segregation_type' => $request->segregation_type,
+            'status' => $request->status,
+        ]);
+
+        return $order->id;
+    }
+
+    public function orderedItems(Request $request)
+    {
+        $orderedItems = MobileOrderItems::create([
+            'mobile_order_id' => $request->order_id,
+            'item_name' => $request->item_name,
+            'item_price' => $request->item_price,
+        ]);
+
+        return response('success');
+    }
+
+    public function showCustomerOrder($id)
+    {
+        $pendingOrders = DB::table('mobile_orders')
+            ->where('user_id', $id)
+            ->get();
+        return $pendingOrders;
+    }
+    public function updatePaymentStatus(Request $request)
+    {
+        return $request;
+        MobileOrdersInfo::create([
+            'mobile_order_id' => $request->mobile_order_id,
+            'payment_status' => "Paid",
+            'payment_image_uri' => $request->image_uri
+        ]);
     }
 }

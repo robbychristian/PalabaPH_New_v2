@@ -8,6 +8,9 @@ use App\Http\Controllers\Customer\CustomerOrdering;
 
 use App\Http\Controllers\Client\OwnerMobile;
 
+use App\Http\Controllers\Rider\RiderLogin;
+use App\Http\Controllers\Rider\RiderMobile;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,7 +38,16 @@ Route::get('/getadditionalproducts/{id}', [LaundryController::class, 'getAdditio
 Route::get('/getallmachines/{id}', [LaundryController::class, 'getMachines']);
 
 Route::post('/updatetoken', [CustomerOrdering::class, 'updateToken']);
+Route::post('/ordermobile', [CustomerOrdering::class, 'orderMobile']);
+Route::post('/ordereditems', [CustomerOrdering::class, 'orderedItems']);
+Route::get('/showcustomerorder/{id}', [CustomerOrdering::class, 'showCustomerOrder']);
+Route::post('/updatepaymentstatus', [CustomerOrdering::class, 'updatePaymentStatus']);
 
+//Rider functions
+Route::post('/riderlogin', [RiderLogin::class, 'loginRider']);
+Route::post('/getlaundryorders', [RiderMobile::class, 'getLaundryOrders']);
+Route::post('/getspecificorder', [RiderMobile::class, 'getSpecificOrder']);
+Route::post('/acceptorder', [RiderMobile::class, 'acceptOrder']);
 
 //Owner functions
 Route::post('/ownerlogin', [OwnerMobile::class, 'login']);

@@ -15,7 +15,7 @@ class ManageRiders extends Controller
         $laundry = DB::table('laundries')
             ->where('user_id', Auth::user()->id)
             ->get();
-        $laundry_id = $laundry[0]->user_id;
+        $laundry_id = $laundry[0]->id;
         $all_riders = DB::table('mobile_users')
             ->where('laundry_id', $laundry_id)
             ->where('user_role', 4)

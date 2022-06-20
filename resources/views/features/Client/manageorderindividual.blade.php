@@ -23,12 +23,12 @@
                             role="tab" aria-controls="pills-machine" aria-selected="true">Machines</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-services-tab" data-toggle="pill" href="#pills-services"
-                            role="tab" aria-controls="pills-services" aria-selected="false">Services</a>
+                        <a class="nav-link" id="pills-services-tab" data-toggle="pill" href="#pills-services" role="tab"
+                            aria-controls="pills-services" aria-selected="false">Services</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-products-tab" data-toggle="pill" href="#pills-products"
-                            role="tab" aria-controls="pills-products" aria-selected="false">Products</a>
+                        <a class="nav-link" id="pills-products-tab" data-toggle="pill" href="#pills-products" role="tab"
+                            aria-controls="pills-products" aria-selected="false">Products</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
@@ -140,18 +140,87 @@
                                     </script>
                                 @else
                                     <div class="col mb-4">
-                                        <div class="card h-100 bg-danger text-white">
+                                        <div class="card h-100 bg-danger text-white" id="M{{ $info->id }}">
                                             <div class="card-body">
                                                 <h2 class="card-title d-flex justify-content-center align-items-center">
                                                     {{ $info->machine_name }}
                                                 </h2>
                                                 <div class="card-footer text-center" style="background-color: transparent;">
-                                                    <span class="badge badge-danger">Not
-                                                        Available</span>
+                                                    <span class="badge badge-danger">In Use</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <script>
+                                        $("#M{{ $info->id }}").on('click', function() {
+                                            const currPrice = $("#totalPrice").html()
+                                            const currTime = $("#totalTime").html()
+                                            const currVal = Number($("#numberOfRows").val())
+
+                                            //CHECK IF MACHINE EXIST ALREADY
+
+                                            $("#numberOfRows").val(currVal + 1)
+                                            const numRows = Number($("#numberOfRows").val())
+                                            $("#totalPrice").html(Number(currPrice) + Number({{ $info->price }}))
+                                            $("#totalTime").html(Number(currTime) + Number({{ $info->timer }}))
+                                            $("#receiptTable > tbody:last-child").append(
+                                                '<tr>' +
+                                                '<td>{{ $info->machine_service }}<span class="d-none" id="machineCount' +
+                                                numRows + '">{{ $info->id }}</span></td>' +
+                                                '<td>{{ $info->price }}<span class="d-none" id="machineTimer' + numRows +
+                                                '">{{ $info->timer }}</span></td>' +
+                                                '<td class="d-flex">' +
+                                                '<button class="btn btn-sm btn-circle btn-danger mr-3" id="{{ $info->id }}minusQuantity" type="button"><i class="fas fa-minus"></i></button>' +
+                                                '<input readonly type="text" value="0" class="form-control w-25" id="weight{{ $info->id }}">' +
+                                                '<input readonly type="text" value="{{ $info->machine_service }}" class="form-control w-25 d-none" id="machineService' +
+                                                numRows + '">' +
+                                                '<button class="btn btn-sm btn-circle btn-success ml-3" type="button" id="{{ $info->id }}addQuantity"><i class="fas fa-plus"></i></button></td>' +
+                                                '<td id="totalService{{ $info->id }}"></td>' +
+                                                '<td><button class="btn btn-danger btn-sm btn-circle"><i class="fas fa-trash"></i></button></td>' +
+                                                '<tr>'
+                                            )
+                                            // $("#machineCount{{ $info->id }}").text(numRows);
+                                            // console.log($("#machineId{{ $info->id }}").html())
+                                            console.log($("#machineCount" + numRows).html())
+                                            const currMachineTimer = Number($("#totalTime").html())
+
+                                            // for (let i = 0; i < numRows; i++) {
+                                            //     console.log($("#weight{{ $info->id }}").val())
+                                            // }
+                                            $("#{{ $info->id }}addQuantity").on('click', function() {
+                                                let currWeight = Number($('#weight{{ $info->id }}').val())
+                                                if (currWeight >= 0 && currWeight < Number({{ $info->max_kg }})) {
+                                                    currWeight = currWeight + 0.5
+                                                    $("#weight{{ $info->id }}").val(currWeight);
+                                                    $("#totalService{{ $info->id }}").html(Number({{ $info->price }}))
+                                                } else {
+                                                    swal({
+                                                        icon: 'error',
+                                                        title: 'Error!',
+                                                        text: "Cannot exceed past the weight limit!",
+                                                        buttons: false
+                                                    })
+                                                }
+                                            })
+                                            $("#{{ $info->id }}minusQuantity").on('click', function() {
+                                                let currWeight = Number($('#weight{{ $info->id }}').val())
+                                                if (currWeight > 0 && currWeight <= Number({{ $info->max_kg }})) {
+                                                    currWeight = currWeight - 0.5
+                                                    $("#weight{{ $info->id }}").val(currWeight);
+                                                    $("#totalService{{ $info->id }}").html(Number({{ $info->price }}))
+                                                } else {
+                                                    swal({
+                                                        icon: 'error',
+                                                        title: 'Error!',
+                                                        text: "Cannot exceed past the weight limit!",
+                                                        buttons: false
+                                                    })
+                                                }
+                                            })
+
+
+                                        });
+                                    </script>
                                 @endif
                             @endforeach
                         </div>
@@ -195,18 +264,7 @@
                                 </script>
                             @endforeach
 
-                            {{-- <div class="col mb-4">
-                                <div class="card h-100 bg-danger text-white">
-                                    <div class="card-body ">
-                                        <h2 class="card-title d-flex justify-content-center align-items-center">
-                                            S1
-                                        </h2>
-                                        <div class="card-footer text-center" style="background-color: transparent;">
-                                            <span class="badge badge-danger">Not Available</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+
                         </div>
                     </div>{{-- END OF SERVICES TAB --}}
 
@@ -433,8 +491,7 @@
                 </form>
 
                 <div class="d-flex justify-content-end mt-5">
-                    <button class="btn btn-danger mr-3">Clear Items</button>
-                    <button class="btn btn-warning">Back</button>
+                    <button type="button" id="queueItems" class="btn btn-warning mr-3">Queue Items</button>
                 </div>
                 {{-- ======================== CASHLESS MODAL ======================== --}}
                 {{-- ======================== CASHLESS MODAL ======================== --}}
@@ -454,7 +511,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" id="cashlessRecepitSubmit" class="btn btn-primary">Confirm</button>
+                                <button type="button" id="cashlessRecepitSubmit"
+                                    class="btn btn-primary">Confirm</button>
                             </div>
                         </div>
                     </div>

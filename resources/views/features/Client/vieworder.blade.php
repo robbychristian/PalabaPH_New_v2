@@ -124,6 +124,72 @@
                                             }
                                         }, 1000);
                                     </script>
+                                @elseif($machine->machine_status === 'Queued')
+                                    <span class="d-none"
+                                        id="machineOccupancyId{{ $machine->id }}">{{ $machine->id }}</span>
+                                    <span class="d-none"
+                                        id="machineId{{ $machine->machine_id }}">{{ $machine->machine_id }}</span>
+                                    <tr>
+                                        <th>{{ $machine->machine_name }} <span class="d-none"
+                                                id="machineService{{ $machine->id }}">{{ $machine->machine_service }}</span>
+                                        </th>
+                                        <th>{{ $machine->first_name }} {{ $machine->middle_name }}
+                                            {{ $machine->last_name }}</th>
+                                        <th>
+                                            @if ($machine->machine_status === 'pending')
+                                                On Going
+                                            @else
+                                                Queued
+                                            @endif
+                                        </th>
+                                        <th id="machineTimer{{ $machine->id }}">
+                                            <button type="button" class="btn btn-warning"
+                                                id="startCount{{ $machine->id }}">
+                                                @if ($machine->machine_service === 'Wash')
+                                                    Start Timer
+                                                @else
+                                                    On Going
+                                                @endif
+                                            </button>
+                                        </th>
+                                        <th id="numOfDryMachine" class="d-none">0</th>
+                                    </tr>
+                                    <script>
+                                        $("#startCount{{ $machine->id }}").on('click', function() {
+                                            swal({
+                                                icon: "warning",
+                                                title: "Warning!",
+                                                text: "Are you sure you want to start the machine?",
+                                                buttons: {
+                                                    cancel: "Cancel",
+                                                    true: "OK"
+                                                }
+                                            }).then(response => {
+                                                if (response == 'true') {
+                                                    swal({
+                                                        icon: "success",
+                                                        title: "Machine Started!",
+                                                        text: "The machine has been removed from the queue!",
+                                                        buttons: false
+                                                    }).then(response => {
+                                                        const machineId = $("#machineId{{ $machine->machine_id }}").html()
+                                                        const machineOccupancyId = "{{ $machine->id }}"
+                                                        const machineTimer = "{{ $machine->machine_timer }}"
+                                                        const timeEnd = moment().add(machineTimer, 'm')
+                                                        const queuedFormData = new FormData()
+                                                        queuedFormData.append('id', machineOccupancyId)
+                                                        queuedFormData.append('machine_id', machineId)
+                                                        queuedFormData.append('time_end', timeEnd)
+
+                                                        axios.post('/updateQueuedWashStatus', queuedFormData)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    })
+                                                }
+                                            })
+                                        })
+                                    </script>
                                 @endif
                             @endforeach
                         </tbody>
@@ -141,8 +207,8 @@
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-walkIn-tab" data-toggle="tab" href="#nav-walkIn"
                             role="tab" aria-controls="nav-walkIn" aria-selected="true">Walk Ins (Self-Service)</a>
-                        <a class="nav-item nav-link" id="nav-dropOff-tab" data-toggle="tab" href="#nav-dropOff" role="tab"
-                            aria-controls="nav-dropOff" aria-selected="false">Drop Offs (Full-Service)</a>
+                        <a class="nav-item nav-link" id="nav-dropOff-tab" data-toggle="tab" href="#nav-dropOff"
+                            role="tab" aria-controls="nav-dropOff" aria-selected="false">Drop Offs (Full-Service)</a>
                         <a class="nav-item nav-link" id="nav-pickup-tab" data-toggle="tab" href="#nav-pickup" role="tab"
                             aria-controls="nav-pickup" aria-selected="false">Pick Up and Deliveries</a>
                         <a class="nav-item nav-link" id="nav-reservation-tab" data-toggle="tab" href="#nav-reservation"

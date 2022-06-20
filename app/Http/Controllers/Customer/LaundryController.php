@@ -12,6 +12,7 @@ class LaundryController extends Controller
     {
         $laundries = DB::table('laundries')
             ->join('laundry_infos', 'laundries.id', '=', 'laundry_infos.laundry_id')
+            ->join('services', 'laundries.id', '=', 'services.laundry_id')
             ->get();
         return response(['response' => true, 'data' => $laundries]);
     }
