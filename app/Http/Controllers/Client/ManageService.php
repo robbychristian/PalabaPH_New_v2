@@ -38,8 +38,8 @@ class ManageService extends Controller
                 ->addIndexColumn()
 
                 ->addColumn('main_serv_action', function ($row) {
-                    $link = '<a href="#" data-id="' . $row->id . '" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-search"></i></a>';
-                    $link = $link . '<a href="#" data-id="' . $row->id . '" class="btn btn-primary btn-circle btn-sm ml-2"><i class="fas fa-search"></i></a>';
+                    $link = '<a href="/editmainservice/' . $row->id . '" id="editService' . $row->id . '" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-pen"></i></a>';
+                    $link = $link . '<a href="/deletemainservice/' . $row->id . '" id="deleteService' . $row->id . '" class="btn btn-danger btn-circle btn-sm ml-2"><input class="d-none" type="text" name="id' . $row->id . '" value="' . $row->id . '"></input><i class="fas fa-trash"></i></form>';
                     return $link;
                 })
 
@@ -67,8 +67,8 @@ class ManageService extends Controller
                 ->addIndexColumn()
 
                 ->addColumn('add_serv_action', function ($row) {
-                    $link = '<a href="#" data-id="' . $row->id . '" class="btn btn-success btn-circle btn-sm"><i class="fas fa-search"></i></a>';
-                    $link = $link . '<a href="#" data-id="' . $row->id . '" class="btn btn-success btn-circle btn-sm ml-2"><i class="fas fa-search"></i></a>';
+                    $link = '<a href="/editadditionalservice/' . $row->id . '" id="additionalServiceEdit' . $row->id . '" class="btn btn-success btn-circle btn-sm"><i class="fas fa-pen"></i></a>';
+                    $link = $link . '<a href="/deleteadditionalservice/' . $row->id . '" id="additionalServiceDelete' . $row->id . '" class="btn btn-danger btn-circle btn-sm ml-2"><i class="fas fa-trash"></i></a>';
                     return $link;
                 })
 
@@ -90,8 +90,8 @@ class ManageService extends Controller
                 ->addIndexColumn()
 
                 ->addColumn('add_prod_action', function ($row) {
-                    $link = '<a href="#" data-id="' . $row->id . '" class="btn btn-info btn-circle btn-sm"><i class="fas fa-search"></i></a>';
-                    $link = $link . '<a href="#" data-id="' . $row->id . '" class="btn btn-info btn-circle btn-sm ml-2"><i class="fas fa-search"></i></a>';
+                    $link = '<a href="/editadditionalproduct/' . $row->id . '" id="additionalProductEdit' . $row->id . '" class="btn btn-info btn-circle btn-sm"><i class="fas fa-pen"></i></a>';
+                    $link = $link . '<a href="/deleteadditionalproduct/' . $row->id . '" id="additionalProductDelete' . $row->id . '" class="btn btn-circle btn-danger btn-sm ml-2"><i class="fas fa-trash"></i></a>';
                     return $link;
                 })
 
@@ -142,5 +142,90 @@ class ManageService extends Controller
             ]);
             return redirect('/manageservices')->with("success", "Successfully added an additional product");
         }
+    }
+
+    public function editMainService($id)
+    {
+        $laundry_info = DB::table('main_services')
+            ->where('id', $id)
+            ->get();
+        return view('features.Client.Services.editmainservices')->with('service_id', $id)->with('laundry_info', $laundry_info);
+    }
+
+    //FUNCTIONS FOR MAIN SERVICES
+    public function submitEditMainService(Request $request)
+    {
+        DB::table('main_services')
+            ->where('id', $request->id)
+            ->update([
+                'main_serv_name' => $request->name,
+                'main_serv_max_kg' => $request->kg,
+                'main_serv_name' => $request->name,
+            ]);
+        return redirect('/editmainservice/' . $request->id);
+    }
+
+    public function deleteMainService($id)
+    {
+        DB::table('main_services')
+            ->where('id', $id)
+            ->delete();
+        return redirect('/manageservices');
+    }
+    //FUNCTIONS FOR ADDITIONAL SERVICES
+    public function editAdditionalService($id)
+    {
+        $additional_service = DB::table('additional_services')
+            ->where('id', $id)
+            ->get();
+        return view('features.Client.Services.editadditionalservice')->with('service_id', $id)->with('laundry_info', $additional_service);
+    }
+
+    public function submitEditAdditionalService(Request $request)
+    {
+        DB::table('additional_services')
+            ->where('id', $request->id)
+            ->update([
+                'add_serv_name' => $request->name,
+                'add_serv_price' => $request->price
+            ]);
+        return redirect('/editadditionalservice/' . $request->id);
+    }
+
+    public function deleteAdditionalService($id)
+    {
+        DB::table('additional_services')
+            ->where('id', $id)
+            ->delete();
+        return redirect('/manageservices');
+    }
+
+    //FUNCTIONS FOR ADDITIONAL PRODUCTS
+
+    public function editAdditionalProduct($id)
+    {
+        $additional_product = DB::table('additional_products')
+            ->where('id', $id)
+            ->get();
+        return view('features.Client.Services.editadditionalproducts')->with('service_id', $id)->with('laundry_info', $additional_product);
+    }
+
+    public function submitEditAdditionalProduct(Request $request)
+    {
+        DB::table('additional_products')
+            ->where('id', $request->id)
+            ->update([
+                'add_prod_name' => $request->name,
+                'add_prod_price' => $request->price
+            ]);
+        return redirect('/editadditionalproduct/' . $request->id);
+    }
+
+    public function deleteAdditionalProduct($id)
+    {
+        DB::table('additional_products')
+            ->where('id', $id)
+            ->delete();
+        return redirect('/manageservices');
     }
 }

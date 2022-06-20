@@ -47,6 +47,15 @@ Route::get('/addprodtable', [ManageService::class, 'addProdTable'])->name('clien
 Route::post('/addservice', [ManageService::class, 'addService'])->name('client.addservice');
 Route::post('/addadditionalservice', [ManageService::class, 'addAdditionalService'])->name('client.addadditionalservice');
 Route::post('/addadditionalproduct', [ManageService::class, 'addAdditionalProduct'])->name('client.addadditionalproduct');
+Route::get('/editmainservice/{id}', [ManageService::class, 'editMainService']);
+Route::post('/submiteditmainservice', [ManageService::class, 'submitEditMainService']);
+Route::get('/deletemainservice/{id}', [ManageService::class, 'deleteMainService']);
+Route::get('/editadditionalservice/{id}', [ManageService::class, 'editAdditionalService']);
+Route::post('/submiteditadditionalservice', [ManageService::class, 'submitEditAdditionalService']);
+Route::get('/deleteadditionalservice/{id}', [ManageService::class, 'deleteAdditionalService']);
+Route::get('/editadditionalproduct/{id}', [ManageService::class, 'editAdditionalProduct']);
+Route::post('/submiteditadditionalproduct', [ManageService::class, 'submitEditAdditionalProduct']);
+Route::get('/deleteadditionalproduct/{id}', [ManageService::class, 'deleteAdditionalProduct']);
 
 Route::get('/manageinventory', [ManageInventory::class, 'index'])->name('client.manageinventory');
 Route::post('/additem', [ManageInventory::class, 'addItem'])->name('client.addinventory');
