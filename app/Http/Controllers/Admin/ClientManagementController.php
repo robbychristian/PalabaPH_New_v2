@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Laundries;
+use App\Models\UserVerification;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Mail;
+use App\Mail\EmailVerification;
 
 class ClientManagementController extends Controller
 {
@@ -71,6 +75,14 @@ class ClientManagementController extends Controller
 
     public function accept(Request $request)
     {
+        $token = Str::random(64);
+        UserVerification::create([
+            'user_id' => $request->id,
+            'token' => $token
+        ]);
+
+        Mail::to($request->email)->send(new EmailVerification($token));
+
         $laundry = DB::table('laundries')
             ->where('id', $request->id)
             ->update(['is_approved' => 1]);

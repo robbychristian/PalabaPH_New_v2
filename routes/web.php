@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\ClientManagementController as AdminClientManagement;
 use App\Http\Controllers\Admin\UserManagementController as AdminUserManagement;
 
+use App\Http\Controllers\Auth\VerificationController;
+
 use App\Http\Controllers\Client\ManageStore;
 use App\Http\Controllers\Client\ManageService;
 use App\Http\Controllers\Client\ManageInventory;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Client\ManageRiders;
 use App\Http\Controllers\Customer\CustomerOrdering;
 
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +32,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes([
+    'login'    => true,
+    'logout'   => true,
+    'register' => true,
+    'reset'    => true,   // for resetting passwords
+    'confirm'  => false,  // for additional password confirmations
+    'verify'   => true,  // for email verification
+]);
+
+Route::get('/verify', [VerificationController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -39,6 +51,9 @@ Route::post('/clientmanagement/{id}/accept', [AdminClientManagement::class, 'acc
 Route::post('/clientmanagement/{id}/decline', [AdminClientManagement::class, 'decline'])->name('admin.clientmanagement.decline');
 
 Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement');
+Route::post('/blockcustomer', [AdminUserManagement::class, 'blockCustomer']);
+Route::post('/unblockcustomer', [AdminUserManagement::class, 'unblockCustomer']);
+Route::post('/deletecustomer', [AdminUserManagement::class, 'deleteCustomer']);
 
 Route::get('/managestore', [ManageStore::class, 'index'])->name('client.managestore');
 Route::post('/storelaundry', [ManageStore::class, 'store'])->name('client.storelaundry');

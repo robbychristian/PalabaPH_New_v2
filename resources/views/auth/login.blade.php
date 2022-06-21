@@ -2,7 +2,12 @@
 
 @section('content')
     <div class="flex flex-col h-[90vh] w-screen md:h-[85vh]">
-        <div class="grid grid-cols-1 h-full w-full md:grid-cols-2 bg-sky-300 ">
+        @if (Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                <strong>Success!</strong> Your account has been created. Wait for the admin to verify your account!
+            </div>
+        @endif
+        <div class="grid grid-cols-1 h-full w-full md:grid-cols-2 bg-sky-300">
             <div class="hidden md:flex justify-center items-center">
                 <div class="hidden md:flex justify-content">
                     <img src="{{ asset('images/PalabaPH-Icon.png') }}" class="h-4/6 w-full" />
