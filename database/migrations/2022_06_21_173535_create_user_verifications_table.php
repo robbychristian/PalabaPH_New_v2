@@ -15,7 +15,7 @@ class CreateUserVerificationsTable extends Migration
     {
         Schema::create('user_verifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->string('email');
             $table->string('token');
             $table->timestamps();
         });

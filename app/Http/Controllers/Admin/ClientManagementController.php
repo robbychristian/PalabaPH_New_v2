@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Mail;
 use App\Mail\EmailVerification;
+use Carbon\Carbon;
 
 class ClientManagementController extends Controller
 {
@@ -77,16 +78,16 @@ class ClientManagementController extends Controller
     {
         $token = Str::random(64);
         UserVerification::create([
-            'user_id' => $request->id,
+            'email' => $request->email,
             'token' => $token
         ]);
 
-        Mail::to($request->email)->send(new EmailVerification($token));
+        Mail::to($request->email)->send(new EmailVerification($token, $request->email));
 
         $laundry = DB::table('laundries')
             ->where('id', $request->id)
             ->update(['is_approved' => 1]);
-        return redirect('http://127.0.0.1:8000/clientmanagement');
+        return redirect('/clientmanagement');
     }
 
     public function decline(Request $request)
@@ -94,6 +95,21 @@ class ClientManagementController extends Controller
         $laundry = DB::table('laundries')
             ->where('id', $request->id)
             ->delete();
-        return redirect('http://127.0.0.1:8000/clientmanagement');
+        return redirect('/clientmanagement');
+    }
+
+    public function verifyUser($email, $token)
+    {
+        $db_token = DB::table('user_verifications')
+            ->where('email', $email)
+            ->get();
+        if ($db_token[0]->token == $token) {
+            DB::table('users')
+                ->where('email', $email)
+                ->update([
+                    'email_verified_at' => Carbon::now()
+                ]);
+        }
+        return redirect('https://palabaph.com/login')->with('login', 'success');
     }
 }

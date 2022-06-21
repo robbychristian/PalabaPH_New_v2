@@ -23,8 +23,7 @@
                     ipsum at nibh aliquam, et pulvinar tortor lobortis.</div>
             </div>
             <div class="flex col-span-1 justify-center items-center h-full lg:mx-10">
-                <img src="https://github.com/robbychristian/PalabaPH/blob/master/public/images/PalabaPH-Icon.png?raw=true"
-                    class="h-[40vh] w-[40vh] xl:h-[55vh] xl:w-[55vh]" />
+                <img src="https://palabaph.com/images/PalabaPH-Icon.png" class="h-[40vh] w-[40vh] xl:h-[55vh] xl:w-[55vh]" />
             </div>
         </div>
         <div class="flex flex-col h-1/2 w-full bg-white">

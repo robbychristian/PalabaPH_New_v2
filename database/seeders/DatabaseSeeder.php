@@ -21,30 +21,30 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         //Admin
-        // User::create([
-        //     'id' => 0,
-        //     'first_name' => 'Admin',
-        //     'middle_name' => '',
-        //     'last_name' => '',
-        //     'birth_day' => '',
-        //     'email' => 'admin@palabaph.com',
-        //     'password' => Hash::make('palabaph'),
-        //     'user_role' => '1',
-        // ]);
+        User::create([
+            'id' => 0,
+            'first_name' => 'Admin',
+            'middle_name' => '',
+            'last_name' => '',
+            'birth_day' => '',
+            'email' => 'admin@palabaph.com',
+            'password' => Hash::make('palabaph'),
+            'user_role' => '1',
+        ]);
 
         //CUSTOMER POPULATE
-        $faker = Factory::create();
-        foreach (range(1, 20) as $index) {
-            MobileUsers::create([
-                'first_name' => $faker->firstName(),
-                'middle_name' => $faker->lastName(),
-                'last_name' => $faker->lastName(),
-                'contact_no' => $faker->phoneNumber(),
-                'email' => $faker->safeEmail(),
-                'pass' => Hash::make('password'),
-                'is_blocked' => 0,
-                'user_role' => '3',
-            ]);
-        }
+        // $faker = Factory::create();
+        // foreach (range(1, 20) as $index) {
+        //     MobileUsers::create([
+        //         'first_name' => $faker->firstName(),
+        //         'middle_name' => $faker->lastName(),
+        //         'last_name' => $faker->lastName(),
+        //         'contact_no' => $faker->phoneNumber(),
+        //         'email' => $faker->safeEmail(),
+        //         'pass' => Hash::make('password'),
+        //         'is_blocked' => 0,
+        //         'user_role' => '3',
+        //     ]);
+        // }
     }
 }

@@ -3,8 +3,8 @@
 
     The body of your message.
 
-    @component('mail::button', ['url' => ''])
-        {{ $data }}
+    @component('mail::button', ['url' => 'https://palabaph.com/verifyemail/{{ $eamil }}/{{ $token }}'])
+        Verify Email
     @endcomponent
 
     Thanks,<br>

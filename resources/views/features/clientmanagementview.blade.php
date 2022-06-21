@@ -74,17 +74,41 @@
                             <div class="h6">
                                 BIR
                             </div>
-                            <img src="{{ asset('images/PalabaPH-Icon.png') }}" alt="" srcset=""
-                                style="height: 100px; width: 100px">
+                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/bir_pics/{{ $laundries[0]->id }}/{{ $laundries[0]->bir_permit }}"
+                                alt="" srcset="" style="height: 100px; width: 100px">
                         </div>
                     </div>
 
-                    <div class="col-md-6">Photo</div>
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column">
+                            <div class="h6">
+                                Business Permit
+                            </div>
+                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/business_pics/{{ $laundries[0]->id }}/{{ $laundries[0]->bir_permit }}"
+                                alt="" srcset="" style="height: 100px; width: 100px">
+                        </div>
+                    </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-md-6">Photo</div>
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column">
+                            <div class="h6">
+                                DTI
+                            </div>
+                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/dti_pics/{{ $laundries[0]->id }}/{{ $laundries[0]->bir_permit }}"
+                                alt="" srcset="" style="height: 100px; width: 100px">
+                        </div>
+                    </div>
 
-                    <div class="col-md-6">Photo</div>
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column">
+                            <div class="h6">
+                                Valid ID of Owner
+                            </div>
+                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/valid_id_pics/{{ $laundries[0]->id }}/{{ $laundries[0]->bir_permit }}"
+                                alt="" srcset="" style="height: 100px; width: 100px">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
