@@ -1,11 +1,10 @@
 @component('mail::message')
-    # Introduction
+    Click Below to Verify your account!
 
-    The body of your message.
+    <a href="">
+        Verify
+    </a>
 
-    @component('mail::button', ['url' => 'https://palabaph.com/verifyemail/{{ $eamil }}/{{ $token }}'])
-        Verify Email
-    @endcomponent
 
     Thanks,<br>
     {{ config('app.name') }}

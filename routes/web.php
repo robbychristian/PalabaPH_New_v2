@@ -42,6 +42,9 @@ Auth::routes([
 ]);
 
 Route::get('/verifyemail/{email}/{token}', [AdminClientManagement::class, 'verifyUser']);
+Route::get('/mailformat', function () {
+    return view('mail.email-verification');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

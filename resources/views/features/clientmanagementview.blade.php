@@ -74,8 +74,8 @@
                             <div class="h6">
                                 BIR
                             </div>
-                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/bir_pics/{{ $laundries[0]->id }}/{{ $laundries[0]->bir_permit }}"
-                                alt="" srcset="" style="height: 100px; width: 100px">
+                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/bir_pics/{{ $laundries[0]->user_id }}/{{ $laundries[0]->bir_permit }}"
+                                alt="" srcset="" style="height: 350px; width: 350px">
                         </div>
                     </div>
 
@@ -84,8 +84,8 @@
                             <div class="h6">
                                 Business Permit
                             </div>
-                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/business_pics/{{ $laundries[0]->id }}/{{ $laundries[0]->bir_permit }}"
-                                alt="" srcset="" style="height: 100px; width: 100px">
+                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/business_pics/{{ $laundries[0]->user_id }}/{{ $laundries[0]->business_permit }}"
+                                alt="" srcset="" style="height: 350px; width: 350px">
                         </div>
                     </div>
                 </div>
@@ -95,8 +95,8 @@
                             <div class="h6">
                                 DTI
                             </div>
-                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/dti_pics/{{ $laundries[0]->id }}/{{ $laundries[0]->bir_permit }}"
-                                alt="" srcset="" style="height: 100px; width: 100px">
+                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/dti_pics/{{ $laundries[0]->user_id }}/{{ $laundries[0]->dti_permit }}"
+                                alt="" srcset="" style="height: 350px; width: 350px">
                         </div>
                     </div>
 
@@ -105,8 +105,8 @@
                             <div class="h6">
                                 Valid ID of Owner
                             </div>
-                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/valid_id_pics/{{ $laundries[0]->id }}/{{ $laundries[0]->bir_permit }}"
-                                alt="" srcset="" style="height: 100px; width: 100px">
+                            <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/valid_id_pics/{{ $laundries[0]->user_id }}/{{ $laundries[0]->valid_id }}"
+                                alt="" srcset="" style="height: 350px; width: 350px">
                         </div>
                     </div>
                 </div>
