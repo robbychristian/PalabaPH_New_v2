@@ -48,8 +48,9 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-md-6"> <strong> Cellphone Number: </strong>{{ $laundries[0]->phone }}</div>
-                    <div class="col-md-6"> <strong> Landline Number: </strong>{{ $laundries[0]->landline }}</div>
+                    <div class="col-md-4"> <strong> Cellphone Number: </strong>{{ $laundries[0]->phone }}</div>
+                    <div class="col-md-4"> <strong> Landline Number: </strong>{{ $laundries[0]->landline }}</div>
+                    <div class="col-md-4"></div>
                 </div>
 
                 <div class="row mb-3">
@@ -71,7 +72,8 @@
                             <div class="h6">
                                 BIR
                             </div>
-                            <img src="{{  }}" alt="" srcset="" style="height: 100px; width: 100px">
+                            <img src="{{ asset('images/PalabaPH-Icon.png') }}" alt="" srcset=""
+                                style="height: 100px; width: 100px">
                         </div>
                     </div>
 

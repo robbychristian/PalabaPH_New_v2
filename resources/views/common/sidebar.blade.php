@@ -28,7 +28,7 @@
 
         <!-- Nav Item - User Management -->
         <li class="nav-item {{ Route::is() ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('home') }}">
+            <a class="nav-link" href="{{ route('admin.usermanagement') }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>User Management</span></a>
         </li>

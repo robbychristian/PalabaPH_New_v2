@@ -18,8 +18,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Clients</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">30</div>
+                                Customer</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $customer_count }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-building fa-2x text-gray-300"></i>
@@ -37,7 +37,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Laundry Owner Users</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">40</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $client_count }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user fa-2x text-gray-300"></i>
@@ -55,7 +55,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Laundry Riders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">90</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $rider_count }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-biking fa-2x text-gray-300"></i>
