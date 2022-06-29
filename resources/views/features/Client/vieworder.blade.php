@@ -151,6 +151,16 @@
                                                     On Going
                                                 @endif
                                             </button>
+                                            <button type="button" class="btn btn-danger"
+                                                id="cancelMachineQueue{{ $machine->id }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                    <path
+                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                </svg>
+                                            </button>
                                         </th>
                                         <th id="numOfDryMachine" class="d-none">0</th>
                                     </tr>
@@ -184,6 +194,35 @@
                                                         axios.post('/updateQueuedWashStatus', queuedFormData)
                                                             .then(response => {
                                                                 location.reload()
+                                                            })
+                                                    })
+                                                }
+                                            })
+                                        })
+
+                                        $("#cancelMachineQueue{{ $machine->id }}").click(function() {
+                                            swal({
+                                                icon: "warning",
+                                                title: "Cancel Queue?",
+                                                text: "Are you sure you want to cancel the queued machine?",
+                                                buttons: {
+                                                    cancel: "Cancel",
+                                                    true: "OK"
+                                                }
+                                            }).then(response => {
+                                                if (response == 'true') {
+                                                    swal({
+                                                        icon: "success",
+                                                        title: "Queue Cancelled!",
+                                                        text: "The queued machine has been successfully voided!",
+                                                        buttons: false
+                                                    }).then(response => {
+                                                        const formdata = new FormData()
+                                                        formdata.append('id', "{{ $machine->id }}")
+                                                        axios.post('/deletemachine', formdata)
+                                                            .then(response => {
+                                                                console.log(response.data)
+                                                                location.reload();
                                                             })
                                                     })
                                                 }
@@ -269,7 +308,8 @@
                                                             d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
                                                     </svg>
                                                 </button>
-                                                <button class="btn btn-danger btn-sm btn-circle"><i
+                                                <button class="btn btn-danger btn-sm btn-circle"
+                                                    id="deleteOrder{{ $walkIn->id }}"><i
                                                         class="fas fa-trash"></i></button>
                                             </th>
                                         </tr>
@@ -289,6 +329,14 @@
                                                 formdata.append("id", '{{ $walkIn->id }}')
                                                 axios.post('/updatelaundrystatus', formdata)
                                                     .then(respomse => {
+                                                        location.reload()
+                                                    })
+                                            })
+                                            $("#deleteOrder{{ $walkIn->id }}").click(function() {
+                                                const formdata = new FormData()
+                                                formdata.append('id', '{{ $walkIn->id }}')
+                                                axios.post('/deleteorder', formdata)
+                                                    .then(response => {
                                                         location.reload()
                                                     })
                                             })

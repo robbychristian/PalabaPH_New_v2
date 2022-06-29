@@ -13,13 +13,21 @@ class ManageMachine extends Controller
 {
     public function index()
     {
-        $laundries = DB::table('laundries')
-            ->join('laundry_addresses', 'laundry_addresses.laundry_id', '=', 'laundries.id')
-            ->join('laundry_infos', 'laundry_infos.laundry_id', '=', 'laundries.id')
-            ->where('laundries.user_id', Auth::user()->id)
-            ->select('laundries.id', 'laundries.type_of_laundry', 'laundry_infos.*', 'laundry_addresses.*')
+        $laundry = DB::table('laundries')
+            ->where('user_id', Auth::user()->id)
             ->get();
-        return view('features.Client.managemachines')->with('laundries', $laundries);
+
+        $laundry_id = $laundry[0]->id;
+
+        $machines = DB::table('machines')
+            ->where('laundry_id', $laundry_id)
+            ->get();
+
+        $machine_maintenance = DB::table('machines')
+            ->join('machine_maintenances', 'machines.id', '=', 'machine_maintenances.machine_id')
+            ->where('machines.laundry_id', $laundry_id)
+            ->get();
+        return view('features.Client.managemachineindividual')->with('laundry', $laundry)->with('machines', $machines)->with('maintenances', $machine_maintenance);
     }
 
     public function individualMachine($id)
@@ -82,5 +90,12 @@ class ManageMachine extends Controller
             ->update(['maintenance_date' => $request->maintenance_date]);
 
         return response('success');
+    }
+
+    public function deleteMaintenance(Request $request)
+    {
+        DB::table("machine_maintenances")
+            ->where('id', $request->id)
+            ->delete();
     }
 }

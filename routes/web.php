@@ -10,6 +10,7 @@ use App\Http\Controllers\Client\ManageService;
 use App\Http\Controllers\Client\ManageInventory;
 use App\Http\Controllers\Client\ManageOrder;
 use App\Http\Controllers\Client\ManageMachine;
+use App\Http\Controllers\Client\ManageReservation;
 use App\Http\Controllers\Client\ManageSales;
 use App\Http\Controllers\Client\ManageRiders;
 use App\Http\Controllers\Customer\CustomerOrdering;
@@ -80,7 +81,13 @@ Route::get('/deleteadditionalproduct/{id}', [ManageService::class, 'deleteAdditi
 Route::get('/manageinventory', [ManageInventory::class, 'index'])->name('client.manageinventory');
 Route::post('/additem', [ManageInventory::class, 'addItem'])->name('client.addinventory');
 Route::post('/confirmquantity', [ManageInventory::class, 'confirmQuantity']);
+Route::post('/edititem', [ManageInventory::class, 'editItem']);
 Route::post('/deleteitem', [ManageInventory::class, 'deleteItem'])->name('client.deleteinventory');
+
+Route::get('/managereservation', [ManageReservation::class, 'index'])->name('client.managereservation');
+Route::post('/addtimeslot', [ManageReservation::class, 'addTimeSlot']);
+Route::post('/deletetimeslot', [ManageReservation::class, 'deleteTimeSlot']);
+Route::post('/cancelreservation', [ManageReservation::class, 'cancelReservation']);
 
 Route::get('/managemachine', [ManageMachine::class, 'index'])->name('client.managemachine');
 Route::get('/managemachine/{id}', [ManageMachine::class, 'individualMachine'])->name('client.individualmachine');
@@ -88,6 +95,7 @@ Route::post('/addmachine', [ManageMachine::class, 'addMachine'])->name('client.a
 Route::post('/editmachine', [ManageMachine::class, 'editMachine'])->name('client.editmachine');
 Route::post('/deletemachine', [ManageMachine::class, 'deleteMachine'])->name('client.deletemachine');
 Route::post('/addmachinemaintenance', [ManageMachine::class, 'addMaintenance'])->name('client.addmaintenance');
+Route::post('/deletemachinemaintenance', [ManageMachine::class, 'deleteMaintenance']);
 
 Route::get('/manageorder', [ManageOrder::class, 'index'])->name('client.manageorder');
 Route::get('/manageorder/{id}', [ManageOrder::class, 'individualLaundry'])->name('client.manageindividual');
@@ -99,11 +107,15 @@ Route::post('/submitorder', [ManageOrder::class, 'submitOrder'])->name('client.s
 Route::post('/updatepaymentstatus', [ManageOrder::class, 'updatePaymentStatus']);
 Route::post('/updatelaundrystatus', [ManageOrder::class, 'updateLaundryStatus']);
 Route::post('/updateQueuedWashStatus', [ManageOrder::class, 'updateQueuedWashStatus']);
+Route::post('/deleteorder', [ManageOrder::class, 'deleteOrder']);
+Route::post('/deletemachine', [ManageOrder::class, 'deleteMachine']);
 
 Route::get('/managesales', [ManageSales::class, 'index'])->name('client.managesales');
 
 Route::get('/manageriders', [ManageRiders::class, 'index'])->name('client.manageriders');
 Route::post('/addriders', [ManageRiders::class, 'addRiders'])->name('client.addrider');
+Route::post('/editriders', [ManageRiders::class, 'editRiders']);
+Route::post('/deleteriders', [ManageRiders::class, 'deleteRiders']);
 
 Route::get('/sendnotification', [CustomerOrdering::class, 'sendNotification']);
 

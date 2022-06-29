@@ -28,9 +28,14 @@ class ManageService extends Controller
         //    ->where('laundries.user_id', Auth::user()->id)
         //    ->get();
         //return $laundries;
+        // $laundries = DB::table('laundries')
+        // ->join('main_services', 'main_services.laundry_id', '=', 'laundries.id')
+        // ->where('laundries.user_id', Auth::user()->id)
+        // ->get();
+        // dd($laundries);
         if ($request->ajax()) {
-            $laundries = DB::table('main_services')
-                ->join('laundries', 'main_services.laundry_id', '=', 'laundries.id')
+            $laundries = DB::table('laundries')
+                ->join('main_services', 'main_services.laundry_id', '=', 'laundries.id')
                 ->where('laundries.user_id', Auth::user()->id)
                 ->get();
 
@@ -58,8 +63,8 @@ class ManageService extends Controller
     public function addServTable(Request $request)
     {
         if ($request->ajax()) {
-            $laundries = DB::table('additional_services')
-                ->join('laundries', 'additional_services.laundry_id', '=', 'laundries.id')
+            $laundries = DB::table('laundries')
+                ->join('additional_services', 'additional_services.laundry_id', '=', 'laundries.id')
                 ->where('laundries.user_id', Auth::user()->id)
                 ->get();
 
@@ -81,8 +86,8 @@ class ManageService extends Controller
     public function addProdTable(Request $request)
     {
         if ($request->ajax()) {
-            $laundries = DB::table('additional_products')
-                ->join('laundries', 'additional_products.laundry_id', '=', 'laundries.id')
+            $laundries = DB::table('laundries')
+                ->join('additional_products', 'additional_products.laundry_id', '=', 'laundries.id')
                 ->where('laundries.user_id', Auth::user()->id)
                 ->get();
 

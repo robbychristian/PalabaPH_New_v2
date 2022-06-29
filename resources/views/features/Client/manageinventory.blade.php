@@ -106,7 +106,7 @@
                                                     id="{{ $inventory->id }}minusQuantity" type="button"><i
                                                         class="fas fa-minus"></i></button>
                                                 <input type="text" name="itemQty" id="{{ $inventory->id }}itemQty"
-                                                    class="form-control" value="{{ $inventory->item_quantity }}">
+                                                    class="form-control w-50" value="{{ $inventory->item_quantity }}">
                                                 <input type="text" id="itemThreshold" class="d-none form-control w-25"
                                                     value="{{ $inventory->item_threshold }}">
                                                 <input type="text" name="item_id" class="d-none form-control w-25"
@@ -119,12 +119,52 @@
                                                 <button class="btn btn-sm btn-circle btn-info" type="button"
                                                     id="{{ $inventory->id }}confirmQuantity"><i
                                                         class="fas fa-check"></i></button>
-                                                <button type="button" class="btn btn-sm btn-circle btn-danger"><i
-                                                        class="fas fa-trash"
-                                                        id="deleteItem{{ $inventory->id }}"></i></button>
+                                                <button class="btn btn-sm btn-circle btn-warning" type="button"
+                                                    id="{{ $inventory->id }}editQuantity" data-toggle="modal"
+                                                    data-target="#editItem{{ $inventory->id }}"><i
+                                                        class="fas fa-pen"></i></button>
+                                                <button type="button" id="deleteItem{{ $inventory->id }}"
+                                                    class="btn btn-sm btn-circle btn-danger"><i
+                                                        class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     </form>
+                                    <div class="modal fade" id="editItem{{ $inventory->id }}" data-backdrop="static"
+                                        data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Name</label>
+                                                            <input type="text" id="itemName{{ $inventory->id }}"
+                                                                class="form-control" aria-describedby="emailHelp">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Threshold</label>
+                                                            <input type="text" class="form-control"
+                                                                id="itemThreshold{{ $inventory->id }}"
+                                                                aria-describedby="emailHelp">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="button" id="saveEdit{{ $inventory->id }}"
+                                                        class="btn btn-primary">Save Changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <script>
                                         $(document).ready(function() {
                                             $(`#{{ $inventory->id }}addQuantity`).on("click", function() {
@@ -189,6 +229,19 @@
                                                             })
                                                     })
                                             })
+                                        })
+
+                                        $("#saveEdit{{ $inventory->id }}").click(function() {
+                                            const name = $("#itemName{{ $inventory->id }}").val()
+                                            const threshold = parseInt($("#itemThreshold{{ $inventory->id }}").val())
+                                            const formdata = new FormData()
+                                            formdata.append('id', '{{ $inventory->id }}')
+                                            formdata.append('name', name)
+                                            formdata.append('threshold', threshold)
+                                            axios.post('/edititem', formdata)
+                                                .then(response => {
+                                                    location.reload()
+                                                })
                                         })
                                     </script>
                                 @endforeach

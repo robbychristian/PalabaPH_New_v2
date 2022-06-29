@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MobileUsers;
+use Illuminate\Support\Facades\Hash;
 
 class ManageRiders extends Controller
 {
@@ -35,11 +36,32 @@ class ManageRiders extends Controller
             'last_name' => $request->last_name,
             'contact_no' => $request->contact_no,
             'email' => $request->email,
-            'pass' => $request->password,
+            'pass' => Hash::make($request->pass),
             'is_blocked' => 0,
             'user_role' => 4,
         ]);
 
         return response('success');
+    }
+
+    public function editRiders(Request $request)
+    {
+        DB::table('mobile_users')
+            ->where('id', $request->id)
+            ->update([
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'last_name' => $request->last_name,
+                'contact_no' => $request->contact_no,
+                'email' => $request->email,
+                'pass' => Hash::make($request->pass),
+            ]);
+    }
+
+    public function deleteRiders(Request $request)
+    {
+        DB::table('mobile_users')
+            ->where('id', $request->id)
+            ->delete();
     }
 }

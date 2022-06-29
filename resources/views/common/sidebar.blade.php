@@ -81,6 +81,12 @@
                 <span>Sales Management</span></a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('client.managereservation') }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Reservation Management</span></a>
+        </li>
+
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">

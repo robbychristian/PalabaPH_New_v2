@@ -74,6 +74,89 @@
             </div>
 
         </div>
+        <div class="col-md 6 justify-content-end w-100 d-flex h-25">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#machineMaintenanceTable">View Machine
+                Maintenances</button>
+        </div>
+        <div class="modal fade" id="machineMaintenanceTable" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($maintenances as $maintenance)
+                                    <tr>
+                                        <th scope="row">{{ $maintenance->machine_name }}</th>
+                                        <td>{{ $maintenance->description }}</td>
+                                        <td>{{ $maintenance->maintenance_date }}</td>
+                                        <td>
+                                            <button class="btn-danger btn" id="deleteMaintenance{{ $maintenance->id }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <script>
+                                        $("#deleteMaintenance{{ $maintenance->id }}").click(function() {
+                                            swal({
+                                                icon: "warning",
+                                                title: "Delete Maintenance?",
+                                                text: "Are you sure want to delete the machine maintenance?",
+                                                buttons: {
+                                                    cancel: "Cancel",
+                                                    true: "OK"
+                                                }
+                                            }).then(response => {
+                                                if (response == 'true') {
+                                                    swal({
+                                                        icon: "success",
+                                                        title: "Maintenance Deleted!",
+                                                        text: "The machine maintenance has been deleted!",
+                                                        buttons: false
+                                                    }).then(response => {
+                                                        const formdata = new FormData()
+                                                        formdata.append('id', "{{ $maintenance->id }}")
+                                                        axios.post('/deletemachinemaintenance', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    })
+                                                }
+                                            })
+                                        })
+                                    </script>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-12">
             <div class="card shadow-card mb-3 mt-3">
                 <div class="card-body">
@@ -94,7 +177,8 @@
                                 @foreach ($machines as $machine)
                                     <tr>
                                         <td id="machineName{{ $machine->id }}">{{ $machine->machine_name }}</td>
-                                        <td id="machineService{{ $machine->id }}">{{ $machine->machine_service }}</td>
+                                        <td id="machineService{{ $machine->id }}">{{ $machine->machine_service }}
+                                        </td>
                                         <td id="machineTimer{{ $machine->id }}">{{ $machine->timer }}</td>
                                         <td id="machinePrice{{ $machine->id }}">{{ $machine->price }}</td>
                                         <td id="machineKg{{ $machine->id }}">{{ $machine->max_kg }}</td>

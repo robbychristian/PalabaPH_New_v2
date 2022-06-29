@@ -60,4 +60,15 @@ class ManageInventory extends Controller
             ->where("id", $request->item_id)
             ->delete();
     }
+
+    public function editItem(Request $request)
+    {
+        // return $request;
+        DB::table('inventories')
+            ->where('id', $request->id)
+            ->update([
+                'item_name' => $request->name,
+                'item_threshold' => $request->threshold
+            ]);
+    }
 }

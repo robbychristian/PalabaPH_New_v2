@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CustomerRegisterController;
 use App\Http\Controllers\Customer\LaundryController;
 use App\Http\Controllers\Customer\CustomerOrdering;
-
+use App\Http\Controllers\Client\ManageReservation;
 use App\Http\Controllers\Client\OwnerMobile;
 
 use App\Http\Controllers\Rider\RiderLogin;
@@ -51,3 +51,9 @@ Route::post('/acceptorder', [RiderMobile::class, 'acceptOrder']);
 
 //Owner functions
 Route::post('/ownerlogin', [OwnerMobile::class, 'login']);
+
+
+//RESERVATION functions
+Route::post('/gettimeslots', [ManageReservation::class, 'getTimeSlot']);
+Route::post('/createreservation', [ManageReservation::class, 'createReservation']);
+Route::post('/getallreservation', [ManageReservation::class, 'getAllReservation']);

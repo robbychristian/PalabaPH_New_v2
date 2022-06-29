@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Machines;
 use App\Models\MachineOccupancy;
 use App\Models\OrderInfo;
+use Illuminate\Support\Facades\Auth;
 
 //FCM
 use Kreait\Firebase\Contract\Messaging;
@@ -21,6 +22,7 @@ class ManageOrder extends Controller
     public function index()
     {
         $list_of_laundries = DB::table('laundries')
+            ->where('user_id', Auth::user()->id)
             ->get();
         return view('features.Client.manageorder')->with('laundries', $list_of_laundries);
     }
@@ -213,5 +215,22 @@ class ManageOrder extends Controller
             ->update([
                 'status' => 1
             ]);
+    }
+
+    public function deleteOrder(Request $request)
+    {
+        DB::table('order_infos')
+            ->where('id', $request->id)
+            ->update([
+                'status' => "Void",
+                'payment_status' => "Voided"
+            ]);
+    }
+
+    public function deleteMachine(Request $request)
+    {
+        DB::table('machine_occupancies')
+            ->where('id', $request->id)
+            ->delete();
     }
 }

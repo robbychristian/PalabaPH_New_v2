@@ -16,6 +16,7 @@ class ManageSales extends Controller
             $sales = DB::table('orders')
                 ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
                 ->where('order_infos.status', 'Completed')
+                ->orWhere('order_infos.status', 'Void')
                 ->get();
             //dd($laundries);
 

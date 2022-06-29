@@ -19,4 +19,5 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/servicemanagement.js", "public/js")
     .js("resources/js/inventorymanagement.js", "public/js")
     .js("resources/js/swal.js", "public/js")
+    .js("resources/js/reservation.js", "public/js")
     .sourceMaps();
