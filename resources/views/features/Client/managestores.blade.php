@@ -13,162 +13,332 @@
         </div>
 
         @forelse ($storeOwned as $store)
-            <div class="card">
-                <div class="card-body">
-                    {{-- FIRST ROW --}}
-                    <div class="row">
-                        {{-- STORE INFORMATION --}}
-                        <div class="col-sm-12 mb-2">
-                            <div class="card border-0">
-                                <div class="card-header font-weight-bold text-center text-primary">Store Information</div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        {{-- LOGO --}}
-                                        <div class="col-md-3 rounded-circle mb-3">
-                                            <img class="img-fluid d-block mr-auto ml-auto"
-                                                src="{{ asset('images/PalabaPH-Icon.png') }}" alt="No image"
-                                                width="200" />
-                                            <div class="custom-file mt-3">
-                                                <input type="file" class="custom-file-input" id="customFile">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                        </div>
-                                        {{-- DETAILS --}}
-                                        <div class="col-md-9 d-flex justify-content-center flex-column">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="manage-store-content mb-2"><strong
-                                                            class="mr-2">Store
-                                                            Name:</strong>
-                                                        {{ $store->name }}</div>
-                                                    <div class="manage-store-content mb-2"><strong
-                                                            class="mr-2">Address:</strong>
-                                                        {{ $store->street }},
-                                                        {{ Str::substr($store->barangay, 9, Str::of($store->barangay)->length()) }},
-                                                        {{ Str::substr($store->city, 6, Str::of($store->city)->length()) }},
-                                                        {{ Str::substr($store->state, 4, Str::of($store->state)->length()) }}
-                                                    </div>
-                                                    <div class="manage-store-content mb-2"><strong
-                                                            class="mr-2">Landline:</strong>
-                                                        {{ $store->landline }}</div>
-                                                    <div class="manage-store-content mb-2"><strong
-                                                            class="mr-2">Contact
-                                                            Info:</strong>
-                                                        {{ $store->phone }}</div>
-                                                    <div class="manage-store-content mb-2 text-justify"><strong
-                                                            class="mr-2">Description:</strong>
-                                                        {{ $store->description }}</div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="manage-store-content mb-2"><strong
-                                                            class="mr-2">Type of
-                                                            Laundry Shop:</strong>
-                                                        {{ $store->type_of_laundry }}</div>
-                                                    <div class="manage-store-content mb-2"><strong class="mr-2">
-                                                            Opening Hours;</strong>
-                                                        {{ date('h:i A', strtoTime($store->opening_time)) }}</div>
-                                                    <div class="manage-store-content mb-2"><strong class="mr-2">
-                                                            Closing Hours</strong>
-                                                        {{ date('h:i A', strtoTime($store->closing_time)) }}</div>
-                                                </div>
-                                            </div>
-                                        </div> {{-- END OF DETAILS --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>{{-- END OF STORE INFORMATION --}}
-                    </div> {{-- END OF FIRST ROW --}}
-                    <form method="POST" action="{{ route('client.storelaundry') }}" enctype="multipart/form-data">
-                        @csrf
-                        @method('POST')
-                        {{-- SECOND ROW --}}
+            @if ($store->is_published == 0)
+                <div class="card">
+                    <div class="card-body">
+                        {{-- FIRST ROW --}}
                         <div class="row">
-                            {{-- SERVICE TYPES --}}
-                            <div class="col-md-6">
+                            {{-- STORE INFORMATION --}}
+                            <div class="col-sm-12 mb-2">
                                 <div class="card border-0">
-                                    <div class="card-header font-weight-bold text-primary text-center">Services Types
-                                        (Accomodations)
+                                    <div class="card-header font-weight-bold text-center text-primary">Store Information
                                     </div>
-                                    <ul class="list-group list-group-flush border-0">
-                                        <li class="list-group-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="self-servce"
-                                                    name="self_service" value="true">
-                                                <label class="custom-control-label" for="self-servce">Self-Service
-                                                    (Walk-Ins)</label>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {{-- LOGO --}}
+                                            <div class="col-md-3 rounded-circle mb-3">
+                                                <img class="img-fluid d-block mr-auto ml-auto"
+                                                    src="{{ asset('images/PalabaPH-Icon.png') }}" alt="No image"
+                                                    width="200" />
+                                                <div class="custom-file mt-3">
+                                                    <input type="file" class="custom-file-input" id="fileLogo">
+                                                    <label class="custom-file-label" for="fileLogo" id="fileLogoName">Choose
+                                                        file</label>
+                                                </div>
                                             </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="full-service"
-                                                    name="full_service" value="true">
-                                                <label class="custom-control-label" for="full-service">Full Service (Drop
-                                                    Offs)</label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="pickup"
-                                                    name="pickup" value="true">
-                                                <label class="custom-control-label" for="pickup">Pickup and
-                                                    Deliveries</label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="reservations"
-                                                    name="reservation" value="true">
-                                                <label class="custom-control-label" for="reservations">Reservations</label>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                            {{-- DETAILS --}}
+                                            <div class="col-md-9 d-flex justify-content-center flex-column">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="manage-store-content mb-2"><strong class="mr-2">Store
+                                                                Name:</strong>
+                                                            {{ $store->name }}</div>
+                                                        <div class="manage-store-content mb-2"><strong
+                                                                class="mr-2">Address:</strong>
+                                                            {{ $store->street }},
+                                                            {{ Str::substr($store->barangay, 9, Str::of($store->barangay)->length()) }},
+                                                            {{ Str::substr($store->city, 6, Str::of($store->city)->length()) }},
+                                                            {{ Str::substr($store->state, 4, Str::of($store->state)->length()) }}
+                                                        </div>
+                                                        <div class="manage-store-content mb-2"><strong
+                                                                class="mr-2">Landline:</strong>
+                                                            {{ $store->landline }}</div>
+                                                        <div class="manage-store-content mb-2"><strong
+                                                                class="mr-2">Contact
+                                                                Info:</strong>
+                                                            {{ $store->phone }}</div>
+                                                        <div class="manage-store-content mb-2 text-justify"><strong
+                                                                class="mr-2">Description:</strong>
+                                                            {{ $store->description }}</div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="manage-store-content mb-2"><strong class="mr-2">Type
+                                                                of
+                                                                Laundry Shop:</strong>
+                                                            {{ $store->type_of_laundry }}</div>
+                                                        <div class="manage-store-content mb-2"><strong class="mr-2">
+                                                                Opening Hours;</strong>
+                                                            {{ date('h:i A', strtoTime($store->opening_time)) }}</div>
+                                                        <div class="manage-store-content mb-2"><strong class="mr-2">
+                                                                Closing Hours</strong>
+                                                            {{ date('h:i A', strtoTime($store->closing_time)) }}</div>
+                                                    </div>
+                                                </div>
+                                            </div> {{-- END OF DETAILS --}}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>{{-- END OF SERVICE TYPES --}}
+                            </div>{{-- END OF STORE INFORMATION --}}
+                        </div> {{-- END OF FIRST ROW --}}
+                        <form method="POST" action="{{ route('client.storelaundry') }}" enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
+                            {{-- SECOND ROW --}}
+                            <div class="row">
+                                {{-- SERVICE TYPES --}}
+                                <div class="col-md-6">
+                                    <div class="card border-0">
+                                        <div class="card-header font-weight-bold text-primary text-center">Services Types
+                                            (Accomodations)
+                                        </div>
+                                        <ul class="list-group list-group-flush border-0">
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="self-servce"
+                                                        name="self_service" value="true">
+                                                    <label class="custom-control-label" for="self-servce">Self-Service
+                                                        (Walk-Ins)</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="full-service"
+                                                        name="full_service" value="true">
+                                                    <label class="custom-control-label" for="full-service">Full Service
+                                                        (Drop
+                                                        Offs)</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="pickup"
+                                                        name="pickup" value="true">
+                                                    <label class="custom-control-label" for="pickup">Pickup and
+                                                        Deliveries</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="reservations"
+                                                        name="reservation" value="true">
+                                                    <label class="custom-control-label"
+                                                        for="reservations">Reservations</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>{{-- END OF SERVICE TYPES --}}
 
-                            {{-- PAYMENT METHODS --}}
-                            <div class="col-md-6">
-                                <div class="card border-0">
-                                    <div class="card-header font-weight-bold text-primary text-center">Payment Methods
+                                {{-- PAYMENT METHODS --}}
+                                <div class="col-md-6">
+                                    <div class="card border-0">
+                                        <div class="card-header font-weight-bold text-primary text-center">Payment Methods
+                                        </div>
+                                        <ul class="list-group list-group-flush border-0">
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="cash"
+                                                        name="cash" value="true">
+                                                    <label class="custom-control-label" for="cash">Cash</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="cashless"
+                                                        name="cashless" value="true">
+                                                    <label class="custom-control-label" for="cashless">Cashless</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <label for="">GCash QR Code</label>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="gcashFile"
+                                                        name="gcash">
+                                                    <label class="custom-file-label" for="gcashFile"
+                                                        id="gcashFileName">Choose file</label>
+                                                </div>
+                                                @error('gcash')
+                                                    {{ $message }}
+                                                @enderror
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <ul class="list-group list-group-flush border-0">
-                                        <li class="list-group-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="cash" name="cash"
-                                                    value="true">
-                                                <label class="custom-control-label" for="cash">Cash</label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="cashless"
-                                                    name="cashless" value="true">
-                                                <label class="custom-control-label" for="cashless">Cashless</label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <label for="">GCash QR Code</label>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="customFile" name="gcash">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                            @error('gcash')
-                                                {{ $message }}
-                                            @enderror
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>{{-- END OF PAYMENT METHODS --}}
-                        </div> {{-- END OF SECOND ROW --}}
-                        <div class="row d-flex justify-content-center my-3">
-                            <input type="number" value="{{ $store->laundry_id }}" class="d-none"
-                                name="laundry_id">
-                            <button type="submit" class="btn btn-primary w-50 p-2 font-weight-bold"
-                                href="{{ route('client.storelaundry') }}">Publish
-                                Laundry Shop</button>
-                        </div>
-                    </form>
+                                </div>{{-- END OF PAYMENT METHODS --}}
+                            </div> {{-- END OF SECOND ROW --}}
+                            <div class="row d-flex justify-content-center my-3">
+                                <input type="number" value="{{ $store->laundry_id }}" class="d-none"
+                                    name="laundry_id">
+                                <button type="submit" class="btn btn-primary w-50 p-2 font-weight-bold"
+                                    href="{{ route('client.storelaundry') }}">Publish
+                                    Laundry Shop</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="card">
+                    <div class="card-body">
+                        {{-- FIRST ROW --}}
+                        <div class="row">
+                            {{-- STORE INFORMATION --}}
+                            <div class="col-sm-12 mb-2">
+                                <div class="card border-0">
+                                    <div class="card-header font-weight-bold text-center text-primary">Store Information
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {{-- LOGO --}}
+                                            <div class="col-md-3 rounded-circle mb-3">
+                                                <img class="img-fluid d-block mr-auto ml-auto"
+                                                    src="{{ asset('images/PalabaPH-Icon.png') }}" alt="No image"
+                                                    width="200" />
+                                                <div class="custom-file mt-3">
+                                                    <input type="file" class="custom-file-input" id="fileLogo">
+                                                    <label class="custom-file-label" for="fileLogo"
+                                                        id="fileLogoName">Choose file</label>
+                                                </div>
+                                            </div>
+                                            {{-- DETAILS --}}
+                                            <div class="col-md-9 d-flex justify-content-center flex-column">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="manage-store-content mb-2"><strong
+                                                                class="mr-2">Store
+                                                                Name:</strong>
+                                                            {{ $store->name }}</div>
+                                                        <div class="manage-store-content mb-2"><strong
+                                                                class="mr-2">Address:</strong>
+                                                            {{ $store->street }},
+                                                            {{ Str::substr($store->barangay, 9, Str::of($store->barangay)->length()) }},
+                                                            {{ Str::substr($store->city, 6, Str::of($store->city)->length()) }},
+                                                            {{ Str::substr($store->state, 4, Str::of($store->state)->length()) }}
+                                                        </div>
+                                                        <div class="manage-store-content mb-2"><strong
+                                                                class="mr-2">Landline:</strong>
+                                                            {{ $store->landline }}</div>
+                                                        <div class="manage-store-content mb-2"><strong
+                                                                class="mr-2">Contact
+                                                                Info:</strong>
+                                                            {{ $store->phone }}</div>
+                                                        <div class="manage-store-content mb-2 text-justify"><strong
+                                                                class="mr-2">Description:</strong>
+                                                            {{ $store->description }}</div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="manage-store-content mb-2"><strong class="mr-2">Type
+                                                                of
+                                                                Laundry Shop:</strong>
+                                                            {{ $store->type_of_laundry }}</div>
+                                                        <div class="manage-store-content mb-2"><strong class="mr-2">
+                                                                Opening Hours;</strong>
+                                                            {{ date('h:i A', strtoTime($store->opening_time)) }}</div>
+                                                        <div class="manage-store-content mb-2"><strong class="mr-2">
+                                                                Closing Hours</strong>
+                                                            {{ date('h:i A', strtoTime($store->closing_time)) }}</div>
+                                                    </div>
+                                                </div>
+                                            </div> {{-- END OF DETAILS --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>{{-- END OF STORE INFORMATION --}}
+                        </div> {{-- END OF FIRST ROW --}}
+                        <form method="POST" action="{{ route('client.storelaundry') }}"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
+                            {{-- SECOND ROW --}}
+                            <div class="row">
+                                {{-- SERVICE TYPES --}}
+                                <div class="col-md-6">
+                                    <div class="card border-0">
+                                        <div class="card-header font-weight-bold text-primary text-center">Services Types
+                                            (Accomodations)
+                                        </div>
+                                        <ul class="list-group list-group-flush border-0">
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="self-servce"
+                                                        name="self_service" value="true">
+                                                    <label class="custom-control-label" for="self-servce">Self-Service
+                                                        (Walk-Ins)</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="full-service"
+                                                        name="full_service" value="true">
+                                                    <label class="custom-control-label" for="full-service">Full Service
+                                                        (Drop
+                                                        Offs)</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="pickup"
+                                                        name="pickup" value="true">
+                                                    <label class="custom-control-label" for="pickup">Pickup and
+                                                        Deliveries</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="reservations"
+                                                        name="reservation" value="true">
+                                                    <label class="custom-control-label"
+                                                        for="reservations">Reservations</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>{{-- END OF SERVICE TYPES --}}
+
+                                {{-- PAYMENT METHODS --}}
+                                <div class="col-md-6">
+                                    <div class="card border-0">
+                                        <div class="card-header font-weight-bold text-primary text-center">Payment Methods
+                                        </div>
+                                        <ul class="list-group list-group-flush border-0">
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="cash"
+                                                        name="cash" value="true">
+                                                    <label class="custom-control-label" for="cash">Cash</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="cashless"
+                                                        name="cashless" value="true">
+                                                    <label class="custom-control-label" for="cashless">Cashless</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <label for="">GCash QR Code</label>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="gcashFile"
+                                                        name="gcash">
+                                                    <label class="custom-file-label" for="gcashFile"
+                                                        id="gcashFileName">Choose file</label>
+                                                </div>
+                                                @error('gcash')
+                                                    {{ $message }}
+                                                @enderror
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>{{-- END OF PAYMENT METHODS --}}
+                            </div> {{-- END OF SECOND ROW --}}
+                            <div class="row d-flex justify-content-center my-3">
+                                <input type="number" value="{{ $store->laundry_id }}" class="d-none"
+                                    name="laundry_id">
+                                <button type="submit" class="btn btn-primary w-50 p-2 font-weight-bold"
+                                    href="{{ route('client.storelaundry') }}">Edit Laundry Shop</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @endif
         @empty
             <div class="container">
                 <div class="card">
@@ -184,9 +354,13 @@
 
         <script src="{{ asset('js/time.js') }}"></script>
         <script>
-            $('.custom-file-input').change(function(e) {
+            $('#fileLogo').change(function(e) {
                 var fileName = e.target.files[0].name;
-                $('.custom-file-label').html(fileName);
+                $('#fileLogoName').html(fileName);
+            });
+            $('#gcashFile').change(function(e) {
+                var fileName = e.target.files[0].name;
+                $('#gcashFileName').html(fileName);
             });
         </script>
         {{-- <div class="rounded-circle d-flex justify-content-center align-items-center">

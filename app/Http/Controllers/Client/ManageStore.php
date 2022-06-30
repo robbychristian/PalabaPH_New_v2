@@ -24,7 +24,6 @@ class ManageStore extends Controller
             ->join('laundry_infos', 'laundries.id', '=', 'laundry_infos.laundry_id')
             ->join('services', 'laundries.id', '=', 'services.laundry_id')
             ->where('user_id', Auth::user()->id)
-            ->where('services.is_published', 0)
             ->get();
         return view('features.Client.managestores')->with('storeOwned', $storeOwned);
     }
@@ -73,11 +72,11 @@ class ManageStore extends Controller
                 ->where('laundry_id', $request->laundry_id)
                 ->update([
                     'self_service' => $ss,
-                    'full_service' => $ss,
-                    'pick_up' => $ss,
-                    'reservations' => $ss,
-                    'cash' => $ss,
-                    'cashless' => $ss,
+                    'full_service' => $fs,
+                    'pick_up' => $pu,
+                    'reservations' => $res,
+                    'cash' => $cash,
+                    'cashless' => $cl,
                     'gcash_qr_code' => $fileName,
                     'is_published' => 1,
                 ]);
@@ -87,11 +86,11 @@ class ManageStore extends Controller
                 ->where('laundry_id', $request->laundry_id)
                 ->update([
                     'self_service' => $ss,
-                    'full_service' => $ss,
-                    'pick_up' => $ss,
-                    'reservations' => $ss,
-                    'cash' => $ss,
-                    'cashless' => $ss,
+                    'full_service' => $fs,
+                    'pick_up' => $pu,
+                    'reservations' => $res,
+                    'cash' => $cash,
+                    'cashless' => $cl,
                     'gcash_qr_code' => null,
                     'is_published' => 1,
                 ]);
