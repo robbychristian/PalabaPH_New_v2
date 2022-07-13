@@ -349,6 +349,7 @@
                                                     if (response == 'true') {
                                                         const formdata = new FormData()
                                                         formdata.append("id", '{{ $walkIn->id }}')
+                                                        formdata.append('user_id', "{{ $walkIn->user_id }}")
                                                         axios.post('/updatelaundrystatus', formdata)
                                                             .then(respomse => {
                                                                 location.reload()
@@ -473,6 +474,7 @@
                                                     if (response == 'true') {
                                                         const formdata = new FormData()
                                                         formdata.append("id", '{{ $dropOff->id }}')
+                                                        formdata.append("user_id", '{{ $dropOff->user_id }}')
                                                         axios.post('/updatelaundrystatus', formdata)
                                                             .then(response => {
                                                                 location.reload()
@@ -595,6 +597,7 @@
                                                 }).then(response => {
                                                     const formdata = new FormData()
                                                     formdata.append("id", '{{ $pickUp->id }}')
+                                                    formdata.append("user_id", '{{ $pickUp->user_id }}')
                                                     axios.post('/updatelaundrystatus', formdata)
                                                         .then(respomse => {
                                                             location.reload()

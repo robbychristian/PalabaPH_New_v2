@@ -219,6 +219,19 @@ class ManageOrder extends Controller
 
     public function updateLaundryStatus(Request $request)
     {
+        $getToken = DB::table('mobile_users')
+            ->where('id', $request->user_id)
+            ->get();
+
+        $messaging = app('firebase.messaging');
+        $deviceToken = $getToken[0]->notif_token;
+        $title = "Order Completed!";
+        $body =  "Your order has been completed!";
+
+        $message = CloudMessage::withTarget('token', $deviceToken)
+            ->withNotification(Notification::create($title, $body))
+            ->withData(['key' => 'value']);
+        $messaging->send($message);
         DB::table('order_infos')
             ->where('id', $request->id)
             ->update([
