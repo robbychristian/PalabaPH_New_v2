@@ -243,7 +243,7 @@
                                 </div>
                             </div>{{-- END OF STORE INFORMATION --}}
                         </div> {{-- END OF FIRST ROW --}}
-                        <form method="POST" action="{{ route('client.storelaundry') }}"
+                        <form method="POST" action="{{ route('client.storelaundry') }}" id="editForm"
                             enctype="multipart/form-data">
                             @csrf
                             @method('POST')
@@ -259,7 +259,8 @@
                                             <li class="list-group-item">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" id="self-servce"
-                                                        name="self_service" value="true">
+                                                        name="self_service" value="true"
+                                                        @if ($store->self_service == 1) checked @endif>
                                                     <label class="custom-control-label" for="self-servce">Self-Service
                                                         (Walk-Ins)</label>
                                                 </div>
@@ -267,7 +268,8 @@
                                             <li class="list-group-item">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" id="full-service"
-                                                        name="full_service" value="true">
+                                                        name="full_service" value="true"
+                                                        @if ($store->full_service == 1) checked @endif>
                                                     <label class="custom-control-label" for="full-service">Full Service
                                                         (Drop
                                                         Offs)</label>
@@ -276,7 +278,8 @@
                                             <li class="list-group-item">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" id="pickup"
-                                                        name="pickup" value="true">
+                                                        name="pickup" value="true"
+                                                        @if ($store->pick_up == 1) checked @endif>
                                                     <label class="custom-control-label" for="pickup">Pickup and
                                                         Deliveries</label>
                                                 </div>
@@ -284,7 +287,8 @@
                                             <li class="list-group-item">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" id="reservations"
-                                                        name="reservation" value="true">
+                                                        name="reservation" value="true"
+                                                        @if ($store->reservations == 1) checked @endif>
                                                     <label class="custom-control-label"
                                                         for="reservations">Reservations</label>
                                                 </div>
@@ -301,15 +305,17 @@
                                         <ul class="list-group list-group-flush border-0">
                                             <li class="list-group-item">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="cash"
-                                                        name="cash" value="true">
+                                                    <input type="checkbox" class="custom-control-input payment"
+                                                        id="cash" name="cash" value="true"
+                                                        @if ($store->cash == 1) checked @endif>
                                                     <label class="custom-control-label" for="cash">Cash</label>
                                                 </div>
                                             </li>
                                             <li class="list-group-item">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="cashless"
-                                                        name="cashless" value="true">
+                                                    <input type="checkbox" class="custom-control-input payment"
+                                                        id="cashless" name="cashless" value="true"
+                                                        @if ($store->cashless == 1) checked @endif>
                                                     <label class="custom-control-label" for="cashless">Cashless</label>
                                                 </div>
                                             </li>
@@ -332,12 +338,33 @@
                             <div class="row d-flex justify-content-center my-3">
                                 <input type="number" value="{{ $store->laundry_id }}" class="d-none"
                                     name="laundry_id">
-                                <button type="submit" class="btn btn-primary w-50 p-2 font-weight-bold"
-                                    href="{{ route('client.storelaundry') }}">Edit Laundry Shop</button>
+                                <button type="button" class="btn btn-primary w-50 p-2 font-weight-bold"
+                                    id="submitEditLaundry">Edit Laundry Shop</button>
                             </div>
                         </form>
                     </div>
                 </div>
+                <script>
+                    $("#submitEditLaundry").click(function() {
+                        if ($('#editForm input:checked').length > 0) {
+                            swal({
+                                icon: "success",
+                                title: "Laundry Edited!",
+                                text: "The laundry shop has been successfully edited!",
+                                buttons: false,
+                            }).then(() => {
+                                $("#editForm").submit()
+                            })
+                        } else {
+                            swal({
+                                icon: "error",
+                                title: "Error!",
+                                text: "Please make sure you check at least one box in both accomodations and payment method!",
+                                buttons: false
+                            })
+                        }
+                    })
+                </script>
             @endif
         @empty
             <div class="container">

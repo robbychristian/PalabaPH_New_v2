@@ -11,6 +11,7 @@ use App\Models\Machines;
 use App\Models\MachineOccupancy;
 use App\Models\OrderInfo;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 //FCM
 use Kreait\Firebase\Contract\Messaging;
@@ -52,6 +53,27 @@ class ManageOrder extends Controller
             ->where('is_blocked', 0)
             ->get();
         $laundryID = Laundries::find($id);
+        $reservations = DB::table('mobile_reservations')
+            ->join('machines', 'machines.id', '=', 'mobile_reservations.machine_id')
+            ->join('mobile_users', 'mobile_users.id', '=', 'mobile_reservations.user_id')
+            ->where('mobile_reservations.laundry_id', $id)
+            ->where('mobile_reservations.status', 'Pending')
+            ->select('mobile_reservations.*', 'machines.machine_name', 'mobile_users.first_name', 'mobile_users.last_name')
+            ->get();
+        $date = Carbon::now()->format('m-d-Y');
+
+        $reservation_today = [];
+
+        foreach ($reservations as $reservation) {
+            if ($date == $reservation->reservation_date) {
+                array_push($reservation_today, $reservation);
+            }
+        }
+
+        $cashlessReceipts = DB::table('mobile_orders_infos')
+            ->join('mobile_orders', 'mobile_orders.id', '=', 'mobile_orders_infos.mobile_order_id')
+            ->where('mobile_orders.laundry_id', $id)
+            ->get();
 
         return view('features.Client.manageorderindividual', [
             'laundry' => $laundry,
@@ -60,6 +82,8 @@ class ManageOrder extends Controller
             'laundryCommodities' => $laundry_services,
             'customers' => $customers,
             'laundryID' => $laundryID,
+            'reservations' => $reservation_today,
+            'cashlessReceipts' => $cashlessReceipts
         ]);
     }
 

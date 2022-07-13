@@ -83,8 +83,18 @@
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('client.managereservation') }}">
-                <i class="fas fa-fw fa-user"></i>
+                <i class="fas fa-fw fa-calendar"></i>
                 <span>Reservation Management</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('client.managecomplaints') }}">
+                <i class="fas fa-fw fa-comment"></i>
+                <span>Complaints Management</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('client.managefeedbacks') }}">
+                <i class="fas fa-fw fa-star"></i>
+                <span>Feedbacks Management</span></a>
         </li>
 
 

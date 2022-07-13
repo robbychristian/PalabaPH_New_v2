@@ -165,7 +165,7 @@ class ManageService extends Controller
             ->update([
                 'main_serv_name' => $request->name,
                 'main_serv_max_kg' => $request->kg,
-                'main_serv_name' => $request->name,
+                'main_serv_price' => $request->price,
             ]);
         return redirect('/editmainservice/' . $request->id);
     }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\TimeSlots;
 use App\Models\MobileReservations;
+use Carbon\Carbon;
 
 class ManageReservation extends Controller
 {
@@ -26,6 +27,9 @@ class ManageReservation extends Controller
             ->where("laundry_id", $laundry_id)
             ->get();
 
+
+
+
         $reservations = DB::table('mobile_reservations')
             ->join('machines', 'machines.id', '=', 'mobile_reservations.machine_id')
             ->join('mobile_users', 'mobile_users.id', '=', 'mobile_reservations.user_id')
@@ -33,11 +37,20 @@ class ManageReservation extends Controller
             ->where('mobile_reservations.status', 'Pending')
             ->select('mobile_reservations.*', 'machines.machine_name', 'mobile_users.first_name', 'mobile_users.last_name')
             ->get();
+        $date = Carbon::now()->format('m-d-Y');
+
+        $reservation_today = [];
+
+        foreach ($reservations as $reservation) {
+            if ($date == $reservation->reservation_date) {
+                array_push($reservation_today, $reservation);
+            }
+        }
         return view('features.Client.Reservation.viewreservation', [
             'laundry_id' => $laundry_id,
             'laundry_info' => $laundry_info,
             'time_slots' => $time_slots,
-            'reservations' => $reservations
+            'reservations' => $reservation_today
         ]);
     }
 
@@ -93,5 +106,14 @@ class ManageReservation extends Controller
         return DB::table('mobile_reservations')
             ->where('laundry_id', $request->laundry_id)
             ->get();
+    }
+
+    public function processReservation(Request $request)
+    {
+        DB::table('mobile_reservations')
+            ->where('id', $request->id)
+            ->update([
+                'status' => 'Success'
+            ]);
     }
 }

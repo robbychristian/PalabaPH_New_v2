@@ -76,9 +76,7 @@ class LoginController extends Controller
             } else {
                 // dd('ok');
                 $this->incrementLoginAttempts($request);
-                return response()->json([
-                    'error' => 'Credentials do not match our database.'
-                ], 401);
+                return redirect('/login')->with('error');
             }
         }
     }

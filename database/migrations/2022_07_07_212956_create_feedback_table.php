@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCashlessReceiptsTable extends Migration
+class CreateFeedbackTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateCashlessReceiptsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cashless_receipts', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('laundry_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('mobile_order_id');
-            $table->string('gcash_receipt');
-            $table->string('status');
+            $table->string('comment');
+            $table->string('reply')->nullable();
+            $table->string('rating');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateCashlessReceiptsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cashless_receipts');
+        Schema::dropIfExists('feedback');
     }
 }

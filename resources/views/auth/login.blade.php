@@ -12,6 +12,11 @@
                 <strong>Success!</strong> Your account has been verified!
             </div>
         @endif
+        @if (Session::has('error'))
+            <div class="alert alert-success" role="alert">
+                <strong>Error!</strong> Credentials do not match!
+            </div>
+        @endif
         <div class="grid grid-cols-1 h-full w-full md:grid-cols-2 bg-sky-300">
             <div class="hidden md:flex justify-center items-center">
                 <div class="hidden md:flex justify-content">

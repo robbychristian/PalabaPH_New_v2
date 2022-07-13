@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CustomerRegisterController;
 use App\Http\Controllers\Customer\LaundryController;
 use App\Http\Controllers\Customer\CustomerOrdering;
+use App\Http\Controllers\Customer\ComplaintsController;
+use App\Http\Controllers\Customer\FeedbackController;
 use App\Http\Controllers\Client\ManageReservation;
 use App\Http\Controllers\Client\OwnerMobile;
 
@@ -43,6 +45,21 @@ Route::post('/ordereditems', [CustomerOrdering::class, 'orderedItems']);
 Route::get('/showcustomerorder/{id}', [CustomerOrdering::class, 'showCustomerOrder']);
 Route::post('/updatepaymentstatus', [CustomerOrdering::class, 'updatePaymentStatus']);
 
+//Complaints function
+Route::post('/addcomplaints', [ComplaintsController::class, 'addComplaints']);
+Route::post('/getcustomercomplaints', [ComplaintsController::class, 'getCustomerComplaints']);
+Route::post('/getindividualcomplaint', [ComplaintsController::class, 'getIndividualComplaint']);
+
+//Feedback function
+Route::post('/addfeedback', [FeedbackController::class, 'addFeedback']);
+Route::post('/getcustomerfeedbacks', [FeedbackController::class, 'getCustomerFeedback']);
+Route::post('/getindividualfeedback', [FeedbackController::class, 'getIndividualFeedback']);
+
+//RESERVATION functions
+Route::post('/gettimeslots', [ManageReservation::class, 'getTimeSlot']);
+Route::post('/createreservation', [ManageReservation::class, 'createReservation']);
+Route::post('/getallreservation', [ManageReservation::class, 'getAllReservation']);
+
 //Rider functions
 Route::post('/riderlogin', [RiderLogin::class, 'loginRider']);
 Route::post('/getlaundryorders', [RiderMobile::class, 'getLaundryOrders']);
@@ -51,9 +68,3 @@ Route::post('/acceptorder', [RiderMobile::class, 'acceptOrder']);
 
 //Owner functions
 Route::post('/ownerlogin', [OwnerMobile::class, 'login']);
-
-
-//RESERVATION functions
-Route::post('/gettimeslots', [ManageReservation::class, 'getTimeSlot']);
-Route::post('/createreservation', [ManageReservation::class, 'createReservation']);
-Route::post('/getallreservation', [ManageReservation::class, 'getAllReservation']);

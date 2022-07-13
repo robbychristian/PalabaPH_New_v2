@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Services;
 use DataTables;
-use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class ManageStore extends Controller
 {
@@ -96,5 +97,58 @@ class ManageStore extends Controller
                 ]);
             return redirect('/managestore');
         }
+    }
+
+    public function getLaundryInfo(Request $request)
+    {
+        return DB::table('laundries')
+            ->join('laundry_infos', 'laundry_infos.laundry_id', '=', 'laundries.id')
+            ->where('laundries.user_id', $request->user_id)
+            ->get();
+    }
+
+    public function editLaundryInfo(Request $request)
+    {
+        DB::table('laundry_infos')
+            ->where('laundry_id', $request->laundry_id)
+            ->update([
+                'description' => $request->description,
+                'opening_time' => Carbon::parse('2018-06-15' . $request->opening_time),
+                'closing_time' => Carbon::parse('2018-06-15' . $request->closing_time),
+            ]);
+        DB::table('laundries')
+            ->where('id', $request->laundry_id)
+            ->update([
+                'landline' => $request->landline,
+                'phone' => $request->contact_no
+            ]);
+    }
+
+    public function getPassword(Request $request)
+    {
+        return DB::table('users')
+            ->where('id', $request->id)
+            ->get();
+    }
+
+    public function checkCurrentPassword(Request $request)
+    {
+        $user = DB::table('users')
+            ->where('id', $request->id)
+            ->get();
+        if (Hash::check($request->password, $user[0]->password)) {
+            return "nice";
+        } else {
+            return 'error';
+        }
+    }
+
+    public function editPassword(Request $request)
+    {
+        DB::table('users')
+            ->where('id', $request->id)
+            ->update([
+                'password' => Hash::make($request->password)
+            ]);
     }
 }

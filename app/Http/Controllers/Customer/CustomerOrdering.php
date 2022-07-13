@@ -85,11 +85,14 @@ class CustomerOrdering extends Controller
     }
     public function updatePaymentStatus(Request $request)
     {
-        return $request;
-        MobileOrdersInfo::create([
-            'mobile_order_id' => $request->mobile_order_id,
-            'payment_status' => "Paid",
-            'payment_image_uri' => $request->image_uri
-        ]);
+        if ($request->hasFile('imageFile')) {
+            $fileName = $request->file('imageFile')->getClientOriginalName();
+            $request->file('imageFile')->storeAs('cashless_receipts', $request->user_id . '/' . $fileName, '');
+            MobileOrdersInfo::create([
+                'mobile_order_id' => $request->mobile_order_id,
+                'payment_status' => "Paid",
+                'payment_image_uri' => $fileName
+            ]);
+        }
     }
 }

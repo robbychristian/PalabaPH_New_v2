@@ -10,8 +10,56 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Order Management</h1>
-            <a href="{{ route('client.vieworder', $laundryID->id) }}"><button class="btn btn-primary">View
-                    Orders</button></a>
+            <div class="d-flex">
+                <button class="btn btn-secondary mx-3" data-toggle="modal" data-target="#cashlessReceiptsModal">View Cashless
+                    Receipts</button>
+                <a href="{{ route('client.vieworder', $laundryID->id) }}"><button class="btn btn-primary mx-3">View
+                        Orders</button></a>
+            </div>
+
+            <div class="modal fade" id="cashlessReceiptsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Cashless Receipts</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($cashlessReceipts as $cashlessReceipt)
+                                        <tr>
+                                            <th scope="row" class="w-50">
+                                                <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/cashless_recepts/{{ $cashlessReceipt->user_id }}/{{ $cashlessReceipt->payment_image_uri }}"
+                                                    alt="" srcset="" class="w-50">
+                                            </th>
+                                            <td>{{ $cashlessReceipt->first_name }}</td>
+                                            <td>{{ $cashlessReceipt->last_name }}</td>
+                                            <td>P{{ $cashlessReceipt->total_price }}</td>
+                                        </tr>
+                                    @empty
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -145,7 +193,8 @@
                                                 <h2 class="card-title d-flex justify-content-center align-items-center">
                                                     {{ $info->machine_name }}
                                                 </h2>
-                                                <div class="card-footer text-center" style="background-color: transparent;">
+                                                <div class="card-footer text-center"
+                                                    style="background-color: transparent;">
                                                     <span class="badge badge-danger">In Use</span>
                                                 </div>
                                             </div>
@@ -519,6 +568,109 @@
                 </div>
             </div>
         </div>
+
+        {{-- INSERT TABLE HERE --}}
+        <div class="d-flex mx-4 justify-content-between">
+            <div class="h4 text-dark">View Reservations</div>
+        </div>
+        <table class="table mx-4">
+            <thead>
+                <tr>
+                    <th scope="col">Machine</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Reservation Date</th>
+                    <th scope="col">Time Start</th>
+                    <th scope="col">Time End</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($reservations as $reservation)
+                    <tr>
+                        <th scope="row">{{ $reservation->machine_name }}</th>
+                        <td>{{ $reservation->reservation_date }}</td>
+                        <td>{{ $reservation->first_name }} {{ $reservation->last_name }}</td>
+                        <td>{{ $reservation->time_start }}</td>
+                        <td>{{ $reservation->time_end }}</td>
+                        <td>
+                            <button class="btn btn-success" id="successReservation{{ $reservation->id }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path
+                                        d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                                </svg>
+                            </button>
+                            <button class="btn btn-danger" id="cancelReservation{{ $reservation->id }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path
+                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                    <script>
+                        $("#cancelReservation{{ $reservation->id }}").click(function() {
+                            swal({
+                                icon: "warning",
+                                title: "Cancel Reservation?",
+                                text: "Are you sure you want to cancel the reservation?",
+                                buttons: {
+                                    cancel: "Cancel",
+                                    true: "OK"
+                                }
+                            }).then(response => {
+                                if (response == 'true') {
+                                    const formdata = new FormData()
+                                    formdata.append('id', '{{ $reservation->id }}')
+                                    axios.post('/cancelreservation', formdata)
+                                        .then(response => {
+                                            swal({
+                                                icon: "success",
+                                                title: "Reservation Cancelled!",
+                                                text: "The reservation has been cancelled!",
+                                                buttons: false,
+                                            }).then(response => {
+                                                location.reload()
+                                            })
+                                        })
+                                }
+                            })
+                        })
+
+                        $("#successReservation{{ $reservation->id }}").click(function() {
+                            swal({
+                                icon: "warning",
+                                title: "Process the Reservation?",
+                                text: "Are you sure you want to process the reservation?",
+                                buttons: {
+                                    cancel: "Cancel",
+                                    true: "OK"
+                                }
+                            }).then(response => {
+                                if (response == 'true') {
+                                    swal({
+                                        icon: "success",
+                                        title: "Successfully Processed!",
+                                        text: "The reservation has pushed through!",
+                                        buttons: false
+                                    }).then(response => {
+                                        const formdata = new FormData()
+                                        formdata.append('id', "{{ $reservation->id }}")
+                                        axios.post('/processreservation', formdata)
+                                            .then(response => {
+                                                location.reload()
+                                            })
+                                    })
+                                }
+                            })
+                        })
+                    </script>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection
 

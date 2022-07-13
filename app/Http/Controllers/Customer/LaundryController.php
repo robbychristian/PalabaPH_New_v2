@@ -22,6 +22,7 @@ class LaundryController extends Controller
         $laundry = DB::table('laundries')
             ->join('laundry_addresses', 'laundry_addresses.laundry_id', '=', 'laundries.id')
             ->join('laundry_infos', 'laundry_infos.laundry_id', '=', 'laundries.id')
+            ->join('services', 'services.laundry_id', 'laundries.id')
             ->where('laundries.id', $id)
             ->get();
         return response($laundry);

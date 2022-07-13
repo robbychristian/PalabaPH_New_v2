@@ -9,6 +9,7 @@ use App\Models\Laundries;
 use App\Models\LaundryAddress;
 use App\Models\MobileUsers;
 use Faker\Factory;
+use App\Models\Complaints;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,16 +22,24 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         //Admin
-        User::create([
-            'id' => 0,
-            'first_name' => 'Admin',
-            'middle_name' => '',
-            'last_name' => '',
-            'birth_day' => '',
-            'email' => 'admin@palabaph.com',
-            'password' => Hash::make('palabaph'),
-            'user_role' => '1',
-        ]);
+        // User::create([
+        //     'id' => 0,
+        //     'first_name' => 'Admin',
+        //     'middle_name' => '',
+        //     'last_name' => '',
+        //     'birth_day' => '',
+        //     'email' => 'admin@palabaph.com',
+        //     'password' => Hash::make('palabaph'),
+        //     'user_role' => '1',
+        // ]);
+
+        // Complaints::create([
+        //     'laundry_id' => 1,
+        //     'user_id' => 24,
+        //     'comment' => 'Missing underwear',
+        //     'reply' => 'none',
+        //     'complaint_image' => "no_image.jpg"
+        // ]);
 
         //CUSTOMER POPULATE
         // $faker = Factory::create();

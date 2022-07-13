@@ -316,29 +316,65 @@
 
                                         <script>
                                             $("#updatePayment{{ $walkIn->id }}").on('click', function() {
-                                                const formdata = new FormData()
-                                                formdata.append('id', "{{ $walkIn->id }}")
-                                                axios.post('/updatepaymentstatus', formdata)
-                                                    .then(response => {
-                                                        location.reload()
-                                                    })
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Update Payment Status?",
+                                                    text: "Are you sure you want to update the payment status?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    if (response == 'true') {
+                                                        const formdata = new FormData()
+                                                        formdata.append('id', "{{ $walkIn->id }}")
+                                                        axios.post('/updatepaymentstatus', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    }
+                                                })
                                             })
 
                                             $("#updateLaundryStatus{{ $walkIn->id }}").on('click', function() {
-                                                const formdata = new FormData()
-                                                formdata.append("id", '{{ $walkIn->id }}')
-                                                axios.post('/updatelaundrystatus', formdata)
-                                                    .then(respomse => {
-                                                        location.reload()
-                                                    })
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Update Order Status?",
+                                                    text: "Are you sure you want to update the order status?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    if (response == 'true') {
+                                                        const formdata = new FormData()
+                                                        formdata.append("id", '{{ $walkIn->id }}')
+                                                        axios.post('/updatelaundrystatus', formdata)
+                                                            .then(respomse => {
+                                                                location.reload()
+                                                            })
+                                                    }
+                                                })
                                             })
                                             $("#deleteOrder{{ $walkIn->id }}").click(function() {
-                                                const formdata = new FormData()
-                                                formdata.append('id', '{{ $walkIn->id }}')
-                                                axios.post('/deleteorder', formdata)
-                                                    .then(response => {
-                                                        location.reload()
-                                                    })
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Delete Order?",
+                                                    text: "Are you sure you want to delete the order?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    if (response == 'true') {
+                                                        const formdata = new FormData()
+                                                        formdata.append('id', '{{ $walkIn->id }}')
+                                                        axios.post('/deleteorder', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    }
+                                                })
                                             })
                                         </script>
                                     @endforeach
@@ -396,28 +432,73 @@
                                                             d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
                                                     </svg>
                                                 </button>
-                                                <button class="btn btn-danger btn-sm btn-circle"><i
+                                                <button class="btn btn-danger btn-sm btn-circle"
+                                                    id="deleteOrder{{ $dropOff->id }}"><i
                                                         class="fas fa-trash"></i></button>
                                             </th>
                                         </tr>
 
                                         <script>
                                             $("#updatePayment{{ $dropOff->id }}").on('click', function() {
-                                                const formdata = new FormData()
-                                                formdata.append('id', "{{ $dropOff->id }}")
-                                                axios.post('/updatepaymentstatus', formdata)
-                                                    .then(response => {
-                                                        location.reload()
-                                                    })
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Update Payment Status?",
+                                                    text: "Are you sure you want to update the payment status?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    if (response == 'true') {
+                                                        const formdata = new FormData()
+                                                        formdata.append('id', "{{ $dropOff->id }}")
+                                                        axios.post('/updatepaymentstatus', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    }
+                                                })
                                             })
 
                                             $("#updateLaundryStatus{{ $dropOff->id }}").on('click', function() {
-                                                const formdata = new FormData()
-                                                formdata.append("id", '{{ $dropOff->id }}')
-                                                axios.post('/updatelaundrystatus', formdata)
-                                                    .then(respomse => {
-                                                        location.reload()
-                                                    })
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Update Order Status?",
+                                                    text: "Are you sure you want to update the order status?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    if (response == 'true') {
+                                                        const formdata = new FormData()
+                                                        formdata.append("id", '{{ $dropOff->id }}')
+                                                        axios.post('/updatelaundrystatus', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    }
+                                                })
+                                            })
+                                            $("#deleteOrder{{ $dropOff->id }}").click(function() {
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Delete Order?",
+                                                    text: "Are you sure you want to delete the order?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    if (response == 'true') {
+                                                        const formdata = new FormData()
+                                                        formdata.append('id', '{{ $dropOff->id }}')
+                                                        axios.post('/deleteorder', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    }
+                                                })
                                             })
                                         </script>
                                     @endforeach
@@ -482,21 +563,63 @@
 
                                         <script>
                                             $("#updatePayment{{ $pickUp->id }}").on('click', function() {
-                                                const formdata = new FormData()
-                                                formdata.append('id', "{{ $pickUp->id }}")
-                                                axios.post('/updatepaymentstatus', formdata)
-                                                    .then(response => {
-                                                        location.reload()
-                                                    })
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Update Payment Status?",
+                                                    text: "Are you sure you want to update the payment status?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    if (response == 'true') {
+                                                        const formdata = new FormData()
+                                                        formdata.append('id', "{{ $pickUp->id }}")
+                                                        axios.post('/updatepaymentstatus', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    }
+                                                })
                                             })
 
                                             $("#updateLaundryStatus{{ $pickUp->id }}").on('click', function() {
-                                                const formdata = new FormData()
-                                                formdata.append("id", '{{ $pickUp->id }}')
-                                                axios.post('/updatelaundrystatus', formdata)
-                                                    .then(respomse => {
-                                                        location.reload()
-                                                    })
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Update Order Status?",
+                                                    text: "Are you sure you want to update the order status?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    const formdata = new FormData()
+                                                    formdata.append("id", '{{ $pickUp->id }}')
+                                                    axios.post('/updatelaundrystatus', formdata)
+                                                        .then(respomse => {
+                                                            location.reload()
+                                                        })
+                                                })
+                                            })
+                                            $("#deleteOrder{{ $pickUp->id }}").click(function() {
+                                                swal({
+                                                    icon: "warning",
+                                                    title: "Delete Order?",
+                                                    text: "Are you sure you want to delete the order?",
+                                                    buttons: {
+                                                        cancel: "Cancel",
+                                                        true: "OK"
+                                                    }
+                                                }).then(response => {
+                                                    if (response == 'true') {
+                                                        const formdata = new FormData()
+                                                        formdata.append('id', '{{ $pickUp->id }}')
+                                                        axios.post('/deleteorder', formdata)
+                                                            .then(response => {
+                                                                location.reload()
+                                                            })
+                                                    }
+                                                })
                                             })
                                         </script>
                                     @endforeach

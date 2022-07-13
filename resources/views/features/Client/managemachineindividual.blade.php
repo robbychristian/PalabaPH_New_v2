@@ -137,6 +137,7 @@
                                                     }).then(response => {
                                                         const formdata = new FormData()
                                                         formdata.append('id', "{{ $maintenance->id }}")
+                                                        formdata.append('machine_id', "{{ $maintenance->machine_id }}")
                                                         axios.post('/deletemachinemaintenance', formdata)
                                                             .then(response => {
                                                                 location.reload()
@@ -415,8 +416,8 @@
                                                         buttons: false
                                                     }).then(response => {
                                                         const formdata = new FormData()
-                                                        formdata.append('id', '{{ $machine->id }}')
-                                                        axios.post('/deletemachine', formdata)
+                                                        formdata.append('id', "{{ $machine->id }}}")
+                                                        axios.post('/deletemachines', formdata)
                                                             .then(response => {
                                                                 location.reload()
                                                             })

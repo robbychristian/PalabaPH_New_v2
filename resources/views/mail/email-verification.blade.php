@@ -1,7 +1,7 @@
 @component('mail::message')
     Click Below to Verify your account!
 
-    <a href="">
+    <a href="https://palabaph.com/verifyemail/{{ $email }}/{{ $data }}">
         Verify
     </a>
 

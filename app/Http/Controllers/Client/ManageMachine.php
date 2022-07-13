@@ -38,7 +38,12 @@ class ManageMachine extends Controller
         $machines = DB::table('machines')
             ->where('laundry_id', $id)
             ->get();
-        return view('features.Client.managemachineindividual')->with('laundry', $laundry)->with('machines', $machines);
+        $maintenances = DB::table('laundries')
+            ->join('machines', 'machines.laundry_id', '=', 'laundries.id')
+            ->join('machine_maintenances', 'machines.id', '=', 'machine_maintenances.machine_id')
+            ->get();
+        dd($maintenances);
+        return view('features.Client.managemachineindividual')->with('laundry', $laundry)->with('machines', $machines)->with('maintenances', $maintenances);
     }
 
     public function addMachine(Request $request)
@@ -73,7 +78,7 @@ class ManageMachine extends Controller
     public function deleteMachine(Request $request)
     {
         DB::table('machines')
-            ->where('id', (int)$request->id)
+            ->where('id', $request->id)
             ->delete();
     }
 
@@ -97,5 +102,10 @@ class ManageMachine extends Controller
         DB::table("machine_maintenances")
             ->where('id', $request->id)
             ->delete();
+        DB::table('machines')
+            ->where('id', $request->machine_id)
+            ->update([
+                'maintenance_date' => null
+            ]);
     }
 }
