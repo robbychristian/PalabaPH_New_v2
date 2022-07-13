@@ -8,16 +8,22 @@ use Illuminate\Support\Facades\DB;
 use DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
 
 class ManageSales extends Controller
 {
     public function index(Request $request)
     {
+        $laundryInfo = DB::table('laundries')
+            ->where('user_id', Auth::user()->id)
+            ->get();
+        $laundry_id = $laundryInfo[0]->id;
         //admin datatables
         if ($request->ajax()) {
             $sales = DB::table('orders')
                 ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
                 ->where('order_infos.status', 'Completed')
+                ->where('orders.laundry_id', $laundry_id)
                 ->orWhere('order_infos.status', 'Void')
                 ->get();
             //dd($laundries);
@@ -44,6 +50,7 @@ class ManageSales extends Controller
         $sales = DB::table('orders')
             ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
             ->where('order_infos.status', 'Completed')
+            ->where('orders.laundry_id', $laundry_id)
             ->get();
         return view('features.Client.managesales', [
             'sales' => $sales

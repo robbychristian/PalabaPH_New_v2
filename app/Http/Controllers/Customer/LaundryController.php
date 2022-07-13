@@ -39,16 +39,18 @@ class LaundryController extends Controller
 
     public function getAdditionalProducts($id)
     {
-        $additionalProducts = DB::table('additional_products')
-            ->where('laundry_id', $id)
+        $additionalProducts = DB::table('laundries')
+            ->join('additional_products', 'laundries.id', '=', 'additional_products.laundry_id')
+            ->where('laundries.id', $id)
             ->get();
         return $additionalProducts;
     }
 
     public function getAdditionalServices($id)
     {
-        $additionalServices = DB::table("additional_services")
-            ->where('laundry_id', $id)
+        $additionalServices = DB::table("laundries")
+            ->join('additional_services', 'additional_services.laundry_id', '=', 'laundries.id')
+            ->where('laundries.id', $id)
             ->get();
 
         return $additionalServices;

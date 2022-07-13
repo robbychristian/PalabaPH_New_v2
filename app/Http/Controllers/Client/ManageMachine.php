@@ -42,7 +42,6 @@ class ManageMachine extends Controller
             ->join('machines', 'machines.laundry_id', '=', 'laundries.id')
             ->join('machine_maintenances', 'machines.id', '=', 'machine_maintenances.machine_id')
             ->get();
-        dd($maintenances);
         return view('features.Client.managemachineindividual')->with('laundry', $laundry)->with('machines', $machines)->with('maintenances', $maintenances);
     }
 

@@ -65,6 +65,7 @@ Route::post('/riderlogin', [RiderLogin::class, 'loginRider']);
 Route::post('/getlaundryorders', [RiderMobile::class, 'getLaundryOrders']);
 Route::post('/getspecificorder', [RiderMobile::class, 'getSpecificOrder']);
 Route::post('/acceptorder', [RiderMobile::class, 'acceptOrder']);
+Route::post('/getgcashurl', [RiderMobile::class, 'getGcashUrl']);
 
 //Owner functions
 Route::post('/ownerlogin', [OwnerMobile::class, 'login']);

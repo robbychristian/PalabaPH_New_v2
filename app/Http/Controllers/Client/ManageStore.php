@@ -69,6 +69,7 @@ class ManageStore extends Controller
         }
         if ($request->hasFile('gcash')) {
             $fileName = $request->file('gcash')->getClientOriginalName();
+            $request->file('gcash')->storeAs('gcash_image', $request->laundry_id . '/' . $fileName, '');
             $services = DB::table('services')
                 ->where('laundry_id', $request->laundry_id)
                 ->update([
@@ -81,7 +82,6 @@ class ManageStore extends Controller
                     'gcash_qr_code' => $fileName,
                     'is_published' => 1,
                 ]);
-            return redirect('/managestore');
         } else {
             $services = DB::table('services')
                 ->where('laundry_id', $request->laundry_id)
@@ -95,8 +95,18 @@ class ManageStore extends Controller
                     'gcash_qr_code' => null,
                     'is_published' => 1,
                 ]);
-            return redirect('/managestore');
         }
+
+        if ($request->hasFile('fileLogo')) {
+            $fileName = $request->file('fileLogo')->getClientOriginalName();
+            $request->file('fileLogo')->storeAs('laundry_img_pics', Auth::user()->id . '/' . $fileName, '');
+            DB::table('laundry_infos')
+                ->where('laundry_id', $request->laundry_id)
+                ->update([
+                    'laundry_img' => $fileName
+                ]);
+        }
+        return redirect('/managestore');
     }
 
     public function getLaundryInfo(Request $request)

@@ -25,6 +25,7 @@ class RiderMobile extends Controller
 
         $order = DB::table('customer_addresses')
             ->join('mobile_orders', 'mobile_orders.user_id', '=', 'customer_addresses.customer_id')
+            ->where('mobile_orders.id', $request->id)
             ->get();
         return $order;
     }
@@ -36,5 +37,12 @@ class RiderMobile extends Controller
             ->update([
                 'status' => 'Accepted'
             ]);
+    }
+
+    public function getGcashUrl(Request $request)
+    {
+        return DB::table('services')
+            ->where('laundry_id', $request->laundry_id)
+            ->get();
     }
 }

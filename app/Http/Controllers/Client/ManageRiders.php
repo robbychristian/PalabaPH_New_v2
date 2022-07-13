@@ -36,7 +36,7 @@ class ManageRiders extends Controller
             'last_name' => $request->last_name,
             'contact_no' => $request->contact_no,
             'email' => $request->email,
-            'pass' => Hash::make($request->pass),
+            'pass' => $request->pass,
             'is_blocked' => 0,
             'user_role' => 4,
         ]);
@@ -54,7 +54,7 @@ class ManageRiders extends Controller
                 'last_name' => $request->last_name,
                 'contact_no' => $request->contact_no,
                 'email' => $request->email,
-                'pass' => Hash::make($request->pass),
+                'pass' => $request->pass,
             ]);
     }
 

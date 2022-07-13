@@ -556,7 +556,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <img src="{{ asset('images/Gcash_QR.jpg') }}" class="img-fluid" alt="">
+                                @forelse ($gcash_image as $gcash)
+                                    <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/gcash_image/{{ $laundryID->id }}/{{ $gcash->gcash_qr_code }}"
+                                        class="img-fluid" alt="">
+                                @empty
+                                @endforelse
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

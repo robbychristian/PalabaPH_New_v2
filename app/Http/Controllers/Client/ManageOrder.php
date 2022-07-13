@@ -53,6 +53,9 @@ class ManageOrder extends Controller
             ->where('is_blocked', 0)
             ->get();
         $laundryID = Laundries::find($id);
+        $gcash_image = DB::table('services')
+            ->where('laundry_id', $id)
+            ->get();
         $reservations = DB::table('mobile_reservations')
             ->join('machines', 'machines.id', '=', 'mobile_reservations.machine_id')
             ->join('mobile_users', 'mobile_users.id', '=', 'mobile_reservations.user_id')
@@ -83,7 +86,8 @@ class ManageOrder extends Controller
             'customers' => $customers,
             'laundryID' => $laundryID,
             'reservations' => $reservation_today,
-            'cashlessReceipts' => $cashlessReceipts
+            'cashlessReceipts' => $cashlessReceipts,
+            'gcash_image' => $gcash_image
         ]);
     }
 
@@ -219,24 +223,32 @@ class ManageOrder extends Controller
 
     public function updateLaundryStatus(Request $request)
     {
-        $getToken = DB::table('mobile_users')
-            ->where('id', $request->user_id)
-            ->get();
+        if ($request->user_id == '') {
+            DB::table('order_infos')
+                ->where('id', $request->id)
+                ->update([
+                    'status' => "Completed"
+                ]);
+        } else {
+            $getToken = DB::table('mobile_users')
+                ->where('id', $request->user_id)
+                ->get();
 
-        $messaging = app('firebase.messaging');
-        $deviceToken = $getToken[0]->notif_token;
-        $title = "Order Completed!";
-        $body =  "Your order has been completed!";
+            $messaging = app('firebase.messaging');
+            $deviceToken = $getToken[0]->notif_token;
+            $title = "Order Completed!";
+            $body =  "Your order has been completed!";
 
-        $message = CloudMessage::withTarget('token', $deviceToken)
-            ->withNotification(Notification::create($title, $body))
-            ->withData(['key' => 'value']);
-        $messaging->send($message);
-        DB::table('order_infos')
-            ->where('id', $request->id)
-            ->update([
-                'status' => "Completed"
-            ]);
+            $message = CloudMessage::withTarget('token', $deviceToken)
+                ->withNotification(Notification::create($title, $body))
+                ->withData(['key' => 'value']);
+            $messaging->send($message);
+            DB::table('order_infos')
+                ->where('id', $request->id)
+                ->update([
+                    'status' => "Completed"
+                ]);
+        }
     }
 
     public function updateQueuedWashStatus(Request $request)
