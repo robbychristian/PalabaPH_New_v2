@@ -15,7 +15,9 @@
                         <input value="{{ old('fname') }}" type="text" name="fname"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('fname')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
@@ -23,7 +25,9 @@
                         <input value="{{ old('mname') }}" type="text" name="mname"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('mname')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
@@ -31,7 +35,9 @@
                         <input value="{{ old('lname') }}" type="text" name="lname"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('lname')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -39,10 +45,12 @@
                 <div class="row px-3">
                     <div class="col-md-4 mb-3">
                         <label for="" class="fw-bold">Birthday</label>
-                        <input value="{{ old('bday') }}" type="text" name="bday"
+                        <input value="{{ old('bday') }}" type="date" name="bday"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('bday')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
@@ -50,7 +58,9 @@
                         <input value="{{ old('cnum') }}" type="text" name="cnum"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('cnum')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
@@ -58,7 +68,9 @@
                         <input value="{{ old('pnum') }}" type="text" name="pnum"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('pnum')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -68,7 +80,9 @@
                         <input value="{{ old('email') }}" type="email" name="email"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('email')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -79,7 +93,9 @@
                         <input value="{{ old('pwd') }}" type="password" name="pwd"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('pwd')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -87,7 +103,9 @@
                         <input value="{{ old('confpw') }}" type="password" name="confpw"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('confpw')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -101,7 +119,9 @@
                         <input value="{{ old('laundryName') }}" type="text" name="laundryName"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('laundryName')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -113,7 +133,9 @@
                             <option value="Hybrid Service">Hybrid Service</option>
                         </select>
                         @error('typeLaundry')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-12 mb-3">
@@ -121,7 +143,9 @@
                         <textarea rows="4" name="description" value="{{ old('description') }}"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"></textarea>
                         @error('description')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -129,7 +153,9 @@
                         <input type="time" name="openingtime"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         @error('openingtime')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -137,7 +163,9 @@
                         <input type="time" name="closingtime"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         @error('closingtime')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-12 mb-3">
@@ -145,7 +173,9 @@
                         <input type="file" name="laundry_img"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('laundry_img')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -155,7 +185,9 @@
                         <select id="region" name="region"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"></select>
                         @error('region')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
@@ -163,7 +195,9 @@
                         <select id="province" name="province"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"></select>
                         @error('province')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
@@ -171,7 +205,9 @@
                         <select id="city" name="city"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"></select>
                         @error('city')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -182,7 +218,9 @@
                         <select id="barangay" name="barangay"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"></select>
                         @error('barangay')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -190,7 +228,9 @@
                         <input value="{{ old('houseNo') }}" type="text" name="houseNo"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('houseNo')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -209,7 +249,9 @@
                         <input type="file" name="bir"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('bir')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -217,7 +259,9 @@
                         <input type="file" name="business"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('business')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -227,7 +271,9 @@
                         <input type="file" name="dti"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('dti')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="col-md-6 mb-3">
@@ -235,7 +281,9 @@
                         <input type="file" name="valid_id"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         @error('valid_id')
-                            {{ $message }}
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                 </div>
@@ -245,7 +293,14 @@
                 <div class="d-flex justify-content-center align-items-center flex-column mb-3">
                     <div class="check-box mb-3 mt-3 ">
                         <input type="checkbox" name="" id="" class="mt-1 px-3 py-2 bg-white border">
-                        <label for="" class="fw-bold">I have read and agree to the terms and conditions</label>
+                        <label for="" class="fw-bold">I have read and agree to the <span>
+                                <button class="text-blue-500 underline font-bold hover:text-blue-700 duration-75"
+                                    type="button" data-bs-toggle="modal" data-bs-target="#termsModal">terms and
+                                    conditions</button>
+                                {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Launch demo modal
+                                      </button> --}}
+                            </span></label>
                     </div>
                     <button class="btn btn-block text-white btn-lg " style="background-color: #FFD580"
                         type="submit">Register</button>
@@ -253,11 +308,100 @@
 
 
             </form>
-
             {{-- <select id="region"></select> ito na yung fields na kailangan for API ng address. Need nalang ng styling
             <select id="province"></select>
             <select id="city"></select>
             <select id="barangay"></select> --}}
+            <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Terms and Condition</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="fw-bold mb-3">
+                                PALABA PH PRIVACY POLICY
+                            </div>
+                            <div class="mb-3">
+                                This outlines our practices for collecting, using, and disclosing
+                                Personal Information we receive from users. Kindly read this
+                                guideline thoroughly. The collection and use of your Personal
+                                Information are only for the purpose of providing and improving
+                                the application. By using the application, you consent to the
+                                collection and use of the information you give in accordance with
+                                this policy.
+                            </div>
+                            <div class="fw-bold mb-3">
+                                DATA MANAGEMENT OF APPLICATION
+                            </div>
+                            <div class="mb-3">
+                                We advise you in advance that we may ask you to give us with some of your personal
+                                information when you are use our application. This information can be used to contact and
+                                identify you. The types of information that may be collected include but are not limited to
+                                your name, email address, cellphone number, city of residency, and profile picture, as well
+                                as the inclusion to your own username and password.
+                            </div>
+                            <div class="fw-bold mb-3">
+                                SECURITY
+                            </div>
+                            <div class="mb-3">
+                                We place a high value on the security of your Personal Information, but please keep in mind
+                                that no method of transmission over the Internet, or system of electronic storage, is
+                                guaranteed to be completely secure. While we make every effort to secure your Personal
+                                Information via the use of commercially reasonable safeguards, we cannot guarantee its
+                                ultimate security.
+                            </div>
+                            <div class="fw-bold mb-3">
+                                PALABA PH TERMS OF USAGE
+                            </div>
+                            <div class="mb-3">
+                                Before using our application, please take the time to carefully read the following terms and
+                                conditions.
+                                Acceptance and compliance with these terms are required for access to and use of all the
+                                services included within the application. All users, from laundry shop owners in addition to
+                                their riders and not to mention the customer who use the application provided service
+                                features are subject to these terms.
+
+                                You agree to be bound by these said terms by accessing or using our application. You may not
+                                access these aforementioned services if you disagree with any element or aspects of these
+                                terms.
+                            </div>
+                            <div class="fw-bold mb-3">
+                                CLIENT REGISTRATION AGREEMENT
+                            </div>
+                            <div class="mb-3">
+                                Palaba PH requires you to send business permits and valid ID’s to validate the legitimacy of
+                                your laundry shop. You are responsible for any information you send via the registration.
+                                Any type of fraud or falsification of documents will be immediately blocked in using the
+                                system. The business permits and valid ID’s are subject for approval of the admin.
+                            </div>
+                            <div class="fw-bold mb-3">
+                                PALABA PH AND THE PARTNER LAUNDRY SHOPS
+                            </div>
+                            <div class="mb-3">
+                                Palaba PH’s administration has no relations and control over the partner laundry shop’s
+                                promotion, and accepts no responsibility for, the content, policies and actions of the
+                                laundry shops. Additionally, you acknowledge and agree that the administrators of Palaba PH
+                                shall not be responsible or liable, directly or indirectly, for any damage or loss caused or
+                                alleged to be caused by the partner laundry shops of the Palaba PH.
+                            </div>
+                            <div class="fw-bold mb-3">
+                                CONTRACT DOWNLOAD
+                            </div>
+                            <div class="mb-3">
+                                Agreeing upon this <span class="text-primary">terms and condition</span> will proceed in
+                                downloading the terms and condition PDF.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>

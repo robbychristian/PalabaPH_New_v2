@@ -21,10 +21,12 @@ class CreateMobileUsersTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('contact_no')->nullable();
             $table->string('email')->nullable();
-            $table->string('pass')->nullable();
+            $table->string('email_verified_at')->nullable();
+            $table->string('password')->nullable();
             $table->boolean('is_blocked')->nullable();
             $table->string('user_role')->nullable();
             $table->string('notif_token')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

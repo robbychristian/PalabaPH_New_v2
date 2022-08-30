@@ -41,7 +41,9 @@
                                     @forelse ($cashlessReceipts as $cashlessReceipt)
                                         <tr>
                                             <th scope="row" class="w-50">
-                                                <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/cashless_recepts/{{ $cashlessReceipt->user_id }}/{{ $cashlessReceipt->payment_image_uri }}"
+                                                {{-- <img src="https://palabaph.com/PalabaPH_New_v2-main/storage/app/cashless_recepts/{{ $cashlessReceipt->user_id }}/{{ $cashlessReceipt->payment_image_uri }}"
+                                                    alt="" srcset="" class="w-50"> --}}
+                                                <img src="{{ asset('storage/cashless_receipts/'. $cashlessReceipt->user_id . '/' . $cashlessReceipt->payment_image_uri) }}"
                                                     alt="" srcset="" class="w-50">
                                             </th>
                                             <td>{{ $cashlessReceipt->first_name }}</td>

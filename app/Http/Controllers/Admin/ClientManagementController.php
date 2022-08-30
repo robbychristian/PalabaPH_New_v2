@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Mail;
 use App\Mail\EmailVerification;
 use Carbon\Carbon;
+use App\Mail\WarningEmail;
 
 class ClientManagementController extends Controller
 {
@@ -64,9 +65,18 @@ class ClientManagementController extends Controller
             ->join('laundry_addresses', 'laundries.id', '=', 'laundry_addresses.laundry_id')
             ->where('laundry_id', $id)
             ->get();
+        $complaints_count = DB::table('complaints')
+            ->where('laundry_id', $id)
+            ->count();
+        $complaints_resolved = DB::table('complaints')
+            ->where('laundry_id', $id)
+            ->where('status', "Resolved")
+            ->count();
 
         return view('features.clientmanagementview', [
-            'laundries' => $laundries
+            'laundries' => $laundries,
+            'complaints_count' => $complaints_count,
+            'complaints_resolved' => $complaints_resolved,
         ]);
     }
 
@@ -107,5 +117,28 @@ class ClientManagementController extends Controller
                 ]);
         }
         return redirect('https://palabaph.com/login')->with('login', 'success');
+    }
+
+    public function warn(Request $request)
+    {
+        Mail::to($request->email)->send(new WarningEmail($request->email));
+    }
+
+    public function block(Request $request)
+    {
+        DB::table('users')
+            ->where('id', $request->id)
+            ->update([
+                'is_blocked' => 1
+            ]);
+    }
+
+    public function unblock(Request $request)
+    {
+        DB::table('users')
+            ->where('id', $request->id)
+            ->update([
+                'is_blocked' => 0
+            ]);
     }
 }

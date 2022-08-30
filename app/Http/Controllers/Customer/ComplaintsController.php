@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Complaints;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ComplaintsController extends Controller
 {
     public function addComplaints(Request $request)
     {
+        // return $request;
         if ($request->hasFile('image_file')) {
             // return $request->image_file;
             $fileName = $request->file('image_file')->getClientOriginalName();
@@ -19,6 +21,8 @@ class ComplaintsController extends Controller
                 'laundry_id' => $request->laundry_id,
                 'user_id' => $request->user_id,
                 'comment' => $request->comment,
+                'category' => $request->category,
+                'status' => "Pending",
                 'reply' => 'none',
                 'complaint_image' => $fileName
             ]);

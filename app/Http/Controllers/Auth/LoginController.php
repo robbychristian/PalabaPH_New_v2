@@ -46,7 +46,10 @@ class LoginController extends Controller
         $this->validate($request, [
             $this->username() => 'required',
             'password' => 'required',
+            'captcha' => 'required|captcha'
             // new rules here
+        ], [
+            'captcha.captcha' => "Re-enter Captcha!"
         ]);
     }
 
@@ -60,11 +63,21 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
+        $exist = DB::table('users')->where('email', $request->email)->count();
+
+        if(!$exist) {
+            return redirect('/login')->with("error", 'Credentials does not exist!');
+        }
+
         $valid = DB::table('users')->select('email_verified_at')->where('email', $request->email)->first();
+        $is_blocked = DB::table('users')->select('is_blocked')->where('email', $request->email)->first();
+        // dd($is_blocked->is_blocked);
         if ($valid->email_verified_at == '') {
-            return redirect('/login')->with("Error", "Your Email is not yet verified!");
+            return redirect('/login')->with("email", "Your Email is not yet verified!");
+        } else if ($is_blocked->is_blocked == true) {
+            return redirect('/login')->with('blocked', 'Your email has been blocked');
         } else {
-            if ($this->guard()->validate($this->credentials($request))) {
+            if ($this->guard('web')->validate($this->credentials($request))) {
                 if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                     return redirect('/home');
                 } else {
@@ -76,8 +89,13 @@ class LoginController extends Controller
             } else {
                 // dd('ok');
                 $this->incrementLoginAttempts($request);
-                return redirect('/login')->with('error');
+                return redirect('/login')->with('error', 'test');
             }
         }
+    }
+
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha' => captcha_img()]);
     }
 }

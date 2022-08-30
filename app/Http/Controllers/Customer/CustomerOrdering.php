@@ -87,12 +87,13 @@ class CustomerOrdering extends Controller
     {
         if ($request->hasFile('imageFile')) {
             $fileName = $request->file('imageFile')->getClientOriginalName();
-            $request->file('imageFile')->storeAs('cashless_receipts', $request->user_id . '/' . $fileName, '');
-            MobileOrdersInfo::create([
-                'mobile_order_id' => $request->mobile_order_id,
-                'payment_status' => "Paid",
-                'payment_image_uri' => $fileName
-            ]);
+            $request->file('imageFile')->storeAs('cashless_receipts', $request->user_id . '/' . $fileName, 'public');
+            DB::table('mobile_orders_infos')
+                ->where('mobile_order_id', $request->mobile_order_id)
+                ->update([
+                    'payment_status' => "Paid",
+                    'payment_image_uri' =>$fileName
+                ]);
         }
     }
 }

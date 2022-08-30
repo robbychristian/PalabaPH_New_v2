@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MobileUsers;
 use App\Models\CustomerAddress;
+use App\Models\UserVerification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mail;
+use Illuminate\Support\Str;
+use App\Mail\EmailVerification;
 
 class CustomerRegisterController extends Controller
 {
@@ -20,10 +24,19 @@ class CustomerRegisterController extends Controller
                 'last_name' => $request->lname,
                 'contact_no' => $request->cnum,
                 'email' => $request->email,
-                'pass' => Hash::make($request->pass),
+                'password' => Hash::make($request->pass),
+                'email_verified_at' => null,
                 'is_blocked' => false,
                 'user_role' => 3
             ]);
+
+            $token = Str::random(64);
+            UserVerification::create([
+                'email' => $request->email,
+                'token' => $token
+            ]);
+
+            Mail::to($request->email)->send(new EmailVerification($token, $request->email));
 
             CustomerAddress::create([
                 'customer_id' => $customer->id,
@@ -44,7 +57,7 @@ class CustomerRegisterController extends Controller
             ->where('email', $request->email)
             ->get();
         if (!$creds->isEmpty()) {
-            if (Hash::check($request->password, $creds[0]->pass)) {
+            if (Hash::check($request->password, $creds[0]->password)) {
                 return response(['response' => true, 'data' => $creds]);
             }
         } else {

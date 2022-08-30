@@ -129,8 +129,8 @@
             @foreach ($reservations as $reservation)
                 <tr>
                     <th scope="row">{{ $reservation->machine_name }}</th>
-                    <td>{{ $reservation->reservation_date }}</td>
                     <td>{{ $reservation->first_name }} {{ $reservation->last_name }}</td>
+                    <td>{{ $reservation->reservation_date }}</td>
                     <td>{{ $reservation->time_start }}</td>
                     <td>{{ $reservation->time_end }}</td>
                     <td>

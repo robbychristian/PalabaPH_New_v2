@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use PDF;
 
 class RegisterController extends Controller
 {
@@ -66,7 +67,7 @@ class RegisterController extends Controller
             'cnum' => ['required', 'string', 'max:255'],
             'pnum' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'pwd' => 'required|min:8',
+            'pwd' => 'required|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
             'confpw' => 'required|min:8|same:pwd',
             'region' => ['required', 'string', 'max:255'],
             'province' => ['required', 'string', 'max:255'],
@@ -78,10 +79,44 @@ class RegisterController extends Controller
             'description' => ['required', 'string', 'max:255'],
             'openingtime' => ['required'],
             'closingtime' => ['required'],
-            'bir' => 'mimes:jpeg,png,jpg',
-            'business' => 'mimes:jpeg,png,jpg',
-            'dti' => 'mimes:jpeg,png,jpg',
-            'valid_id' => 'mimes:jpeg,png,jpg',
+            'bir' => ['mimes:pdf', 'required'],
+            'business' => ['mimes:pdf', 'required'],
+            'dti' => ['mimes:pdf', 'required'],
+            'valid_id' => ['mimes:pdf', 'required'],
+            'laundry_img' => ['required'],
+        ], $messages = [
+            'fname.required' => 'The first name field is required!',
+            'mname.required' => 'The middle name field is required!',
+            'lname.required' => 'The last name field is required!',
+            'bday.required' => 'The birthday field is required!',
+            'cnum.required' => 'The contact number field is required!',
+            'pnum.required' => 'The phone number field is required!',
+            'email.required' => 'The email field is required!',
+            'pwd.required' => 'The password field is required!',
+            'pwd.regex' => "The password should contain atleast a numeric character",
+            'confpw.required' => 'The confirm password field is required!',
+            'region.required' => 'The region field is required!',
+            'province.required' => 'The province field is required!',
+            'city.required' => 'The city field is required!',
+            'barangay.required' => 'The barangay field is required!',
+            'houseNo.required' => 'The street field is required!',
+            'laundryName.required' => 'The laundry name field is required!',
+            'typeLaundry.required' => 'The laundry type field is required!',
+            'description.required' => 'The laundry description field is required!',
+            'openingtime.required' => 'The opening time field is required!',
+            'closingtime.required' => 'The closing time field is required!',
+
+            'bir.required' => 'The BIR file field is required!',
+            'business.required' => 'The Business file field is required!',
+            'dti.required' => 'The DTI file field is required!',
+            'valid_id.required' => 'The valid ID file field is required!',
+            'laundry_img.required' => 'The Laundry Image file field is required!',
+
+            'bir.mimes' => 'The BIR file needs to be in PDF format!',
+            'business.mimes' => 'The Business file needs to be in PDF format!',
+            'dti.mimes' => 'The DTI file needs to be in PDF format!',
+            'valid_id.mimes' => 'The valid ID file needs to be in PDF format!',
+            'laundry_img.mimes' => 'The laundry image file needs to be in .jpg, .jpeg, .png format only!',
         ]);
     }
 
@@ -101,6 +136,7 @@ class RegisterController extends Controller
             'user_role' => 2,
             'email' => $data['email'],
             'password' => Hash::make($data['pwd']),
+            'is_blocked' => 0
         ]);
 
         $laundry = Laundries::create([
@@ -149,33 +185,33 @@ class RegisterController extends Controller
 
         if (request()->hasFile('laundry_img')) {
             $file = request()->file('laundry_img')->getClientOriginalName();
-            request()->file('laundry_img')->storeAs('laundry_img_pics', $client->id . '/' . $file, '');
+            request()->file('laundry_img')->storeAs('laundry_img_pics', $client->id . '/' . $file, 'public');
             $laundryInfo->update(['laundry_img' => $file]);
         }
         if (request()->hasFile('bir')) {
             $file = request()->file('bir')->getClientOriginalName();
-            request()->file('bir')->storeAs('bir_pics', $client->id . '/' . $file, '');
+            request()->file('bir')->storeAs('bir_pics', $client->id . '/' . $file, 'public');
             $laundry->update(['bir_permit' => $file]);
         }
         if (request()->hasFile('dti')) {
             $file = request()->file('dti')->getClientOriginalName();
-            request()->file('dti')->storeAs('dti_pics', $client->id . '/' . $file, '');
+            request()->file('dti')->storeAs('dti_pics', $client->id . '/' . $file, 'public');
             $laundry->update(['dti_permit' => $file]);
         }
         if (request()->hasFile('business')) {
             $file = request()->file('business')->getClientOriginalName();
-            request()->file('business')->storeAs('business_pics', $client->id . '/' . $file, '');
+            request()->file('business')->storeAs('business_pics', $client->id . '/' . $file, 'public');
             $laundry->update(['business_permit' => $file]);
         }
         if (request()->hasFile('valid_id')) {
             $file = request()->file('valid_id')->getClientOriginalName();
-            request()->file('valid_id')->storeAs('valid_id_pics', $client->id . '/' . $file, '');
+            request()->file('valid_id')->storeAs('valid_id_pics', $client->id . '/' . $file, 'public');
             $laundry->update(['valid_id' => $file]);
             $laundry->update(['address_id' => $laundryAddress->id]);
         }
 
-
-        return $client;
+        $pdf = PDF::loadView('pdf.contract');
+        return $pdf->download('contract.pdf');
     }
     public function register(Request $request)
     {

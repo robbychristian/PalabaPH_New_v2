@@ -11,10 +11,13 @@ class FeedbackController extends Controller
 {
     public function addFeedback(Request $request)
     {
+        // return $request;
         Feedback::create([
             'laundry_id' => $request->laundry_id,
             'user_id' => $request->user_id,
             'comment' => $request->comment,
+            'category' => $request->category,
+            'status' => "Pending",
             'reply' => 'none',
             'rating' => $request->rating
         ]);

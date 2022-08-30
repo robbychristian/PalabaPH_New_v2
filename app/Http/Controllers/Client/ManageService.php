@@ -121,7 +121,7 @@ class ManageService extends Controller
     {
         if ($request->hasFile('imgService')) {
             $file = $request->file('imgService')->getClientOriginalName();
-            $request->file('imgService')->storeAs('img_service', Auth::user()->id . '/' . $file, '');
+            $request->file('imgService')->storeAs('img_service', Auth::user()->id . '/' . $file, 'public');
             AdditionalServices::create([
                 'laundry_id' => $request->laundryId,
                 'add_serv_name' => $request->addService,
@@ -138,7 +138,7 @@ class ManageService extends Controller
     {
         if ($request->hasFile('imgProduct')) {
             $file = $request->file('imgProduct')->getClientOriginalName();
-            $request->file('imgProduct')->storeAs('img_product', Auth::user()->id . '/' . $file, '');
+            $request->file('imgProduct')->storeAs('img_product', Auth::user()->id . '/' . $file, 'public');
             AdditionalProducts::create([
                 'laundry_id' => $request->laundryId,
                 'add_prod_name' => $request->addProducts,

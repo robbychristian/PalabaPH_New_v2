@@ -44,7 +44,17 @@ class ManageComplaints extends Controller
         DB::table('complaints')
             ->where('id', $request->id)
             ->update([
-                'reply' => $request->reply
+                'reply' => $request->reply,
+                'status' => 'Resolved'
+            ]);
+    }
+
+    public function toReview(Request $request)
+    {
+        DB::table("complaints")
+            ->where('id', $request->id)
+            ->update([
+                'status' => "Review"
             ]);
     }
 }

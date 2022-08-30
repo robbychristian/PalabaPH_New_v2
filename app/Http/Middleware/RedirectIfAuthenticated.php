@@ -29,4 +29,16 @@ class RedirectIfAuthenticated
 
         return $next($request);
     }
+
+    // public function handle(Request $request, Closure $next, $guard = null)
+    // {
+    //     if ($guard == 'web' && Auth::guard($guard)->check()) {
+    //         return redirect('/home');
+    //     }
+    //     if ($guard == 'customer' && Auth::guard($guard)->check()) {
+    //         return redirect('/customer/home');
+    //     }
+
+    //     return $next($request);
+    // }
 }

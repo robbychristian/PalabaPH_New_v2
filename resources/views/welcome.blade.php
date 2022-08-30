@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex flex-col h-screen w-screen">
+    <div class="flex flex-col h-screen">
         <div class="grid grid-cols-1 gap-5 h-full w-full py-3 md:grid-cols-2 bg-sky-300">
             <div class="flex flex-col col-span-1 w-full h-full lg:mx-10">
                 <div class="text-3xl text-orange-700 uppercase font-bold px-3 xl:text-5xl">the best partner of the laundry

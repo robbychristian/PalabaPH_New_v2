@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Singapore',
 
     /*
     |--------------------------------------------------------------------------
@@ -175,7 +175,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         //FIREBASE
-        Kreait\Laravel\Firebase\ServiceProvider::class
+        Kreait\Laravel\Firebase\ServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
+
+        //PDF GENERATOR
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -231,6 +235,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

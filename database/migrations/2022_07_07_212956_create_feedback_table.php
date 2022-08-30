@@ -18,6 +18,8 @@ class CreateFeedbackTable extends Migration
             $table->unsignedBigInteger('laundry_id');
             $table->unsignedBigInteger('user_id');
             $table->string('comment');
+            $table->string('category');
+            $table->string('status');
             $table->string('reply')->nullable();
             $table->string('rating');
             $table->timestamps();

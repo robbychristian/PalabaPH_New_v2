@@ -18,7 +18,7 @@ class RiderLogin extends Controller
             ->where('email', $request->email)
             ->get();
         if ($exist === 1) {
-            if ($request->password === $rider_creds[0]->pass) {
+            if ($request->password === $rider_creds[0]->password) {
                 return response([
                     'response' => true,
                     'data' => $rider_creds[0]

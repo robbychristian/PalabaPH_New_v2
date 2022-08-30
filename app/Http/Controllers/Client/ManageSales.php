@@ -9,6 +9,7 @@ use DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class ManageSales extends Controller
 {
@@ -62,14 +63,20 @@ class ManageSales extends Controller
         $order_info = DB::table('orders')
             ->join('order_infos', 'order_infos.order_id', '=', 'orders.id')
             ->where('order_infos.id', $id)
-            ->get();
-        $receipt_data = (json_encode($order_info[0]));
+            ->first();
+        $laundry_info = DB::table('laundries')
+            ->join('laundry_addresses', 'laundries.id', '=', 'laundry_addresses.laundry_id')
+            ->where('laundries.id', $order_info->laundry_id)
+            ->first();
+        // $receipt_data = (json_encode($order_info[0]));
         $file_name = 'receiptNo' . $id . ".txt";
-        Storage::disk('public')->put($file_name, $receipt_data);
+        // Storage::disk('public')->put($file_name, $receipt_data);
 
         $path = public_path('storage/' . $file_name);
 
-        return Response::download($path, $file_name);
+        $pdf = PDF::loadView('pdf.receiptpdf', ['order' => $order_info, 'laundry_info' => $laundry_info]);
+        return $pdf->download('receipt_no_' . $order_info->order_id . '.pdf');
+        // return Response::download($path, $file_name);
     }
 
     public function viewSalesInformation($id)

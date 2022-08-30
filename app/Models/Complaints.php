@@ -13,6 +13,8 @@ class Complaints extends Model
         'user_id',
         'comment',
         'reply',
+        'category',
+        'status',
         'complaint_image',
     ];
 }

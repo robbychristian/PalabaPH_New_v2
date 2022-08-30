@@ -233,21 +233,28 @@ class ManageOrder extends Controller
             $getToken = DB::table('mobile_users')
                 ->where('id', $request->user_id)
                 ->get();
-
-            $messaging = app('firebase.messaging');
-            $deviceToken = $getToken[0]->notif_token;
-            $title = "Order Completed!";
-            $body =  "Your order has been completed!";
-
-            $message = CloudMessage::withTarget('token', $deviceToken)
-                ->withNotification(Notification::create($title, $body))
-                ->withData(['key' => 'value']);
-            $messaging->send($message);
-            DB::table('order_infos')
-                ->where('id', $request->id)
-                ->update([
-                    'status' => "Completed"
-                ]);
+            if($getToken[0]->notif_token == null) {
+                DB::table('order_infos')
+                    ->where('id', $request->id)
+                    ->update([
+                        'status' => "Completed"
+                    ]);
+            } else {
+                $messaging = app('firebase.messaging');
+                $deviceToken = $getToken[0]->notif_token;
+                $title = "Order Completed!";
+                $body =  "Your order has been completed!";
+    
+                $message = CloudMessage::withTarget('token', $deviceToken)
+                    ->withNotification(Notification::create($title, $body))
+                    ->withData(['key' => 'value']);
+                $messaging->send($message);
+                DB::table('order_infos')
+                    ->where('id', $request->id)
+                    ->update([
+                        'status' => "Completed"
+                    ]);
+            }
         }
     }
 

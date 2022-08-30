@@ -43,7 +43,8 @@ class ManageFeedbacks extends Controller
         DB::table('feedback')
             ->where("id", $request->id)
             ->update([
-                'reply' => $request->reply
+                'reply' => $request->reply,
+                'status' => "Reviewed"
             ]);
     }
 }

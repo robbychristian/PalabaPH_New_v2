@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\ClientManagementController as AdminClientManagement;
 use App\Http\Controllers\Admin\UserManagementController as AdminUserManagement;
-
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 
 use App\Http\Controllers\Client\ManageStore;
@@ -15,10 +15,20 @@ use App\Http\Controllers\Client\ManageSales;
 use App\Http\Controllers\Client\ManageRiders;
 use App\Http\Controllers\Client\ManageComplaints;
 use App\Http\Controllers\Client\ManageFeedbacks;
+use App\Http\Controllers\Client\ManageStatistics;
 use App\Http\Controllers\Customer\CustomerOrdering;
-
+use App\Http\Controllers\WebCustomer\CartController;
+use App\Http\Controllers\WebCustomer\ComplaintsController;
+use App\Http\Controllers\WebCustomer\FeedbackController;
 use Illuminate\Support\Facades\Route;
 
+//CUSTOMER CONTROLLERS
+use App\Http\Controllers\WebCustomer\LoginController;
+use App\Http\Controllers\WebCustomer\HomeController;
+use App\Http\Controllers\WebCustomer\LaundryController;
+use App\Http\Controllers\WebCustomer\OrdersController;
+use App\Models\Feedback;
+use App\Http\Controllers\Customer\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +43,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('guest');
+})->middleware('guest')->name('welcome');
 
 Auth::routes([
     'login'    => true,
@@ -60,6 +70,9 @@ Route::get('/clientmanagement', [AdminClientManagement::class, 'index'])->name('
 Route::get('/clientmanagement/{id}', [AdminClientManagement::class, 'show'])->name('admin.clientmanagement.show');
 Route::post('/clientmanagement/{id}/accept', [AdminClientManagement::class, 'accept'])->name('admin.clientmanagement.accept');
 Route::post('/clientmanagement/{id}/decline', [AdminClientManagement::class, 'decline'])->name('admin.clientmanagement.decline');
+Route::post('/clientmanagement/warn', [AdminClientManagement::class, 'warn']);
+Route::post('/clientmanagement/block', [AdminClientManagement::class, 'block']);
+Route::post('/clientmanagement/unblock', [AdminClientManagement::class, 'unblock']);
 
 Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement');
 Route::post('/blockcustomer', [AdminUserManagement::class, 'blockCustomer']);
@@ -120,6 +133,7 @@ Route::post('/deletemachine', [ManageOrder::class, 'deleteMachine']);
 
 Route::get('/managecomplaints', [ManageComplaints::class, 'index'])->name('client.managecomplaints');
 Route::post('/replytocomplaints', [ManageComplaints::class, 'replyToComplaints']);
+Route::post('/toreview', [ManageComplaints::class, 'toReview']);
 
 Route::get('/managefeedbacks', [ManageFeedbacks::class, 'index'])->name('client.managefeedbacks');
 Route::post('/replytofeedback', [ManageFeedbacks::class, 'replyToFeedback']);
@@ -133,6 +147,43 @@ Route::post('/addriders', [ManageRiders::class, 'addRiders'])->name('client.addr
 Route::post('/editriders', [ManageRiders::class, 'editRiders']);
 Route::post('/deleteriders', [ManageRiders::class, 'deleteRiders']);
 
+Route::get('/managestatistics', [ManageStatistics::class, 'index'])->name('client.managestatistics');
+
 Route::get('/sendnotification', [CustomerOrdering::class, 'sendNotification']);
+
+// Customer
+
+Route::prefix('customer')->group(function () {
+    Route::get("/login", [LoginController::class, 'index'])->name('customer.login');
+    Route::post("/login", [LoginController::class, 'login']);
+    Route::get('/reset', [ResetPasswordController::class, 'index']);
+    Route::post("/reset", [ResetPasswordController::class, 'resetPassword'])->name('customer.reset');
+    Route::get('/password-reset/{token}', [ResetPasswordController::class, 'getPassword']);
+    Route::post('/password-reset', [ResetPasswordController::class, 'updatePassword']);
+    Route::get("/home", [HomeController::class, 'index']);
+    Route::get('/laundry/{id}', [LaundryController::class, 'index'])->name('customer.laundry');
+    Route::post('/addtocart', [CartController::class, 'addToCart']);
+    Route::get('/cart/{id}', [CartController::class, 'index'])->name('customer.cart');
+    Route::post('/deleteitem', [CartController::class, 'deleteItem']);
+
+    Route::post('/submitpickup', [CartController::class, 'submitPickUp']);
+    Route::post('/ordereditems', [CartController::class, 'orderedItems']);
+
+    Route::get('/orders', [OrdersController::class, 'index']);
+    Route::get('/orders/{id}', [OrdersController::class, 'individualOrder']);
+
+    Route::get('/complaints/{id}', [ComplaintsController::class, 'index']);
+    Route::post('/submitcomplaints', [ComplaintsController::class, 'addComplaints']);
+    Route::get('/complaints', [ComplaintsController::class, 'viewComplaints']);
+
+    Route::get('/feedback/{id}', [FeedbackController::class, 'index']);
+    Route::post('/submitfeedback', [FeedbackController::class, 'addFeedback']);
+    Route::get('/feedbacks', [FeedbackController::class, 'viewFeedbacks']);
+});
+
+Route::get('/warningemail', function() {
+    return view('mail.warning-email');
+});
+
 
 //Route::get('/usermanagement', [AdminUserManagement::class, 'index'])->name('admin.usermanagement.index');

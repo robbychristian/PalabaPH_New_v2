@@ -12,7 +12,9 @@ class Feedback extends Model
         'laundry_id',
         'user_id',
         'comment',
+        'category',
+        'status',
         'reply',
-        'rating'
+        'rating',
     ];
 }

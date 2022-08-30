@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('birth_day');
             $table->string('email')->unique();
+            $table->boolean('is_blocked');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('user_role');

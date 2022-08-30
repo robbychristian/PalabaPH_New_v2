@@ -52,8 +52,13 @@
         </a>
 
 
-
+        
         <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('client.managestatistics') }}">
+                <i class="fas fa-fw fa-signal"></i>
+                <span>Statistics Management</span></a>
+        </li>
         <li class="nav-item {{ Route::is('home') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
